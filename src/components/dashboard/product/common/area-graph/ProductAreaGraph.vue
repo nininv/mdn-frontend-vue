@@ -46,13 +46,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import areaGraphStore from './store'
+import Store from './store'
 import TimeRangeChooser from '../../../TimeRangeChooser'
+import dynamicStoreMixin from '../dynamicStoreMixin'
+
 export default {
   name: 'AreaGraph',
   components: {
     TimeRangeChooser
   },
+  mixins: [dynamicStoreMixin],
   props: {
     namespace: {
       type: String,
@@ -98,25 +101,32 @@ export default {
   },
   computed: {
     ...mapGetters('machines', ['timeRangeLabel', 'timeRangeFromTo']),
+    Store() {
+      // dynamic vuex store generators for the mixin
+      return Store
+    },
+    state() {
+      return this.$store.state[this.namespace]
+    },
     isLoading() {
-      return this.$store.state[this.namespace]['isLoading']
+      return this.state['isLoading']
     },
     isImperial() {
-      return this.$store.state[this.namespace]['isImperial']
+      return this.state['isImperial']
     },
     timeRange() {
-      return this.$store.state[this.namespace]['timeRange']
+      return this.state['timeRange']
     },
     series() {
       if (this.names.length)
         return this.names.map((name, index) => {
           return {
             name,
-            data: (this.$store.state[this.namespace]['items'].length) ? (this.$store.state[this.namespace]['items'][index]) : []
+            data: (this.state['items'].length) ? (this.state['items'][index]) : []
           }
         })
       else
-        return (this.$store.state[this.namespace]['items']) ? (this.$store.state[this.namespace]['items']) : [[]]
+        return (this.state['items']) ? (this.state['items']) : [[]]
     },
     graphUnit() {
       if (this.unit === 'imperial-metric')
@@ -164,16 +174,8 @@ export default {
       }
     }
   },
-  created() {
-    if (!this.isModuleCreated([this.namespace])) {
-      this.registerModule()
-    }
-  },
   mounted() {
     this.open()
-  },
-  beforeDestroy() {
-    if (!this.persist) this.$store.unregisterModule(this.namespace)
   },
   methods: {
     ...mapActions({
@@ -189,23 +191,6 @@ export default {
         machineId: this.machineId,
         serialNumber: this.serialNumber,
         timeRange: this.timeRange
-      })
-    },
-    isModuleCreated(path) {
-      let m = this.$store._modules.root
-
-      return path.every((p) => {
-        m = m._children[p]
-
-        return m
-      })
-    },
-    registerModule() {
-      this.$store.registerModule(this.namespace, {
-        namespaced: true,
-        state: areaGraphStore.areaGraphState(),
-        actions: areaGraphStore.areaGraphActions(this.fetch),
-        mutations: areaGraphStore.areaGraphMutations()
       })
     },
     onTimeRangeChanged(newTimeRange) {

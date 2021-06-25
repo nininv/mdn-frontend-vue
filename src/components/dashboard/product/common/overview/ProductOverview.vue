@@ -29,7 +29,7 @@
             </v-tooltip>
           </v-list-item-avatar>
         </v-list-item>
-        
+
         <v-card-subtitle>
           <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
           <div>{{ overview.machineName }}</div>
@@ -126,10 +126,12 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import overviewStore from './store'
+import Store from './store'
+import dynamicStoreMixin from '../dynamicStoreMixin'
 
 export default {
   name: 'Overview',
+  mixins: [dynamicStoreMixin],
   props: {
     namespace: {
       type: String,
@@ -179,25 +181,27 @@ export default {
     ...mapState({
       user: (state) => state.auth.user
     }),
+    Store() {
+      // dynamic vuex store generators for the mixin
+      return Store
+    },
+    state() {
+      return this.$store.state[this.namespace]
+    },
     isLoading() {
-      return this.$store.state[this.namespace]['isLoading']
+      return this.state['isLoading']
     },
     overview() {
-      return this.$store.state[this.namespace]['overview']
+      return this.state['overview']
     },
     machineImage() {
       return this.overview.machineId ? require(`@/assets/imgs/${this.overview.machineId}.png`) : ''
     },
     isSavedMachine() {
-      return this.$store.state[this.namespace]['isSavedMachine']
+      return this.state['isSavedMachine']
     },
     isSaveMachineLoading() {
-      return this.$store.state[this.namespace]['isSaveMachineLoading']
-    }
-  },
-  created() {
-    if (!this.isModuleCreated([this.namespace])) {
-      this.registerModule()
+      return this.state['isSaveMachineLoading']
     }
   },
   mounted() {
@@ -216,23 +220,6 @@ export default {
         return dispatch(this.namespace + '/saveMachine', payload)
       }
     }),
-    isModuleCreated(path) {
-      let m = this.$store._modules.root
-
-      return path.every((p) => {
-        m = m._children[p]
-
-        return m
-      })
-    },
-    registerModule() {
-      this.$store.registerModule(this.namespace, {
-        namespaced: true,
-        state: overviewStore.overviewState(),
-        actions: overviewStore.overviewActions(this.fetch),
-        mutations: overviewStore.overviewMutations()
-      })
-    },
     handleRequestService() {
       const sendEmail = process.env.VUE_APP_SERVICE_REQUEST_SEND_EMAIL
 
