@@ -12,7 +12,7 @@ const module = {
     recipeValues: [],
     recipeMode: 0,
     ezTypes: [],
-    
+
     loadingHopperStables: false,
     hopperStables: [],
 
@@ -136,7 +136,7 @@ const module = {
 
   getters: {
     timeRangeLabel: (state, getters, rootState) => (timeRange) => {
-      const timeRangeOptions = rootState.machines.timeRageOptions
+      const { timeRangeOptions } = rootState.machines
 
       if (timeRange.timeRangeOption === 'custom') {
         return `${timeRange.dateFrom} ${timeRange.timeFrom} ~ ${timeRange.dateTo} ${timeRange.timeTo}`

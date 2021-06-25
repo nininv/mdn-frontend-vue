@@ -14,7 +14,7 @@ const module = {
     isAlarmsReportLoading: false,
     alarmsReports: {},
     alarmsCount: 0,
-    timeRageOptions: [
+    timeRangeOptions: [
       {
         label: 'Last 30 minutes',
         value: 'last30Min'
@@ -306,7 +306,7 @@ const module = {
   getters: {
     timeRangeLabel(state) {
       if (state.timeRange !== 'custom') {
-        return state.timeRageOptions.find((range) => range.value === state.timeRange).label
+        return state.timeRangeOptions.find((range) => range.value === state.timeRange).label
       } else {
         return state.dateFrom + ' ' + state.timeFrom + ' ~ ' + state.dateTo + ' ' + state.timeTo
       }

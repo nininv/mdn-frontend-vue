@@ -43,13 +43,13 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <time-range-chooser
+    <time-range-chooser3
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
     >
-    </time-range-chooser>
+    </time-range-chooser3>
   </v-card>
 </template>
 
@@ -63,13 +63,13 @@
 |
 */
 import { mapState, mapGetters, mapActions } from 'vuex'
-import TimeRangeChooser from '../../../TimeRangeChooser3'
+import TimeRangeChooser3 from '../../../TimeRangeChooser3'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   components: {
-    TimeRangeChooser
+    TimeRangeChooser3
   },
   props: {
     serialNumber: {

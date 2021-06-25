@@ -9,7 +9,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions.slice(0, 5)"
+                v-for="(item, i) in timeRangeOptions.slice(0, 5)"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -21,7 +21,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions.slice(5, 10)"
+                v-for="(item, i) in timeRangeOptions.slice(5, 10)"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -187,7 +187,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('machines', ['timeRageOptions'])
+    ...mapState('machines', ['timeRangeOptions'])
   },
   watch: {
     timeRange (newValue) {

@@ -21,7 +21,7 @@ const extendedMachines = (state) => {
 
 const timeRangeLabel = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
-    const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
+    const tr = state.timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption)
 
     return tr ? tr.label : ''
   } else {
@@ -31,7 +31,7 @@ const timeRangeLabel = (state) => (timeRange) => {
 
 const timeRangeDataToolLabel = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
-    const tr = state.timeRageOptions.find((item) => item.value === timeRange.timeRangeOption)
+    const tr = state.timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption)
 
     return tr ? tr.label : ''
   } else {

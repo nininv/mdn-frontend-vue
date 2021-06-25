@@ -25,7 +25,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions"
+                v-for="(item, i) in timeRangeOptions"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -89,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('machines', ['timeRageOptions']),
+    ...mapState('machines', ['timeRangeOptions']),
     ...mapGetters('machines', ['timeRangeFromTo']),
     groupedTags() {
       if (this.noAlarms) {

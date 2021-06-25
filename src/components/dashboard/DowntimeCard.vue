@@ -33,13 +33,13 @@
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
-      <time-range-chooser
+      <time-range-chooser4
         :dlg="showTimeRangeChooser"
         :time-range="selectedTimeRange"
         @close="showTimeRangeChooser = false"
         @submit="onTimeRangeChanged"
       >
-      </time-range-chooser>
+      </time-range-chooser4>
     </div>
     <div v-else>
       <v-card-title>
@@ -80,7 +80,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import TimeRangeChooser from './TimeRangeChooser4'
+import TimeRangeChooser4 from './TimeRangeChooser4'
 import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
@@ -110,7 +110,7 @@ const seriesColors = [{
 
 export default {
   components: {
-    TimeRangeChooser,
+    TimeRangeChooser4,
     AvailabilityPlanTimeForm
   },
   data() {
