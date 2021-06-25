@@ -288,14 +288,19 @@ export default {
       this.initAcsDashboard()
     this.getLocations()
     this.getZones()
+
     await this.getDeviceConfiguration(this.$route.params.productId)
+
+    const now = new Date().getTime()
+    const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
       machine_id: this.$route.params.configurationId,
       serial_number: this.$route.params.productId,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
 
     this.getDowntimeByTypeGraphSeries({
@@ -303,8 +308,8 @@ export default {
       location_id: 0,
       machine_id: this.$route.params.configurationId,
       serial_number: this.$route.params.productId,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
 
     this.getDowntimeByReasonGraphSeries({
@@ -312,8 +317,8 @@ export default {
       location_id: 0,
       machine_id: this.$route.params.configurationId,
       serial_number: this.$route.params.productId,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
     if (!this.error) {
       this.getNotes(this.$route.params.productId)

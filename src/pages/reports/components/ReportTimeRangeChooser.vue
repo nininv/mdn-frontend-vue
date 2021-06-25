@@ -146,7 +146,7 @@
 <script>
 import { mapState } from 'vuex'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   props: {
@@ -155,8 +155,8 @@ export default {
       default: () => {
         return {
           timeRangeOption: 'last24Hours',
-          dateFrom: dateTimeIsoString,
-          dateTo: dateTimeIsoString,
+          dateFrom: TODAY,
+          dateTo: TODAY,
           timeFrom: '00:00',
           timeTo: '00:00'
         }

@@ -111,25 +111,28 @@ export default {
       })
     }
 
+    const now = new Date().getTime()
+    const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
 
     this.getDowntimeByTypeGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
 
     this.getDowntimeByReasonGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      to: new Date().getTime(),
-      from: new Date().getTime() - 60 * 60 * 24 * 1000
+      from: nowMinus24Hours,
+      to: now
     })
   },
   methods: {
@@ -163,28 +166,31 @@ export default {
         })
       }
 
+      const now = new Date().getTime()
+      const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+
       this.getDowntimeGraphData({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        to: new Date().getTime(),
-        from: new Date().getTime() - 60 * 60 * 24 * 1000
+        from: nowMinus24Hours,
+        to: now
       })
 
       this.getDowntimeByTypeGraphSeries({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        to: new Date().getTime(),
-        from: new Date().getTime() - 60 * 60 * 24 * 1000
+        from: nowMinus24Hours,
+        to: now
       })
 
       this.getDowntimeByReasonGraphSeries({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        to: new Date().getTime(),
-        from: new Date().getTime() - 60 * 60 * 24 * 1000
+        from: nowMinus24Hours,
+        to: now
       })
     }
   }

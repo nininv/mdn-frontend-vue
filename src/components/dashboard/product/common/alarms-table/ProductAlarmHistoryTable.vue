@@ -65,7 +65,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import TimeRangeChooser from '../../../TimeRangeChooser3'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   components: {
@@ -85,8 +85,8 @@ export default {
     return {
       timeRange: {
         timeRangeOption: 'last24Hours',
-        dateFrom: dateTimeIsoString,
-        dateTo: dateTimeIsoString,
+        dateFrom: TODAY,
+        dateTo: TODAY,
         timeFrom: '00:00',
         timeTo: '00:00'
       },
@@ -111,17 +111,17 @@ export default {
       if (this.selectedTimeRange && this.selectedTimeRange.timeRangeOption !== 'custom') {
         const tR = {
           timeRangeOption: this.selectedTimeRange.timeRangeOption,
-          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+          dates: [TODAY, TODAY]
         }
 
         const from = new Date(this.timeRangeFromTo(tR).from)
         const to = new Date(this.timeRangeFromTo(tR).to)
 
         const timeRange = {
-          dateFrom: from.toLocaleDateString(),
-          dateTo: to.toLocaleDateString(),
-          timeFrom: from.toLocaleTimeString(),
-          timeTo: to.toLocaleTimeString()
+          dateFrom: from.toLocaleDateString('en-US'),
+          dateTo: to.toLocaleDateString('en-US'),
+          timeFrom: from.toLocaleTimeString('en-US'),
+          timeTo: to.toLocaleTimeString('en-US')
         }
 
         return timeRange
@@ -138,11 +138,14 @@ export default {
     }
   },
   mounted() {
+    const now = new Date().getTime()
+    const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+
     this.getAlarmHistory({
       serialNumber: this.serialNumber,
       machineId: this.machineId,
-      from: new Date().getTime() - 24 * 60 * 60 * 1000,
-      to: new Date().getTime()
+      from: nowMinus24Hours,
+      to: now
     })
   },
   methods: {
@@ -152,7 +155,7 @@ export default {
     getTimeFromTimestamp(timestamp) {
       const date = timestamp !== -1 ? new Date(timestamp) : ''
 
-      return date !== '' ? `${date.toLocaleDateString()} ${date.toLocaleTimeString()}` : ''
+      return date !== '' ? `${date.toLocaleDateString('en-US')} ${date.toLocaleTimeString('en-US')}` : ''
     },
     onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange

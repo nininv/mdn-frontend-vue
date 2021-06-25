@@ -54,7 +54,7 @@
 <script>
 import { mapState } from 'vuex'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   props: {
@@ -69,7 +69,7 @@ export default {
       timeFromMenu: false,
       dateToMenu: false,
       timeToMenu: false,
-      locDateFrom: dateTimeIsoString,
+      locDateFrom: TODAY,
       planTime: 0
     }
   },

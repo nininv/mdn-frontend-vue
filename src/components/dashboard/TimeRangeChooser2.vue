@@ -53,8 +53,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
-
 export default {
   props: {
     dlg: {
@@ -99,13 +97,13 @@ export default {
       } else {
         const ts = this.tags
         const importantTags = this.tags.filter((t) => t.divided_by)
-      
+
         ts.splice(importantTags.length, 0, { divider: true })
         ts.splice(importantTags.length + 1, 0, { header: 'Alarms' })
 
         return ts
       }
-      
+
     }
   },
   watch: {
@@ -117,9 +115,10 @@ export default {
     },
     locTimeRangeOption (newValue) {
       if (newValue !== 'custom') {
+        const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
         const tR = {
           timeRangeOption: newValue,
-          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+          dates: [TODAY, TODAY]
         }
 
         this.dates = [

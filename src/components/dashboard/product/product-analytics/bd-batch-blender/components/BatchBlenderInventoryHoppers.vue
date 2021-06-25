@@ -72,7 +72,7 @@ export default {
     getClearedTime(timestamp) {
       const date = new Date(timestamp)
 
-      return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+      return `${date.toLocaleDateString('en-US')} ${date.toLocaleTimeString('en-US')}`
     }
   }
 }

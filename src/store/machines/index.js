@@ -2,6 +2,8 @@ import actions from './actions'
 import mutations from './mutations'
 import getters from './getters'
 
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+
 const state = {
   machines: [],
   reportMachines: [],
@@ -16,7 +18,7 @@ const state = {
 
   isSavedMachine: false,
   isReportLoading: false,
-  
+
   // Accumeter Ovation Continuous Blender
   actualRecipe2Values: [],
   targetRecipe2Values: [],
@@ -149,11 +151,11 @@ const state = {
   selectedTags: [],
   dataToolTimeRange: {
     timeRangeOption: 'last24Hours',
-    dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+    dates: [TODAY, TODAY]
   },
   hopperSettingTimeRange: {
     timeRangeOption: 'last24Hours',
-    dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+    dates: [TODAY, TODAY]
   },
   selectedHoppers: [{
     id: 0, name: 'Hopper 1'

@@ -1,6 +1,6 @@
 import alarmAPI from '../../services/api/alarm'
-const now = new Date('YYYY-MM-DD')
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 const module = {
   namespaced: true,
@@ -64,8 +64,8 @@ const module = {
     alamrsPerMachine: [],
 
     timeRange: 'last24Hours',
-    dateFrom: dateTimeIsoString,
-    dateTo: dateTimeIsoString,
+    dateFrom: TODAY,
+    dateTo: TODAY,
     timeFrom: '00:00',
     timeTo: '00:00',
 
@@ -97,7 +97,7 @@ const module = {
 
     async getAlarmsByMachine({ commit }) {
       commit('SET_LOADING_ALARMS_PER_MACHINE', true)
-      
+
       try {
         const response = await alarmAPI.getAlarmsByMachine()
 
@@ -180,7 +180,7 @@ const module = {
       } else {
         data.machine_name = state.selectedMachineName['Alarms Distribution']
       }
-      
+
       try {
         const response = await alarmAPI.getAlarmsDistributionByMachine(data)
 
@@ -193,7 +193,7 @@ const module = {
     async getAlarmsAmountPerMachineByCompanyId({ commit }, data ) {
       try {
         const response = await alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
-        
+
         commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.results)
       } catch (error) {
         console.log(error)
@@ -283,7 +283,7 @@ const module = {
       state.timeTo = params.timeTo
       state.timeFrom = params.timeFrom
     },
-    
+
     ALARMS_LOADING(state) {
       state.isLoading = true
     },
