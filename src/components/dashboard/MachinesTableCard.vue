@@ -64,22 +64,25 @@
         <!-- -->
         
         <template v-slot:item.status="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-list-item-avatar
-                class="mr-1"
-                :color="getColor(item)"
-                size="25"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon small>
-                  {{ getIcon(item) }}
-                </v-icon>
-              </v-list-item-avatar>
-            </template>
-            <span>{{ getText(item) }}</span>
-          </v-tooltip>
+          <v-chip color="grey lighten-4" dense>
+            <v-tooltip v-for="(status, index) in item.status" :key="index" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-avatar
+                  class="ml-0 mr-0"
+                  v-bind="attrs"
+                  :color="getColor(status)"
+                  v-on="on"
+                >
+                  <v-icon
+                    small
+                  >
+                    {{ getIcon(status) }}
+                  </v-icon>
+                </v-avatar>
+              </template>
+              <span>{{ getText(status) }}</span>
+            </v-tooltip>
+          </v-chip>
         </template>
         
         <template v-slot:item.configuration="{ item }">
@@ -193,25 +196,45 @@ export default {
         'Zones'
       ],
       deviceStatus: {
-        running: {
+        machineRunning: {
           color: 'green',
-          text: 'Running',
+          text: 'Machine Running',
           icon: '$mdi-check-circle-outline'
         },
         routerNotConnected: {
           color: 'yellow',
-          text: 'Router Not Connected',
+          text: 'Router No Communication',
           icon: '$mdi-wifi-off'
         },
-        shutOff: {
-          color: 'red',
-          text: 'Shut Off',
+        machineStopped: {
+          color: 'grey',
+          text: 'Machine Stopped',
           icon: '$mdi-block-helper'
         },
+        machineIdle: {
+          color: 'grey',
+          text: 'Machine Idle - No Demand',
+          icon: '$mdi-block-helper'
+        },
+        machineStoppedActiveAlarm: {
+          color: 'red',
+          text: 'Machine Stopped - Active Alarm',
+          icon: '$mdi-block-helper'
+        },
+        machineRunningAlert: {
+          color: 'yellow',
+          text: 'Machine Running - Alert',
+          icon: '$mdi-alert-outline'
+        },
         plcNotConnected: {
-          color: 'orange',
-          text: 'PLC Not Connected',
+          color: 'red',
+          text: 'PLC No Communication',
           icon: '$mdi-database-remove'
+        },
+        machineRunningThreshold: {
+          color: 'red',
+          text: 'Machine Running - Threshold Alert',
+          icon: '$mdi-alert-outline'
         }
       },
       chartOptions: {
@@ -338,14 +361,14 @@ export default {
       getDevicesAnalytics: 'devices/getDevicesAnalytics'
     }),
     open(item) { },
-    getColor(item) {
-      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].color : ''
+    getColor(status) {
+      return this.deviceStatus[status] ? this.deviceStatus[status].color : ''
     },
-    getIcon(item) {
-      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
+    getIcon(status) {
+      return this.deviceStatus[status] ? this.deviceStatus[status].icon : ''
     },
-    getText(item) {
-      return this.deviceStatus[item.status] ? this.deviceStatus[item.status].text : ''
+    getText(status) {
+      return this.deviceStatus[status] ? this.deviceStatus[status].text : ''
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
