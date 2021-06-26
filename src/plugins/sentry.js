@@ -4,7 +4,7 @@ import { Integrations } from '@sentry/tracing'
 
 Sentry.init({
   Vue,
-  dsn: 'https://3b9791a8547949d89f696bffb6ab47ee@o500701.ingest.sentry.io/5580915',
+  dsn: 'https://6d16e0d1f9784b558f91c327fe3b4604@o101010.ingest.sentry.io/5835137',
   autoSessionTracking: true,
   integrations: [
     new Integrations.BrowserTracing()
