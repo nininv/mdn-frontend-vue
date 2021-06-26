@@ -1,4 +1,5 @@
 import alarmAPI from '../../services/api/alarm'
+import * as Sentry from '@sentry/vue'
 const now = new Date('YYYY-MM-DD')
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
@@ -79,7 +80,7 @@ const module = {
 
         commit('SET_ALARMS_OVERVIEW', response)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       }
     },
@@ -90,20 +91,20 @@ const module = {
 
         commit('SET_ALARMS_PER_CUSTOMER_CONFIGURATION', response.alarm_types)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       }
     },
 
     async getAlarmsByMachine({ commit }) {
       commit('SET_LOADING_ALARMS_PER_MACHINE', true)
-      
+
       try {
         const response = await alarmAPI.getAlarmsByMachine()
 
         commit('SET_ALARMS_PER_MACHINE', response.devices)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_ALARMS_PER_MACHINE', false)
@@ -118,7 +119,7 @@ const module = {
         commit('SET_ALARMS', response.alarms)
         commit('ALARMS_LOADED')
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -128,7 +129,7 @@ const module = {
 
         commit('SET_ALARM_TYPES', response.alarm_types)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -138,7 +139,7 @@ const module = {
 
         commit('SET_ALARMS', response.alarms)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -148,7 +149,7 @@ const module = {
 
         commit('SET_SEVERITY', response.severity)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -167,7 +168,7 @@ const module = {
 
         commit('SET_ALARMS_PER_TYPE', response.alarms)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -180,23 +181,23 @@ const module = {
       } else {
         data.machine_name = state.selectedMachineName['Alarms Distribution']
       }
-      
+
       try {
         const response = await alarmAPI.getAlarmsDistributionByMachine(data)
 
         commit('SET_ALARMS_DISTRIBUTION', response.results)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
     async getAlarmsAmountPerMachineByCompanyId({ commit }, data ) {
       try {
         const response = await alarmAPI.getAlarmsAmountPerMachineByCompanyId(data)
-        
+
         commit('SET_ALARMS_AMOUNT_PER_MACHINE', response.results)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -207,7 +208,7 @@ const module = {
 
         commit('SET_ALARMS_REPORTS', response)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_ALARMS_REPORTS_LOADING', false)
       }
@@ -283,7 +284,7 @@ const module = {
       state.timeTo = params.timeTo
       state.timeFrom = params.timeFrom
     },
-    
+
     ALARMS_LOADING(state) {
       state.isLoading = true
     },

@@ -1,4 +1,5 @@
 import configurationAPI from '../../services/api/configuration'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -19,7 +20,7 @@ const module = {
 
         commit('SET_CONFIGURATIONS', response.configurations)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_CONFIGURATIONS', false)
@@ -31,7 +32,7 @@ const module = {
 
         commit('SET_CONFIGURATION', response.configuration)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -43,7 +44,7 @@ const module = {
 
         dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SAVING_CONFIGURATION', false)

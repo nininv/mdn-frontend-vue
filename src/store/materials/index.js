@@ -1,4 +1,5 @@
 import api from '../../services/api/material'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -31,7 +32,7 @@ const module = {
 
         commit('SET_DATA', response.materials)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_MATERIALS', false)
@@ -66,6 +67,7 @@ const module = {
         dispatch('app/showError', {
           error
         }, { root: true })
+        Sentry.captureException(error)
 
         throw error
       } finally {
@@ -84,6 +86,7 @@ const module = {
         dispatch('app/showError', {
           error
         }, { root: true })
+        Sentry.captureException(error)
 
         throw error
       } finally {
@@ -99,7 +102,7 @@ const module = {
 
         commit('SET_MATERIAL_LOCATIONS', response.locations)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_MATERIAL_LOCATIONS', false)
@@ -116,6 +119,7 @@ const module = {
         dispatch('app/showError', {
           error
         }, { root: true })
+        Sentry.captureException(error)
 
         throw error
       } finally {
@@ -134,6 +138,7 @@ const module = {
         dispatch('app/showError', {
           error
         }, { root: true })
+        Sentry.captureException(error)
 
         throw error
       } finally {
@@ -152,6 +157,7 @@ const module = {
         dispatch('app/showError', {
           error
         }, { root: true })
+        Sentry.captureException(error)
 
         throw error
       } finally {
@@ -167,7 +173,7 @@ const module = {
 
         commit('SET_BLENDERS', response)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_LOADING_BLENDERS', false)
@@ -182,7 +188,7 @@ const module = {
 
         commit('SET_REPORTS', response.tracks)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_LOADING_REPORTS', false)
@@ -197,7 +203,7 @@ const module = {
 
         dispatch('app/showSuccess', response, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_DELETING_REPORT', false)
@@ -208,9 +214,7 @@ const module = {
       commit('SET_EXPORTING_REPORT', true)
 
       try {
-        const response = await api.exportReport(payload)
-
-        return response
+        return await api.exportReport(payload)
       } catch (error) {
         dispatch('app/showError', {
           'message': 'Exporting report failed'
@@ -235,7 +239,7 @@ const module = {
           error: { message: error }
         }, { root: true })
 
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_LOADING_REPORTS', false)
@@ -246,11 +250,9 @@ const module = {
       commit('SET_EXPORTING_REPORT', true)
 
       try {
-        const response = await api.exportSystemInventoryReport(payload)
-
-        return response
+        return await api.exportSystemInventoryReport(payload)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_EXPORTING_REPORT', false)
