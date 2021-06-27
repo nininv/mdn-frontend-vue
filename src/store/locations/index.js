@@ -32,7 +32,7 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await locationAPI.addLocation(data)
+        await locationAPI.addLocation(data)
       } catch (error) {
         Sentry.captureException(error)
       } finally {
@@ -45,7 +45,7 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await locationAPI.updateLocation(data)
+        await locationAPI.updateLocation(data)
       } catch (error) {
         Sentry.captureException(error)
       } finally {

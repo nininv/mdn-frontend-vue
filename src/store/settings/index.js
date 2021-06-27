@@ -44,7 +44,7 @@ const module = {
       commit('BUTTON_LOAD', 'RESET')
 
       try {
-        const response = await settingAPI.resetSettings()
+        await settingAPI.resetSettings()
       } catch (error) {
         Sentry.captureException(error)
       } finally {

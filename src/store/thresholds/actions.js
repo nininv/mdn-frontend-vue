@@ -51,7 +51,7 @@ const getThresholds = async({ commit }) => {
 const changeThresholdStatus = async({ commit }, payload) => {
   commit('SET_LOADING', true)
   try {
-    const response = await thresholdAPI.changeThresholdStatus(payload)
+    await thresholdAPI.changeThresholdStatus(payload)
   } catch (error) {
     Sentry.captureException(error)
   } finally {

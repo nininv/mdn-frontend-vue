@@ -32,7 +32,7 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await zoneAPI.addZone(data)
+        await zoneAPI.addZone(data)
       } catch (error) {
         Sentry.captureException(error)
       } finally {

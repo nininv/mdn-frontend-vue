@@ -161,8 +161,7 @@ const module = {
       commit('ASSIGN_LOAD')
 
       try {
-        const response = await deviceAPI.deviceAssigned(data)
-
+        await deviceAPI.deviceAssigned(data)
         commit('DEVICE_ASSIGN', data)
       } catch (error) {
         console.log(error)
@@ -483,7 +482,7 @@ const module = {
       commit('SET_ADDING_AVAILABILITY_PLAN_TIME', true)
 
       try {
-        const response = await deviceAPI.setAvailabilityPlanTime(data)
+        await deviceAPI.setAvailabilityPlanTime(data)
       } catch (error) {
         Sentry.captureException(error)
       } finally {

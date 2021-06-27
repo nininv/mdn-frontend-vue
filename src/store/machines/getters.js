@@ -1,8 +1,6 @@
 const selectedMachine = (state) => {
   if (state.selectedId) {
-    const _machine = state.data.find((machine) => machine.id === state.selectedId)
-
-    return _machine
+    return state.data.find((machine) => machine.id === state.selectedId)
   }
 
   return {}
