@@ -32,9 +32,8 @@ API.interceptors.response.use((response) => {
     if (router.history.current.name === 'auth-signin') {
       return Promise.reject(error)
     }
-    else {
-      return window.location = '/auth/signin'
-    }
+
+    return window.location = '/auth/signin'
   } else {
     return Promise.reject(error)
   }
