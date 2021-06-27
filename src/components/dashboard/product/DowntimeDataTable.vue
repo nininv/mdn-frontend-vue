@@ -169,12 +169,7 @@ export default {
       isUpdatingDowntime: (state) => state.devices.isUpdatingDowntime
     }),
     totalItems () {
-      if (this.downtimeTableData.pagination) {
-        return this.downtimeTableData.pagination.totalItems
-      }
-      else {
-        return 0
-      }
+      return this.downtimeTableData.pagination ? this.downtimeTableData.pagination.totalItems : 0
     },
     routeParams() {
       return {

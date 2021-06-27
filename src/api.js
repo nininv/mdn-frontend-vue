@@ -30,11 +30,7 @@ API.interceptors.response.use((response) => {
 
     store.commit('auth/SET_LOGOUT_AUTH', { root: true })
 
-    if (router.history.current.name === 'auth-signin') {
-      return Promise.reject(error)
-    } else {
-      return window.location = '/auth/signin'
-    }
+    return (router.history.current.name === 'auth-signin') ? Promise.reject(error) : window.location = '/auth/signin'
   } else {
     return Promise.reject(error)
   }

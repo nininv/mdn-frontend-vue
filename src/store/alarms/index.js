@@ -306,11 +306,7 @@ const module = {
 
   getters: {
     timeRangeLabel(state) {
-      if (state.timeRange !== 'custom') {
-        return state.timeRageOptions.find((range) => range.value === state.timeRange).label
-      } else {
-        return state.dateFrom + ' ' + state.timeFrom + ' ~ ' + state.dateTo + ' ' + state.timeTo
-      }
+      return state.timeRange !== 'custom' ? state.timeRageOptions.find((range) => range.value === state.timeRange).label : state.dateFrom + ' ' + state.timeFrom + ' ~ ' + state.dateTo + ' ' + state.timeTo
     }
   }
 }

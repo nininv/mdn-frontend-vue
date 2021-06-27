@@ -251,11 +251,7 @@ export default {
       return this.deviceStatus[item.status] ? this.deviceStatus[item.status].icon : ''
     },
     getCapacityUtilizationValue(item) {
-      if (item[0].length === 0) {
-        return 'No Data From Device'
-      } else {
-        return `${item[0][item[0].length - 1][1]} %`
-      }
+      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
