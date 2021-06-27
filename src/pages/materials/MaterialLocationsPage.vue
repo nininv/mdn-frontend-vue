@@ -347,7 +347,7 @@ export default {
       if (this.$refs.editForm.validate()) {
         try {
           this.editedIndex > -1 ? await this.updateMaterial({ id: this.editedItem.id, material: this.editedItem.material, location: this.editedItem.location }) : await this.addMaterial({ material: this.editedItem.material, location: this.editedItem.location })
-          this.getMaterials()
+          await this.getMaterials()
           this.close()
         } catch (err) {
           Sentry.captureException(err)
