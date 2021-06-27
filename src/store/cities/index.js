@@ -1,4 +1,5 @@
 import cityAPI from '../../services/api/city'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -17,7 +18,7 @@ const module = {
 
         commit('SET_DATA', response)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_CITIES', false)

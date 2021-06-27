@@ -62,7 +62,7 @@
         </template>
 
         <!-- -->
-        
+
         <template v-slot:item.status="{ item }">
           <v-chip color="grey lighten-4" dense>
             <v-tooltip v-for="(status, index) in item.status" :key="index" bottom>
@@ -84,7 +84,7 @@
             </v-tooltip>
           </v-chip>
         </template>
-        
+
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
@@ -413,11 +413,7 @@ export default {
     },
 
     getCapacityUtilizationValue(item) {
-      if (item[0].length === 0) {
-        return 'No Data From Device'
-      } else {
-        return `${item[0][item[0].length - 1][1]} %`
-      }
+      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
     },
 
     getSeriesOptions(series) {
@@ -451,7 +447,7 @@ export default {
 
         return sum
       })
-      
+
       return sum === 0
     }
   }

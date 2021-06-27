@@ -78,7 +78,7 @@ export default {
       else if (value === 1) return HEATER_STATES['LOW']
       else if (value === 2) return HEATER_STATES['HIGH']
       else if (value === 3) return HEATER_STATES['AUTO_HEAT']
-      
+
       return ''
     },
     backgroundColor(value) {
@@ -92,8 +92,7 @@ export default {
       return state ? state.circleColor : ''
     },
     textColor(value) {
-      if (value === 0) return '#9e9e9e'
-      else return '#193d66'
+      return (value === 0) ? '#9e9e9e' : '#193d66'
     },
     valueText(value) {
       const state = this.getHeaterState(value)

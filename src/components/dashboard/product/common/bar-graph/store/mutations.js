@@ -5,7 +5,7 @@ export default () => ({
   LOADED: (state, data) => {
     state.items = data.items
     state.unit = data.unit
-    state.isLoading = false,
+    state.isLoading = false
     state.hopperCount = data.hopperCount
   }
 })

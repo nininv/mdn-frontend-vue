@@ -1,5 +1,6 @@
 import companyAPI from '../../services/api/company'
 import router from '../../router'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -28,7 +29,7 @@ const module = {
 
         commit('SET_CUSTOMER_ADMINS', response.data.customer_admins)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
 
       commit('TABLE_LOADED')
@@ -45,7 +46,7 @@ const module = {
 
         commit('SET_COMPANIES', response.data.companies)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
     },
 
@@ -76,6 +77,8 @@ const module = {
             })
           }
         }
+        Sentry.captureException(error)
+
       }
 
       commit('BUTTON_CLEAR')
@@ -91,7 +94,7 @@ const module = {
         commit('SET_COMPANY_PROFILE', response.data.profile)
         commit('cities/SET_DATA', response.data.cities, { root: true } )
       } catch (error) {
-        console.log(error.response.data)
+        Sentry.captureException(error)
       }
     },
 
@@ -121,6 +124,7 @@ const module = {
             })
           }
         }
+        Sentry.captureException(error)
       }
 
       commit('BUTTON_CLEAR')

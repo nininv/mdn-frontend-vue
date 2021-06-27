@@ -1,5 +1,6 @@
 import thresholdAPI from '../../services/api/thresholds'
 import machineAPI from '../../services/api/machine'
+import * as Sentry from '@sentry/vue'
 
 const getMachineTags = async({ commit }, payload) => {
   commit('SET_GET_MACHINE_TAGS_LOADING', true)
@@ -8,7 +9,7 @@ const getMachineTags = async({ commit }, payload) => {
 
     commit('SET_MACHINE_TAGS', response.tags[0].tags)
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_GET_MACHINE_TAGS_LOADING', false)
   }
@@ -21,14 +22,14 @@ const addThreshold = async({ commit, dispatch }, payload) => {
 
     if (response.status === 'success') {
       dispatch('app/showSuccess', response.message, { root: true })
-    } 
+    }
 
     if (response.status === 'fail') {
       dispatch('app/showError', { message: 'Failed: ', error: { message: response.message } }, { root: true })
     }
 
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING', false)
   }
@@ -41,7 +42,7 @@ const getThresholds = async({ commit }) => {
 
     commit('SET_THRESHOLDS', response.conditions)
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING', false)
   }
@@ -50,9 +51,9 @@ const getThresholds = async({ commit }) => {
 const changeThresholdStatus = async({ commit }, payload) => {
   commit('SET_LOADING', true)
   try {
-    const response = await thresholdAPI.changeThresholdStatus(payload)
+    await thresholdAPI.changeThresholdStatus(payload)
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING', false)
   }
@@ -69,7 +70,7 @@ const deleteThreshold = async({ commit, dispatch }, payload) => {
       dispatch('app/showError', response.message, { root: true })
     }
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_DELETE_LOADING', false)
   }
@@ -83,7 +84,7 @@ const updateThreshold = async({ commit, dispatch }, payload) => {
     dispatch('app/showSuccess', response.message, { root: true })
 
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_UPDATE_LOADING', false)
   }
@@ -96,7 +97,7 @@ const getActiveThresholds = async({ commit }) => {
 
     commit('SET_THRESHOLDS', response.conditions)
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING', false)
   }
@@ -109,7 +110,7 @@ const getApproachingThresholds = async({ commit }) => {
 
     commit('SET_APPROACHING_THRESHOLDS', response.conditions)
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING', false)
   }
@@ -122,7 +123,7 @@ const clearThresholds = async({ commit, dispatch }, payload) => {
 
     dispatch('app/showSuccess', response.message, { root: true })
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_UPDATE_LOADING', false)
   }
@@ -135,7 +136,7 @@ const clearApproachingThresholds = async({ commit, dispatch }, payload) => {
 
     dispatch('app/showSuccess', response.message, { root: true })
   } catch (error) {
-    throw new Error(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_UPDATE_LOADING', false)
   }

@@ -1,4 +1,5 @@
 import noteAPI from '../../services/api/note'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -14,7 +15,7 @@ const module = {
 
         commit('SET_DATA', response.notes)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -26,7 +27,7 @@ const module = {
 
         commit('SET_DATA', response.notes)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_IS_NOTE_ADDING', false)
       }

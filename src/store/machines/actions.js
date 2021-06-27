@@ -1,5 +1,6 @@
 import machineAPI from '../../services/api/machine'
 import companyAPI from '../../services/api/company'
+import * as Sentry from '@sentry/vue'
 
 const initAcsDashboard = async ({ commit, state }) => {
   try {
@@ -10,7 +11,7 @@ const initAcsDashboard = async ({ commit, state }) => {
       commit('SET_SELECTED_COMPANY', { id: 0, name: 'All' })
     }
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   }
 }
 
@@ -26,7 +27,7 @@ const getSystemStates = async ({ state, commit }, id) => {
 
     commit('SET_SYSTEM_STATES', response.machine_states)
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_SYSTEM_STATES', false)
   }
@@ -39,7 +40,7 @@ const getWeeklyRunningHours = async ({ commit }, id) => {
 
     commit('SET_WEEKLY_RUNNING_HOURS', response.hours)
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_WEEKLY_RUNNING_HOURS1', false)
   }
@@ -54,7 +55,7 @@ const initLocationsTable = async ({ commit }, data) => {
 
     commit('locations/SET_DATA', response.locations, { root: true })
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_LOCATIONS_TABLE', false)
   }
@@ -69,7 +70,7 @@ const initZonesTable = async ({ commit }, location_id) => {
 
     commit('zones/SET_DATA', response.zones, { root: true })
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_ZONES_TABLE', false)
   }
@@ -84,7 +85,7 @@ const initMachinesTable = async ({ commit }, zone) => {
 
     commit('devices/SET_DATA', response.devices, { root: true })
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_MACHINES_TABLE', false)
   }
@@ -101,7 +102,7 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
     commit('devices/SET_TOTAL_DEVICES', response.devices.total, { root: true })
     commit('devices/SET_PAGE_COUNT', response.devices.last_page, { root: true })
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
   } finally {
     commit('SET_LOADING_MACHINES_TABLE', false)
   }
@@ -119,7 +120,7 @@ const getTags = async ({ state, commit }, machineId) => {
 
 const getDataToolSeries = async ({ state, commit }, payload) => {
   commit('SET_LOADING_DATA_TOOL_SERIES', true)
-  
+
   try {
     const response = await machineAPI.getDataToolSeries(payload)
 
@@ -240,7 +241,7 @@ const deleteReport = async ({ commit, dispatch }, payload) => {
     } else {
       this.$store.dispatch('app/showError', { message: 'Error: ', error: { message: response.message } }, { root: true })
     }
-    
+
     commit('SET_REPORT_LIST', response.reports)
   } catch (error) {
     throw new Error(error)

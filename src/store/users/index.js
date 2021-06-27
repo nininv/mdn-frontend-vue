@@ -1,5 +1,6 @@
 import userAPI from '../../services/api/user'
 import router from '../../router'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -20,7 +21,7 @@ const module = {
 
         commit('SET_DATA', response.data.users)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('TABLE_LOAD', false)
       }
@@ -32,7 +33,7 @@ const module = {
         commit('SET_USER', response.data.user)
         commit('cities/SET_DATA', response.data.cities, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     async addUser({ commit, rootState, dispatch }, data) {
@@ -78,7 +79,7 @@ const module = {
             name: 'users-list'
           })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
 
         if (error.response.status === 422) {
           const errors = Object.values(error.response.data.error).flat()
@@ -107,7 +108,7 @@ const module = {
             name: 'users-list'
           })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }

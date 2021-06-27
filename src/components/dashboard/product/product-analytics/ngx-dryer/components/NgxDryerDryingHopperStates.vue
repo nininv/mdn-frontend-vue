@@ -34,7 +34,7 @@
           </v-row>
         </v-alert>
       </div>
-      
+
     </v-card-text>
   </v-card>
 </template>
@@ -60,7 +60,7 @@ const DRYING_HOPPER_STATES = {
     valueText: 'Enabled'
   },
   ONLINE: {
-    backgroundColor: 'acs-online lighten-4',  
+    backgroundColor: 'acs-online lighten-4',
     circleColor: 'acs-online',
     valueText: 'Online'
   },
@@ -128,8 +128,7 @@ export default {
       return state ? state.circleColor : ''
     },
     textColor(value) {
-      if (value === 0) return '#6c706d'
-      else return '#193d66'
+      return (value === 0) ? '#6c706d' : '#193d66'
     },
     valueText(value) {
       const state = this.getHopperState(value)

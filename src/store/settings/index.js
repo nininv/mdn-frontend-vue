@@ -1,5 +1,6 @@
 import settingAPI from '../../services/api/setting'
 import vuetify from '../../plugins/vuetify'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -43,9 +44,9 @@ const module = {
       commit('BUTTON_LOAD', 'RESET')
 
       try {
-        const response = await settingAPI.resetSettings()
+        await settingAPI.resetSettings()
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -138,7 +139,7 @@ const module = {
         }
 
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     async applyWebsiteColors({
@@ -158,7 +159,7 @@ const module = {
 
         dispatch('app/showSuccess', response.message, { root: true })
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -176,7 +177,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_LOGO_FILE', response.filepath)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOGO_UPLOADING', false)
@@ -194,7 +195,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_IMAGE_FILE', response.filepath)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
 
       commit('SET_IMAGE_UPLOADING', false)
@@ -211,7 +212,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_PAGE_TITLE', response.page_title)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -229,7 +230,7 @@ const module = {
         commit('SET_PRODUCT_NAME', response.product_name)
         commit('SET_PRODUCT_VERSION', response.product_version)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -243,7 +244,7 @@ const module = {
 
         commit('SET_AUTH_BACKGROUND_FILE', response.filepath)
       } catch (error) {
-        console.log('error', error)
+        Sentry.captureException(error)
       }
     }
   },
