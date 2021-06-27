@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from './store'
 import router from './router'
 
+const HTTP_UNAUTHORIZED = 401
 const API = axios.create({
   baseURL: process.env.VUE_APP_SERVER_API_ENDPOINT || '/api',
   // baseURL: 'http://staging.acsgroupds.com/api',
@@ -24,7 +25,7 @@ API.interceptors.request.use(async (config) => {
 API.interceptors.response.use((response) => {
   return response
 }, (error) => {
-  if (error.response.status === 401) {
+  if (error.response.status === HTTP_UNAUTHORIZED) {
 
     localStorage.removeItem('token')
 
