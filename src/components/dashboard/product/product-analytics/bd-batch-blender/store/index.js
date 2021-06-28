@@ -137,7 +137,7 @@ const module = {
 
   getters: {
     timeRangeLabel: (state, getters, rootState) => (timeRange) => {
-      const timeRangeOptions = rootState.machines.timeRageOptions
+      const { timeRangeOptions } = rootState.machines
 
       return (timeRange.timeRangeOption === 'custom') ? `${timeRange.dateFrom} ${timeRange.timeFrom} ~ ${timeRange.dateTo} ${timeRange.timeTo}` : timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption).label
     }

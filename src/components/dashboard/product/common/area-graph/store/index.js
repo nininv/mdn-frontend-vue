@@ -1,9 +1,9 @@
-import areaGraphState from './state'
-import areaGraphActions from './actions'
-import areaGraphMutations from './mutations'
+import generateState from './state'
+import generateActions from './actions'
+import generateMutations from './mutations'
 
 export default {
-  areaGraphState,
-  areaGraphActions,
-  areaGraphMutations
+  generateState,
+  generateActions,
+  generateMutations
 }

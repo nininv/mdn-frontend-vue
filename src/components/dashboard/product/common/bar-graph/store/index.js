@@ -1,9 +1,9 @@
-import barGraphState from './state'
-import barGraphActions from './actions'
-import barGraphMutations from './mutations'
+import generateState from './state'
+import generateActions from './actions'
+import generateMutations from './mutations'
 
 export default {
-  barGraphState,
-  barGraphActions,
-  barGraphMutations
+  generateState,
+  generateActions,
+  generateMutations
 }
