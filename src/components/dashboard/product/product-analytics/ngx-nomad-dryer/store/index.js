@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -9,7 +10,7 @@ const module = {
   },
 
   actions: {
-    async getDryingHopperStates({ state, commit }, payload) {
+    async getDryingHopperStates({ commit }, payload) {
       commit('SET_LOADING_DRYING_HOPPERS', true)
 
       try {
@@ -17,7 +18,7 @@ const module = {
 
         commit('SET_HOPPER_STATES', response.data.states)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DRYING_HOPPERS', false)
       }

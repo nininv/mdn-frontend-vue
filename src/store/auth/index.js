@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import router from '../../router'
 import authAPI from '../../services/api/auth'
 import * as Sentry from '@sentry/vue'

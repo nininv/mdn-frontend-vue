@@ -1,5 +1,6 @@
+import * as Sentry from '@sentry/vue'
 export default (fetch) => {
-  const getSeries = async ({ commit, dispatch, state }, payload) => {
+  const getSeries = async ({ commit }, payload) => {
     commit('SET_LOADING', true)
 
     try {
@@ -7,12 +8,12 @@ export default (fetch) => {
 
       commit('LOADED', response.data)
     } catch (error) {
-      console.log(error)
+      Sentry.captureException(error)
       commit('SET_LOADING', false)
     }
   }
 
-  const updateTimeRange = async ({ commit, dispatch, state }, payload) => {
+  const updateTimeRange = ({ commit }, payload) => {
     commit('SET_TIME_RANGE', payload)
   }
 

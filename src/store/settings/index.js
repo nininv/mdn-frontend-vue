@@ -32,7 +32,7 @@ const module = {
 
         commit('SET_COLORS', response.colors)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -103,7 +103,7 @@ const module = {
         let logoFile = response.filter((data) => data.type.includes('logo_filepath'))
 
         if (logoFile.length) {
-          logoFile = logoFile[0]['value']
+          logoFile = logoFile[0].value
           commit('SET_LOGO_FILE', logoFile)
         } else {
           commit('SET_LOGO_FILE', false)
@@ -112,7 +112,7 @@ const module = {
         let pageTitle = response.filter((data) => data.type.includes('page_title'))
 
         if (pageTitle.length) {
-          pageTitle = pageTitle[0]['value']
+          pageTitle = pageTitle[0].value
           commit('SET_PAGE_TITLE', pageTitle)
         } else {
           commit('SET_PAGE_TITLE', false)
@@ -123,7 +123,7 @@ const module = {
         let productName = response.filter((data) => data.type.includes('product_name'))
 
         if (productName.length) {
-          productName = productName[0]['value']
+          productName = productName[0].value
           commit('SET_PRODUCT_NAME', productName)
         } else {
           commit('SET_PRODUCT_NAME', 'ACS Group')
@@ -132,7 +132,7 @@ const module = {
         let productVersion = response.filter((data) => data.type.includes('product_version'))
 
         if (productVersion.length) {
-          productVersion = productVersion[0]['value']
+          productVersion = productVersion[0].value
           commit('SET_PRODUCT_VERSION', productVersion)
         } else {
           commit('SET_PRODUCT_VERSION', '1.0.0')

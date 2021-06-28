@@ -64,11 +64,7 @@ export default {
       return this.$route.name !== null
     },
     currentLayout: function() {
-      if (this.$route.meta.layout === 'dashboard') {
-        return 'defaultLayout'
-      } else {
-        return (this.$route.meta.layout || 'default') + 'Layout'
-      }
+      return (this.$route.meta.layout === 'dashboard' ) ? 'defaultLayout' : (this.$route.meta.layout || 'default') + 'Layout'
     },
     isDevelopment: function () {
       return process.env.NODE_ENV === 'development'

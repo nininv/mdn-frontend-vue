@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -18,13 +19,13 @@ const module = {
     async getSystemStates({ commit }, payload) {
       commit('SET_SYSTEM_STATES', {})
       commit('SET_LOADING_SYSTEM_STATES', true)
-      
+
       try {
         const response = await api.getSystemStates(payload)
 
         commit('SET_SYSTEM_STATES', response.data.machine_states)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_SYSTEM_STATES', false)
       }
@@ -38,12 +39,12 @@ const module = {
 
         commit('SET_FEEDER_STABLES', response.data.feeders)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_FEEDER_STABLES', false)
       }
     },
-    async getRecipe({ state, commit }, payload) {
+    async getRecipe({ commit }, payload) {
       commit('SET_ACTUAL_RECIPE_TO_VALUES', [])
       commit('SET_TARGET_RECIPE_TO_VALUES', [])
       commit('SET_LOADING_RECIPE', true)
@@ -54,7 +55,7 @@ const module = {
         commit('SET_ACTUAL_RECIPE_TO_VALUES', response.data.actuals)
         commit('SET_TARGET_RECIPE_TO_VALUES', response.data.targets)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_RECIPE', false)
       }
@@ -65,7 +66,7 @@ const module = {
     SET_LOADING_SYSTEM_STATES(state, isLoading) { state.loadingSystemStates = isLoading },
     SET_LOADING_FEEDER_STABLES(state, isLoading) { state.loadingFeederStables = isLoading },
     SET_LOADING_RECIPE(state, isLoading) { state.loadingRecipe = isLoading },
-    
+
     SET_SYSTEM_STATES(state, data) { state.systemStates = data },
     SET_FEEDER_STABLES(state, data) { state.feederStables = data },
     SET_ACTUAL_RECIPE_TO_VALUES(state, data) { state.actualRecipeValues = data },

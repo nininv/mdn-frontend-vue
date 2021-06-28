@@ -101,6 +101,7 @@ import SelectTags from './components/SelectTags'
 import SelectTimeRange from './components/SelectTimeRange'
 import GenerateReport from './components/GenerateReport'
 import ReportsListPage from './ReportsListPage'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -144,7 +145,7 @@ export default {
       try {
         this.initZonesTable(this.locationId)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     async handleSetZone(zoneId) {
@@ -156,7 +157,7 @@ export default {
           zone: this.zoneId
         })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
       this.$refs.selectMachines.resetModel()
     },
@@ -169,7 +170,7 @@ export default {
           deviceIds: data
         })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     handleSetMachineTags(data) {
@@ -196,7 +197,7 @@ export default {
         this.errorMessage = 'Failed to export report due to selected data size. Please choose a smaller timeframe and a smaller selection of devices and data points.'
 
         this.$store.dispatch('app/showError', { message: 'Error: ', error: { message: this.errorMessage } }, { root: true })
-        console.log(error)
+        Sentry.captureException(error)
       }
 
     },

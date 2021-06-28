@@ -19,7 +19,7 @@ const changeSelectedCompany = ({ commit }, company) => {
   commit('SET_SELECTED_COMPANY', company)
 }
 
-const getSystemStates = async ({ state, commit }, id) => {
+const getSystemStates = async ({ commit }, id) => {
   commit('SET_LOADING_SYSTEM_STATES', true)
 
   try {
@@ -108,17 +108,18 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
   }
 }
 
-const getTags = async ({ state, commit }, machineId) => {
+const getTags = async ({ commit }, machineId) => {
   try {
     const response = await machineAPI.getTags(machineId)
 
     commit('SET_TAGS', response.tags)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   }
 }
 
-const getDataToolSeries = async ({ state, commit }, payload) => {
+const getDataToolSeries = async ({ commit }, payload) => {
   commit('SET_LOADING_DATA_TOOL_SERIES', true)
 
   try {
@@ -126,6 +127,7 @@ const getDataToolSeries = async ({ state, commit }, payload) => {
 
     commit('SET_DATA_TOOL_SERIES', response.series)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_LOADING_DATA_TOOL_SERIES', false)
@@ -140,12 +142,13 @@ const updateHopperSetting = async ({ commit }, payload) => {
   commit('SET_HOPPER_SETTING', payload)
 }
 
-const requestService = async ({ commit, dispatch }, payload) => {
+const requestService = async ({ dispatch }, payload) => {
   try {
     const response = await machineAPI.requestService(payload)
 
     dispatch('app/showSuccess', response.message, { root: true })
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   }
 }
@@ -157,16 +160,18 @@ const saveMachine = async ({ commit, dispatch }, payload) => {
     commit('SET_SAVED_MACHINE_STATUS', response.status)
     dispatch('app/showSuccess', response.message, { root: true })
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   }
 }
 
-const getSavedStatus = async ({ commit, dispatch }, payload) => {
+const getSavedStatus = async ({ commit }, payload) => {
   try {
     const response = await machineAPI.getSavedStatus(payload)
 
     commit('SET_SAVED_MACHINE_STATUS', response.status)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   }
 }
@@ -182,6 +187,7 @@ const getMachines = async ({ commit }, payload) => {
 
     commit('SET_REPORT_MACHINES', response.devices)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_REPORT_LOADING', false)
@@ -195,6 +201,7 @@ const getMachineTags = async ({ commit }, payload) => {
 
     commit('SET_REPORT_MACHINE_TAGS', response.tags)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_REPORT_LOADING', false)
@@ -212,6 +219,7 @@ const generateMachinesReport = async ({ commit, dispatch }, payload) => {
     commit('REPORT_GENERATE_COMPLETED', true)
     commit('SET_REPORT_NAME', response.filename)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_REPORT_LOADING', false)
@@ -225,6 +233,7 @@ const getReportsList = async ({ commit }) => {
 
     commit('SET_REPORT_LIST', response.reports)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_REPORT_LIST_LOADING', false)
@@ -244,19 +253,21 @@ const deleteReport = async ({ commit, dispatch }, payload) => {
 
     commit('SET_REPORT_LIST', response.reports)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_REPORT_LIST_LOADING', false)
   }
 }
 
-const getBlenderWeights = async ({ commit, dispatch }, payload) => {
+const getBlenderWeights = async ({ commit }, payload) => {
   commit('SET_HOPPER_WEIGHTS_LOADING', true)
   try {
     const response = await machineAPI.getBlenderWeights(payload)
 
     commit('SET_HOPPER_WEIGHT_SERIES', response.series)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_HOPPER_WEIGHTS_LOADING', false)
@@ -270,6 +281,7 @@ const getAlarmHistory = async ({ commit }, payload) => {
 
     commit('SET_ALARM_HISTORY', response.alarms)
   } catch (error) {
+    Sentry.captureException(error)
     throw new Error(error)
   } finally {
     commit('SET_ALARM_HISTORY_LOADING', false)
