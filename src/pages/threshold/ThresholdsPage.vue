@@ -149,6 +149,7 @@
 import { mapActions, mapState } from 'vuex'
 
 import operators from './content/operators'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -211,7 +212,7 @@ export default {
       try {
         await this.changeThresholdStatus(id)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
       this.getThresholds()
     },
@@ -227,7 +228,7 @@ export default {
         await this.deleteThreshold(this.selectedThresholdId)
         this.isDeleteThreshold = false
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
       this.getThresholds()
     },
@@ -247,7 +248,7 @@ export default {
 
         this.getThresholds()
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     }
   }

@@ -1,6 +1,6 @@
-import Vue from 'vue'
 import router from '../../router'
 import authAPI from '../../services/api/auth'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -96,7 +96,7 @@ const module = {
             })
           }
         } catch (error) {
-          console.log(error)
+          Sentry.captureException(error)
         }
       } catch (error) {
         if (error.response.status === 401) {
@@ -104,6 +104,7 @@ const module = {
             'error': 'Email and password incorrect.'
           })
         }
+        Sentry.captureException(error)
       }
 
       commit('BUTTON_CLEAR')
@@ -137,7 +138,7 @@ const module = {
 
         commit('SET_AUTH_PROFILE', response.data.user)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -164,6 +165,7 @@ const module = {
             'error': errors[0]
           })
         }
+        Sentry.captureException(error)
       }
 
       commit('BUTTON_CLEAR')
@@ -190,6 +192,7 @@ const module = {
             'error': errors[0]
           })
         }
+        Sentry.captureException(error)
       }
 
       commit('BUTTON_CLEAR')
@@ -208,6 +211,7 @@ const module = {
             'error': error.response.data
           })
         }
+        Sentry.captureException(error)
       }
 
       commit('BUTTON_CLEAR')
@@ -223,7 +227,7 @@ const module = {
 
         commit('SET_TIMEZONES', response.data.timezones)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOADING_TIME_ZONE', false)
@@ -239,7 +243,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data.message, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
       commit('SET_UPDATING_TIME_ZONE', false)

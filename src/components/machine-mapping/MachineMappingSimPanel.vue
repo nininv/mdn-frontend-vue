@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-2">
-      SIM Status: 
+      SIM Status:
       <strong v-if="item.sim_status === 'Scrapped'" class="grey--text">Scrapped</strong>
       <strong v-if="item.sim_status === 'Active'" class="green--text">Active</strong>
       <strong v-if="item.sim_status === 'Suspended'" class="red--text">Suspended</strong>
@@ -68,7 +68,7 @@
           @click="isRemote = !isRemote"
         >close</v-btn>
         <div class="py-3">
-          <a :href="'https://' + link" target="_blank">{{ link }} </a>
+          <a :href="'https://' + link" target="_blank" rel="noopener noreferrer">{{ link }} </a>
         </div>
       </v-sheet>
     </v-bottom-sheet>

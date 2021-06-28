@@ -1,5 +1,6 @@
 import settingAPI from '../../services/api/setting'
 import vuetify from '../../plugins/vuetify'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -31,7 +32,7 @@ const module = {
 
         commit('SET_COLORS', response.colors)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -43,9 +44,9 @@ const module = {
       commit('BUTTON_LOAD', 'RESET')
 
       try {
-        const response = await settingAPI.resetSettings()
+        await settingAPI.resetSettings()
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -102,7 +103,7 @@ const module = {
         let logoFile = response.filter((data) => data.type.includes('logo_filepath'))
 
         if (logoFile.length) {
-          logoFile = logoFile[0]['value']
+          logoFile = logoFile[0].value
           commit('SET_LOGO_FILE', logoFile)
         } else {
           commit('SET_LOGO_FILE', false)
@@ -111,7 +112,7 @@ const module = {
         let pageTitle = response.filter((data) => data.type.includes('page_title'))
 
         if (pageTitle.length) {
-          pageTitle = pageTitle[0]['value']
+          pageTitle = pageTitle[0].value
           commit('SET_PAGE_TITLE', pageTitle)
         } else {
           commit('SET_PAGE_TITLE', false)
@@ -122,7 +123,7 @@ const module = {
         let productName = response.filter((data) => data.type.includes('product_name'))
 
         if (productName.length) {
-          productName = productName[0]['value']
+          productName = productName[0].value
           commit('SET_PRODUCT_NAME', productName)
         } else {
           commit('SET_PRODUCT_NAME', 'ACS Group')
@@ -131,14 +132,14 @@ const module = {
         let productVersion = response.filter((data) => data.type.includes('product_version'))
 
         if (productVersion.length) {
-          productVersion = productVersion[0]['value']
+          productVersion = productVersion[0].value
           commit('SET_PRODUCT_VERSION', productVersion)
         } else {
           commit('SET_PRODUCT_VERSION', '1.0.0')
         }
 
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     async applyWebsiteColors({
@@ -158,7 +159,7 @@ const module = {
 
         dispatch('app/showSuccess', response.message, { root: true })
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -176,7 +177,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_LOGO_FILE', response.filepath)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
 
       commit('SET_LOGO_UPLOADING', false)
@@ -194,7 +195,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_IMAGE_FILE', response.filepath)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       }
 
       commit('SET_IMAGE_UPLOADING', false)
@@ -211,7 +212,7 @@ const module = {
         dispatch('app/showSuccess', response.message, { root: true })
         commit('SET_PAGE_TITLE', response.page_title)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -229,7 +230,7 @@ const module = {
         commit('SET_PRODUCT_NAME', response.product_name)
         commit('SET_PRODUCT_VERSION', response.product_version)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BUTTON_CLEAR')
       }
@@ -243,7 +244,7 @@ const module = {
 
         commit('SET_AUTH_BACKGROUND_FILE', response.filepath)
       } catch (error) {
-        console.log('error', error)
+        Sentry.captureException(error)
       }
     }
   },

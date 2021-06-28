@@ -54,6 +54,7 @@
 | List thresholds
 */
 import { mapActions, mapState } from 'vuex'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -101,7 +102,7 @@ export default {
 
         this.getApproachingThresholds()
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     }
   }

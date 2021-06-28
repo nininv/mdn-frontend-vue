@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -14,7 +15,7 @@ const module = {
   },
 
   actions: {
-    async getDryingHopperStats({ state, commit }, payload) {
+    async getDryingHopperStats({ commit }, payload) {
       commit('SET_DRYING_HOPPERS', {})
       commit('SET_NGX_HOPPER_COUNT', 0)
       commit('SET_LOADING_DRYING_HOPPERS', true)
@@ -25,12 +26,12 @@ const module = {
         commit('SET_DRYING_HOPPERS', response.data.states)
         commit('SET_NGX_HOPPER_COUNT', response.data.numberOfHoppers)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DRYING_HOPPERS', false)
       }
     },
-    async getBedStates ({ state, commit }, payload) {
+    async getBedStates ({ commit }, payload) {
       commit('SET_LOADING_BED_STATES', true)
 
       try {
@@ -38,12 +39,12 @@ const module = {
 
         commit('SET_SET_BED_STATES', response.data.states)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_BED_STATES', false)
       }
     },
-    async getOnlineHours ({ state, commit }, payload) {
+    async getOnlineHours ({ commit }, payload) {
       commit('SET_LOADING_ONLINE_HOURS', true)
 
       try {
@@ -51,7 +52,7 @@ const module = {
 
         commit('SET_SET_ONLINE_HOURS', response.data.hours)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_ONLINE_HOURS', false)
       }

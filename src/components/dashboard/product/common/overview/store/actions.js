@@ -1,6 +1,8 @@
 import api from '@/api.js'
+import * as Sentry from '@sentry/vue'
+
 export default (fetch) => {
-  const getOverview = async ({ commit, dispatch, state }, payload) => {
+  const getOverview = async ({ commit }, payload) => {
     commit('SET_LOADING', true)
     commit('SET_SAVE_MACHINE_LOADING', true)
 
@@ -9,7 +11,7 @@ export default (fetch) => {
 
       commit('LOADED', response.data.overview)
     } catch (error) {
-      console.log(error)
+      Sentry.captureException(error)
       commit('SET_LOADING', false)
       commit('SET_SAVE_MACHINE_LOADING', false)
     }
@@ -24,12 +26,12 @@ export default (fetch) => {
       commit('SET_SAVED_MACHINE_STATUS', response.data.status)
       dispatch('app/showSuccess', response.data.message, { root: true })
     } catch (error) {
-      console.log(error)
+      Sentry.captureException(error)
     } finally {
       commit('SET_SAVE_MACHINE_LOADING', false)
     }
   }
-  
+
   return {
     getOverview,
     saveMachine

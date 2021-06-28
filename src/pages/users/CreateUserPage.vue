@@ -275,10 +275,7 @@ export default {
       return ['acs_admin', 'acs_manager', 'acs_viewer'].includes(this.userRole)
     },
     availableRoles() {
-      if (this.isAcsUser)
-        return this.roles.filter((role) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(role.key))
-      else
-        return this.roles.filter((role) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(role.key))
+      return this.isAcsUser ? this.roles.filter((role) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(role.key)) : this.roles.filter((role) => ['customer_admin', 'customer_manager', 'customer_operator'].includes(role.key))
     }
   },
   mounted() {

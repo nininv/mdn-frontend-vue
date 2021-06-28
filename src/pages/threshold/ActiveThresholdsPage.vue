@@ -55,7 +55,7 @@
 */
 import { mapActions, mapState } from 'vuex'
 
-import operators from './content/operators'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -103,7 +103,7 @@ export default {
 
         this.getActiveThresholds()
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     }
   }

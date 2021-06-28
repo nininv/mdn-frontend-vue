@@ -1,5 +1,3 @@
-import api from '../services/api'
-
 const module = {
   namespaced: true,
   state: {

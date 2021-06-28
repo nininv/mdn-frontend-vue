@@ -231,6 +231,7 @@
 */
 
 import { mapState, mapGetters, mapActions } from 'vuex'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -330,7 +331,7 @@ export default {
 
         this.getMaterials()
       } catch (err) {
-        console.log(err)
+        Sentry.captureException(err)
       }
     },
 
@@ -345,23 +346,11 @@ export default {
     async submit () {
       if (this.$refs.editForm.validate()) {
         try {
-          if (this.editedIndex > -1) {
-            await this.updateMaterial({
-              id: this.editedItem.id,
-              material: this.editedItem.material,
-              location: this.editedItem.location
-            })
-          } else {
-            await this.addMaterial({
-              material: this.editedItem.material,
-              location: this.editedItem.location
-            })
-          }
-
-          this.getMaterials()
+          this.editedIndex > -1 ? await this.updateMaterial({ id: this.editedItem.id, material: this.editedItem.material, location: this.editedItem.location }) : await this.addMaterial({ material: this.editedItem.material, location: this.editedItem.location })
+          await this.getMaterials()
           this.close()
         } catch (err) {
-          console.log(err)
+          Sentry.captureException(err)
         }
       }
     },
@@ -381,7 +370,7 @@ export default {
 
         this.getMaterialLocations()
       } catch (err) {
-        console.log(err)
+        Sentry.captureException(err)
       }
     },
 
@@ -396,21 +385,11 @@ export default {
     async submitLocation () {
       if (this.$refs.editLocationForm.validate()) {
         try {
-          if (this.editedLocationIndex > -1) {
-            await this.updateMaterialLocation({
-              id: this.editedLocationItem.id,
-              location: this.editedLocationItem.location
-            })
-          } else {
-            await this.addMaterialLocation({
-              location: this.editedLocationItem.location
-            })
-          }
-
+          this.editedLocationIndex > -1 ? await this.updateMaterialLocation({ id: this.editedLocationItem.id, location: this.editedLocationItem.location }) : await this.addMaterialLocation({ location: this.editedLocationItem.location })
           this.getMaterialLocations()
           this.closeLocation()
         } catch (err) {
-          console.log(err)
+          Sentry.captureException(err)
         }
       }
     }

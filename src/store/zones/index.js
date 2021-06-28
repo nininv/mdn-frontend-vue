@@ -1,4 +1,5 @@
 import zoneAPI from '../../services/api/zone'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -20,7 +21,7 @@ const module = {
 
         commit('SET_DATA', response)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('TABLE_LOADED')
       }
@@ -31,9 +32,9 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await zoneAPI.addZone(data)
+        await zoneAPI.addZone(data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('BTN_LOADED')
       }
@@ -46,7 +47,7 @@ const module = {
       try {
         await zoneAPI.updateZone(data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('BTN_LOADED')
       }

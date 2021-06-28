@@ -16,7 +16,7 @@ export default {
     return api.$post('/dashboard/devices-for-dashboard-table', data)
   },
 
-  getSystemStates(data) {
+  getSystemStates(id) {
     return api.$get(`/analytics/product-system-states/${id}`)
   },
   getWeeklyRunningHours(id) {

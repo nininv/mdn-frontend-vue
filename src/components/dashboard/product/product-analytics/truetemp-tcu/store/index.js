@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -8,7 +9,7 @@ const module = {
   },
 
   actions: {
-    async getSystemStates({ state, commit }, payload) {
+    async getSystemStates({ commit }, payload) {
       commit('SET_LOADING_SYSTEM_STATES', true)
 
       try {
@@ -16,7 +17,7 @@ const module = {
 
         commit('SET_SYSTEM_STATES', response.data.machine_states)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_SYSTEM_STATES', false)
       }

@@ -1,4 +1,5 @@
 import locationAPI from '../../services/api/location'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -20,7 +21,7 @@ const module = {
 
         commit('SET_DATA', response.locations)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('TABLE_LOADED')
       }
@@ -31,9 +32,9 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await locationAPI.addLocation(data)
+        await locationAPI.addLocation(data)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BTN_LOADED')
       }
@@ -44,9 +45,9 @@ const module = {
       commit('BTN_LOAD')
 
       try {
-        const response = await locationAPI.updateLocation(data)
+        await locationAPI.updateLocation(data)
       } catch (error) {
-        console.log(error.response)
+        Sentry.captureException(error)
       } finally {
         commit('BTN_LOADED')
       }

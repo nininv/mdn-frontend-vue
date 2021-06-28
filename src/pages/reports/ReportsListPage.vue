@@ -74,6 +74,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import * as Sentry from '@sentry/vue'
 
 export default {
   data() {
@@ -111,7 +112,7 @@ export default {
       this.$download(filepath, filename)
     },
     editReport(report) {
-      console.log('edit', report)
+      //console.log('edit', report)
     },
     removeReport(report) {
       this.selectedReport = report
@@ -123,7 +124,7 @@ export default {
 
         this.isDeleteReport = false
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
 
     },

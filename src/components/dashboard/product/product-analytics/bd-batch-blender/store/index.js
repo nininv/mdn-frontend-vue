@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -32,7 +33,7 @@ const module = {
         commit('SET_RECIPE_MODE', response.data.mode)
         commit('SET_EZ_TYPES', response.data.ez_types)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_RECIPE', false)
       }
@@ -46,7 +47,7 @@ const module = {
 
         commit('SET_INVENTORIES', response.data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_INVENTORIES', false)
       }
@@ -63,7 +64,7 @@ const module = {
         dispatch('app/showError', {
           error: 'Failed to save material'
         }, { root: true })
-
+        Sentry.captureException(error)
         throw error
       } finally {
         commit('SET_LOADING_MATERIAL_INVENTORY', false)
@@ -79,7 +80,7 @@ const module = {
 
         commit('SET_HOPPER_STABLES', response.data.stables)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_HOPPER_STABLES', false)
       }
@@ -93,7 +94,7 @@ const module = {
 
         commit('SET_LOAD_CELLS', response.data.loadCells)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_LOAD_CELLS', false)
       }
@@ -107,7 +108,7 @@ const module = {
 
         commit('SET_TARCKING_STATUS', response.data.in_progress)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_INVENTORY_TRACK', false)
       }
@@ -138,11 +139,7 @@ const module = {
     timeRangeLabel: (state, getters, rootState) => (timeRange) => {
       const { timeRangeOptions } = rootState.machines
 
-      if (timeRange.timeRangeOption === 'custom') {
-        return `${timeRange.dateFrom} ${timeRange.timeFrom} ~ ${timeRange.dateTo} ${timeRange.timeTo}`
-      } else {
-        return timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption).label
-      }
+      return (timeRange.timeRangeOption === 'custom') ? `${timeRange.dateFrom} ${timeRange.timeFrom} ~ ${timeRange.dateTo} ${timeRange.timeTo}` : timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption).label
     }
   }
 }

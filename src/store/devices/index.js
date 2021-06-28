@@ -1,5 +1,6 @@
 import deviceAPI from '../../services/api/device'
-
+import * as Sentry from '@sentry/vue'
+const ITEM_PER_PAGE = 10
 const module = {
   namespaced: true,
   state: {
@@ -80,7 +81,7 @@ const module = {
         commit('companies/SET_CUSTOMERS', response.data.companies, { root: true })
         commit('SET_CUSTOMER_DATA', response.data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('TABLE_LOAD_CLEAR')
       }
@@ -106,16 +107,19 @@ const module = {
             error: error.response.data
           })
         }
+
+        Sentry.captureException(error)
+
       } finally {
         commit('SET_LOADING_DEVICE_CONFIGURATION', false)
       }
     },
 
-    async updateEnabledProperties({ commit }, payload) {
+    async updateEnabledProperties(payload) {
       try {
         await deviceAPI.updateEnabledProperties(payload)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -127,7 +131,7 @@ const module = {
 
         commit('SET_DATA', response.data.devices)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
 
@@ -146,22 +150,21 @@ const module = {
         commit('SET_ADDED', response.data.numAdded)
         commit('SET_DUPLICATES', response.data.numDuplicates)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('IMPORT_BUTTON_CLEAR')
       }
     },
     async deviceAssigned({
-      commit, dispatch
+      commit
     }, data) {
       commit('ASSIGN_LOAD')
 
       try {
-        const response = await deviceAPI.deviceAssigned(data)
-
+        await deviceAPI.deviceAssigned(data)
         commit('DEVICE_ASSIGN', data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('ASSIGN_CLEAR')
       }
@@ -177,7 +180,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         dispatch('app/showError', {
           error: error.response.data
         }, { root: true })
@@ -197,7 +200,7 @@ const module = {
 
         commit('SET_DATA', response.data.devices)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_TABLE_MACHINE_MAPPING', false)
       }
@@ -220,13 +223,13 @@ const module = {
         commit('SET_DATA', response.data.devices.data)
         commit('SET_REPORT_PAGINATION', response.data.devices.last_page)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DASHBOARD_DEVICES_TABLE', false)
       }
     },
 
-    async getSavedMachines({ commit }, { page = 1, location_id = 0, itemsPerPage = 10 }) {
+    async getSavedMachines({ commit }, { page = 1, itemsPerPage = ITEM_PER_PAGE }) {
       commit('SET_LOADING_SAVED_MACHINES', true)
       commit('SET_SAVED_MACHINES', [])
 
@@ -240,7 +243,7 @@ const module = {
         commit('SET_SAVED_MACHINES', response.data.devices.data)
         commit('SET_REPORT_SAVED_MACHINES_PAGINATION', response.data.devices.last_page)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_SAVED_MACHINES', false)
       }
@@ -256,7 +259,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_BTN_ASSIGN_ZONE_TO_MACHINE', false)
       }
@@ -275,36 +278,34 @@ const module = {
           status: response.data.sim_status
         })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('QUERY_BTN_CLEAR')
       }
     },
     async suspendSIM({
-      commit, dispatch
+      commit
     }, iccid) {
       commit('SUSPEND_BTN_LOAD')
 
       try {
         await deviceAPI.suspendSIM(iccid)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SUSPEND_BTN_CLEAR')
       }
     },
 
     async remoteWeb({
-      commit, dispatch
+      commit
     }, device_id) {
       commit('REMOTE_WEB_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.remoteWeb(device_id)
-
-        return response
+        return await deviceAPI.remoteWeb(device_id)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('REMOTE_WEB_BTN_CLEAR')
       }
@@ -313,16 +314,14 @@ const module = {
     },
 
     async remoteCli({
-      commit, dispatch
+      commit
     }, device_id) {
       commit('REMOTE_CLI_BTN_LOAD')
 
       try {
-        const response = await deviceAPI.remoteCli(device_id)
-
-        return response
+        return await deviceAPI.remoteCli(device_id)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('REMOTE_CLI_BTN_CLEAR')
       }
@@ -340,15 +339,13 @@ const module = {
         commit('SET_DOWNTIME_PLANS', response.data.downtimePlans)
         commit('machines/SET_MACHINES', response.data.machines, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_DOWNTIME_PLANS_TABLE_LOADING', false)
       }
     },
 
-    async updateDowntimePlan({
-      state, commit, dispatch
-    }, { data, id }) {
+    async updateDowntimePlan({ commit, dispatch }, { data, id }) {
       commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
@@ -356,7 +353,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         dispatch('app/showError', {
           error: error.response.data
         }, { root: true })
@@ -365,9 +362,7 @@ const module = {
       }
     },
 
-    async addDowntimePlan({
-      state, commit, dispatch
-    }, data) {
+    async addDowntimePlan({ commit, dispatch }, data) {
       commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
@@ -375,7 +370,7 @@ const module = {
 
         dispatch('app/showSuccess', response.data, { root: true })
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         dispatch('app/showError', {
           error: error.response.data
         }, { root: true })
@@ -384,15 +379,13 @@ const module = {
       }
     },
 
-    async toggleActiveDevices({
-      state, commit, dispatch
-    }) {
+    async toggleActiveDevices({ commit, dispatch }) {
       commit('SET_LOADING_ACTIVE_DEVICES', true)
 
       try {
         await deviceAPI.toggleActiveDevices()
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
         dispatch('app/showError', {
           error: error.response.data
         }, { root: true })
@@ -409,7 +402,7 @@ const module = {
 
         commit('SET_DOWNTIME_GRAPH_DATA', response.data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DOWNTIME_GRAPH', false)
       }
@@ -423,7 +416,7 @@ const module = {
 
         commit('SET_DOWNTIME_BY_TYPE_GRAPH_SERIES', response.data.series)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DOWNTIME_BY_TYPE_GRAPH', false)
       }
@@ -437,7 +430,7 @@ const module = {
 
         commit('SET_DOWNTIME_BY_REASON_GRAPH_SERIES', response.data.series)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DOWNTIM_BY_REASON_GRAPH', false)
       }
@@ -455,7 +448,7 @@ const module = {
         commit('SET_DONWTIME_TABLE_DATA', response.data.downtimes)
         commit('SET_DOWNTIME_REASONS', response.data.reasons)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_DOWNTIMES_TABLE', false)
       }
@@ -473,21 +466,19 @@ const module = {
           dispatch('app/showError', { message: 'Failed: ', error: { message: response.data.message } }, { root: true })
         }
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_UPDATING_DOWNTIME', false)
       }
     },
 
-    async setAvailabilityPlanTime({ commit, disptach }, data) {
+    async setAvailabilityPlanTime({ commit }, data) {
       commit('SET_ADDING_AVAILABILITY_PLAN_TIME', true)
 
       try {
-        const response = await deviceAPI.setAvailabilityPlanTime(data)
-
-        console.log(response)
+        await deviceAPI.setAvailabilityPlanTime(data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_ADDING_AVAILABILITY_PLAN_TIME', false)
       }

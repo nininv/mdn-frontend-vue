@@ -61,24 +61,13 @@ export default {
       pageTitle: (state) => state.settings.pageTitle
     }),
     isRouterLoaded: function() {
-      if (this.$route.name !== null)
-        return true
-
-      return false
+      return this.$route.name !== null
     },
     currentLayout: function() {
-      if (this.$route.meta.layout === 'dashboard') {
-        return 'defaultLayout'
-      } else {
-        return (this.$route.meta.layout || 'default') + 'Layout'
-      }
+      return (this.$route.meta.layout === 'dashboard' ) ? 'defaultLayout' : (this.$route.meta.layout || 'default') + 'Layout'
     },
     isDevelopment: function () {
-      if (process.env.NODE_ENV === 'development') {
-        return true
-      } else {
-        return false
-      }
+      return process.env.NODE_ENV === 'development'
     }
   }
 }
