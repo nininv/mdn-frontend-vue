@@ -23,18 +23,15 @@
         >
         </area-graph>
       </v-col>
-      <v-col v-if="parameters.includes(2)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-dbBlender-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
+      <v-col v-if="parameters.includes(5)" cols="12" md="4">
+        <batch-blender-recipe
+          :loading="loadingRecipe"
+          :recipes="recipeValues"
+          :ez-types="ezTypes"
+          :mode="recipeMode"
+          @reload="getRecipe({ serialNumber })"
         >
-        </area-graph>
+        </batch-blender-recipe>
       </v-col>
       <v-col v-if="parameters.includes(3)" cols="12" md="8">
         <batch-blender-weight
@@ -46,16 +43,6 @@
       <v-col v-if="parameters.includes(3)" cols="12" md="4">
         <batch-blender-standard-deviation>
         </batch-blender-standard-deviation>
-      </v-col>
-      <v-col v-if="parameters.includes(5)" cols="12" md="4">
-        <batch-blender-recipe
-          :loading="loadingRecipe"
-          :recipes="recipeValues"
-          :ez-types="ezTypes"
-          :mode="recipeMode"
-          @reload="getRecipe({ serialNumber })"
-        >
-        </batch-blender-recipe>
       </v-col>
       <v-col v-if="parameters.includes(4)" cols="12">
         <batch-blender-inventory-hoppers
@@ -117,8 +104,7 @@ export default {
     return {
       getWeight: api.getWeight,
       getOverview: commonApi.getOverview,
-      getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption
+      getUtilization: commonApi.getUtilization
     }
   },
   computed: {

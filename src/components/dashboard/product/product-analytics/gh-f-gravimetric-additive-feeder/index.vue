@@ -23,19 +23,6 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-gh-f-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
       <v-col cols="12" md="8">
       </v-col>
       <v-col cols="12" md="4">
@@ -69,8 +56,7 @@ export default {
   data() {
     return {
       getOverview: commonApi.getOverview,
-      getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption
+      getUtilization: commonApi.getUtilization
     }
   },
   computed: {

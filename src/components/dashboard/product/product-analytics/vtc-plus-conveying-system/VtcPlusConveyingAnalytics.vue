@@ -23,19 +23,6 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-vtc-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
       <v-col cols="12" md="6">
         <bar-graph
           namespace="barGraph-vtc-id1"
@@ -117,8 +104,7 @@ export default {
       getPumpHoursOil: api.getPumpHoursOil,
       getPumpOnlineLife: api.getPumpOnlineLife,
       getOverview: commonApi.getOverview,
-      getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption
+      getUtilization: commonApi.getUtilization
     }
   },
   computed: {
