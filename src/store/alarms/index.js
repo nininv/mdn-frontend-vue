@@ -298,7 +298,7 @@ const module = {
     },
 
     SET_ALARMS_REPORTS(state, data) {
-      state.alarmsReports = data.activeAlarms
+      state.alarmsReports = data.active_alarms
       state.alarmsCount = data.alarmsCount
     }
   },

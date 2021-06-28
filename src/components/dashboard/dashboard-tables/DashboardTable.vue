@@ -284,12 +284,12 @@ export default {
       }
     },
 
-    getAlarmsCount(data) {
-      return data ? !data[0].sum ? 'No alarms reported' : `${data[0].sum} alarms reported` : 'No alarms reported'
+    getAlarmsCount(count) {
+      return count ? `${count} alarms reported` : 'No alarms reported'
     },
 
-    getAlarmsTextColor(data) {
-      return data ? !data[0].sum ? 'success--text' : 'error--text' : 'success--text'
+    getAlarmsTextColor(count) {
+      return count ? 'error--text' : 'success--text'
     },
 
     rowClicked(item) {

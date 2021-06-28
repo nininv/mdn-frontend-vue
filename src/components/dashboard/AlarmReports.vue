@@ -10,14 +10,14 @@
     >
       <template v-for="(alarm, index) in activeAlarms">
         <v-list-item
-          :key="`${alarm.alarm_name}${alarm.device_id}`"
+          :key="`${alarm.alarmName}${alarm.device_id}`"
         >
   
           <v-list-item-content>
-            <v-list-item-title v-text="alarm.machine_name"></v-list-item-title>
+            <v-list-item-title v-text="alarm.machineName"></v-list-item-title>
   
-            <v-list-item-subtitle class="text--primary" v-text="alarm.device_name"></v-list-item-subtitle>
-            <v-list-item-subtitle class="red--text" v-text="alarm.alarm_name"></v-list-item-subtitle>
+            <v-list-item-subtitle class="text--primary" v-text="alarm.deviceData.name"></v-list-item-subtitle>
+            <v-list-item-subtitle class="red--text" v-text="alarm.alarmName"></v-list-item-subtitle>
           </v-list-item-content>
   
           <v-list-item-action>
@@ -64,12 +64,12 @@ export default {
   },
   methods: {
     handleClick(item) {
-      if (item.location_id && item.zone_id) {
+      if (item.deviceData.location_id && item.deviceData.zone_id) {
         this.$router.push({
           name: 'dashboard-product',
           params: {
-            location: item.location_id,
-            zone: item.zone_id,
+            location: item.deviceData.location_id,
+            zone: item.deviceData.zone_id,
             configurationId: item.machine_id,
             productId: item.device_id
           }
