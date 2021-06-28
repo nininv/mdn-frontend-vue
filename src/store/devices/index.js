@@ -1,6 +1,6 @@
 import deviceAPI from '../../services/api/device'
 import * as Sentry from '@sentry/vue'
-
+const ITEM_PER_PAGE = 10
 const module = {
   namespaced: true,
   state: {
@@ -229,7 +229,7 @@ const module = {
       }
     },
 
-    async getSavedMachines({ commit }, { page = 1, itemsPerPage = 10 }) {
+    async getSavedMachines({ commit }, { page = 1, itemsPerPage = ITEM_PER_PAGE }) {
       commit('SET_LOADING_SAVED_MACHINES', true)
       commit('SET_SAVED_MACHINES', [])
 
