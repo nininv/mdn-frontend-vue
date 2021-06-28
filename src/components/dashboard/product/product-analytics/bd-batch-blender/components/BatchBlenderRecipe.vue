@@ -75,10 +75,7 @@ export default {
         labels: this.labels,
         dataLabels: {
           formatter: function (val, opts) {
-            if (mode === 1)
-              return opts.w.config.series[opts.seriesIndex]
-            else
-              return [val.toFixed(2) + '%']
+            return (mode === 1) ? opts.w.config.series[opts.seriesIndex] : [val.toFixed(2) + '%']
           },
           offset: 30
         },
@@ -109,7 +106,7 @@ export default {
     recipeSeries() {
       if (this.mode === 0 || this.mode === 1) {
         const filteredRecipes = []
-        
+
         this.recipes.forEach((recipe) => {
           if (recipe !== 0) {
             filteredRecipes.push(recipe)

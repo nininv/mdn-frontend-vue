@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -13,7 +14,7 @@ const module = {
   },
 
   actions: {
-    async getRunnings({ state, commit }, payload) {
+    async getRunnings({ commit }, payload) {
       commit('SET_LOADING_RUNNINGS', true)
 
       try {
@@ -21,13 +22,13 @@ const module = {
 
         commit('SET_RUNNINGS', response.data.states)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_RUNNINGS', false)
       }
     },
 
-    async getHours({ state, commit }, payload) {
+    async getHours({ commit }, payload) {
       commit('SET_LOADING_HOURS', true)
 
       try {
@@ -35,13 +36,13 @@ const module = {
 
         commit('SET_HOURS', response.data.hours)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_HOURS', false)
       }
     },
 
-    async getAmps({ state, commit }, payload) {
+    async getAmps({ commit }, payload) {
       commit('SET_LOADING_AMPS', true)
 
       try {
@@ -49,7 +50,7 @@ const module = {
 
         commit('SET_AMPS', response.data.items)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_AMPS', false)
       }

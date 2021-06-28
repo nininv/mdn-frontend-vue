@@ -1,4 +1,5 @@
 import api from '../services/api'
+import * as Sentry from '@sentry/vue'
 
 const module = {
   namespaced: true,
@@ -11,7 +12,7 @@ const module = {
   },
 
   actions: {
-    async getPumpOnlines({ state, commit }, payload) {
+    async getPumpOnlines({ commit }, payload) {
       commit('SET_ONLINES', [])
       commit('SET_LOADING_PUMP_ONLINES', true)
 
@@ -20,13 +21,13 @@ const module = {
 
         commit('SET_ONLINES', response.data.onlines)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_PUMP_ONLINES', false)
       }
     },
 
-    async getPumpBlowBacks({ state, commit }, payload) {
+    async getPumpBlowBacks({ commit }, payload) {
       commit('SET_BLOWBACKS', [])
       commit('SET_LOADING_PUMP_BLOWBACKS', true)
 
@@ -35,7 +36,7 @@ const module = {
 
         commit('SET_BLOWBACKS', response.data.blowbacks)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SET_LOADING_PUMP_BLOWBACKS', false)
       }

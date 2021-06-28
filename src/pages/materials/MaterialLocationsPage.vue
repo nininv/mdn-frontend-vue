@@ -385,17 +385,7 @@ export default {
     async submitLocation () {
       if (this.$refs.editLocationForm.validate()) {
         try {
-          if (this.editedLocationIndex > -1) {
-            await this.updateMaterialLocation({
-              id: this.editedLocationItem.id,
-              location: this.editedLocationItem.location
-            })
-          } else {
-            await this.addMaterialLocation({
-              location: this.editedLocationItem.location
-            })
-          }
-
+          this.editedLocationIndex > -1 ? await this.updateMaterialLocation({ id: this.editedLocationItem.id, location: this.editedLocationItem.location }) : await this.addMaterialLocation({ location: this.editedLocationItem.location })
           this.getMaterialLocations()
           this.closeLocation()
         } catch (err) {

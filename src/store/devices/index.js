@@ -115,7 +115,7 @@ const module = {
       }
     },
 
-    async updateEnabledProperties({ commit }, payload) {
+    async updateEnabledProperties(payload) {
       try {
         await deviceAPI.updateEnabledProperties(payload)
       } catch (error) {
@@ -156,7 +156,7 @@ const module = {
       }
     },
     async deviceAssigned({
-      commit, dispatch
+      commit
     }, data) {
       commit('ASSIGN_LOAD')
 
@@ -164,7 +164,7 @@ const module = {
         await deviceAPI.deviceAssigned(data)
         commit('DEVICE_ASSIGN', data)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('ASSIGN_CLEAR')
       }
@@ -229,7 +229,7 @@ const module = {
       }
     },
 
-    async getSavedMachines({ commit }, { page = 1, location_id = 0, itemsPerPage = 10 }) {
+    async getSavedMachines({ commit }, { page = 1, itemsPerPage = 10 }) {
       commit('SET_LOADING_SAVED_MACHINES', true)
       commit('SET_SAVED_MACHINES', [])
 
@@ -284,21 +284,21 @@ const module = {
       }
     },
     async suspendSIM({
-      commit, dispatch
+      commit
     }, iccid) {
       commit('SUSPEND_BTN_LOAD')
 
       try {
         await deviceAPI.suspendSIM(iccid)
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       } finally {
         commit('SUSPEND_BTN_CLEAR')
       }
     },
 
     async remoteWeb({
-      commit, dispatch
+      commit
     }, device_id) {
       commit('REMOTE_WEB_BTN_LOAD')
 
@@ -314,7 +314,7 @@ const module = {
     },
 
     async remoteCli({
-      commit, dispatch
+      commit
     }, device_id) {
       commit('REMOTE_CLI_BTN_LOAD')
 
@@ -345,9 +345,7 @@ const module = {
       }
     },
 
-    async updateDowntimePlan({
-      state, commit, dispatch
-    }, { data, id }) {
+    async updateDowntimePlan({ commit, dispatch }, { data, id }) {
       commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
@@ -364,9 +362,7 @@ const module = {
       }
     },
 
-    async addDowntimePlan({
-      state, commit, dispatch
-    }, data) {
+    async addDowntimePlan({ commit, dispatch }, data) {
       commit('SET_DOWNTIME_PLAN_BTN_LOADING', true)
 
       try {
@@ -383,9 +379,7 @@ const module = {
       }
     },
 
-    async toggleActiveDevices({
-      state, commit, dispatch
-    }) {
+    async toggleActiveDevices({ commit, dispatch }) {
       commit('SET_LOADING_ACTIVE_DEVICES', true)
 
       try {
@@ -478,7 +472,7 @@ const module = {
       }
     },
 
-    async setAvailabilityPlanTime({ commit, disptach }, data) {
+    async setAvailabilityPlanTime({ commit }, data) {
       commit('SET_ADDING_AVAILABILITY_PLAN_TIME', true)
 
       try {

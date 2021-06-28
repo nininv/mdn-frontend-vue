@@ -187,6 +187,7 @@
 import ErrorComponent from '../../../components/common/ErrorComponent'
 
 import { mapState, mapActions } from 'vuex'
+import * as Sentry from '@sentry/vue'
 
 export default {
   components: {
@@ -273,7 +274,7 @@ export default {
 
         this.deleteDialog = false
       } catch (error) {
-        console.log(error)
+        Sentry.captureException(error)
       }
     },
     handleResetPassword() {

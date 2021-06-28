@@ -165,7 +165,7 @@ const module = {
       }
     },
 
-    async getBlenders ({ commit, dispatch }, payload) {
+    async getBlenders ({ commit }, payload) {
       commit('SET_LOADING_BLENDERS', true)
 
       try {
@@ -180,7 +180,7 @@ const module = {
       }
     },
 
-    async getReport ({ commit, dispatch }, payload) {
+    async getReport ({ commit }, payload) {
       commit('SET_LOADING_REPORTS', true)
 
       try {
@@ -246,7 +246,7 @@ const module = {
       }
     },
 
-    async exportSystemInventoryReport ({ commit, dispatch }, payload) {
+    async exportSystemInventoryReport ({ commit }, payload) {
       commit('SET_EXPORTING_REPORT', true)
 
       try {

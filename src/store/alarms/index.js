@@ -1,6 +1,5 @@
 import alarmAPI from '../../services/api/alarm'
 import * as Sentry from '@sentry/vue'
-const now = new Date('YYYY-MM-DD')
 const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
 const module = {
