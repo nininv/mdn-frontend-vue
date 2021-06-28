@@ -13,7 +13,7 @@ export default (fetch) => {
     }
   }
 
-  const updateTimeRange = async ({ commit }, payload) => {
+  const updateTimeRange = ({ commit }, payload) => {
     commit('SET_TIME_RANGE', payload)
   }
 
