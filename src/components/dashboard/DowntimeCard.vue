@@ -16,14 +16,16 @@
         >
           <v-icon>$mdi-filter</v-icon>
         </v-btn>
-        <v-btn
-          v-if="canViewEquipmentAvailability || isNotOverrallOption"
-          class="ml-1"
-          color="primary"
-          @click="showDowntimeChart = false"
-        >
-          Equipment Availability
-        </v-btn>
+        <template v-if="$route.name==='dashboard-product'">
+          <v-btn
+            v-if="canViewEquipmentAvailability || isNotOverrallOption"
+            class="ml-1"
+            color="primary"
+            @click="showDowntimeChart = false"
+          >
+            Equipment Availability
+          </v-btn>
+        </template>
       </v-card-title>
       <v-card-text>
         <apexchart
@@ -240,7 +242,7 @@ export default {
             text: 'Availability (%)'
           }
         },
-    
+
         dataLabels: {
           style: {
             fontSize: '10px',
