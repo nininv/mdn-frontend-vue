@@ -3,7 +3,7 @@
     max-width="900"
     class="mx-auto"
   >
-    <v-card-title class="primary white--text">Alarm Reports</v-card-title>
+    <v-card-title class="primary white--text">Alarms</v-card-title>
     <v-list
       subheader
       two-line
@@ -12,14 +12,14 @@
         <v-list-item
           :key="`${alarm.alarmName}${alarm.device_id}`"
         >
-  
+
           <v-list-item-content>
             <v-list-item-title v-text="alarm.machineName"></v-list-item-title>
-  
+
             <v-list-item-subtitle class="text--primary" v-text="alarm.deviceData.name"></v-list-item-subtitle>
             <v-list-item-subtitle class="red--text" v-text="alarm.alarmName"></v-list-item-subtitle>
           </v-list-item-content>
-  
+
           <v-list-item-action>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -34,7 +34,7 @@
               <span>See Machine Details</span>
             </v-tooltip>
           </v-list-item-action>
-          
+
         </v-list-item>
         <v-divider
           v-if="index < activeAlarms.length - 1"
