@@ -87,7 +87,9 @@ export default {
         },
         legend: {
           position: 'bottom',
-          offsetY: 10
+          markers: {
+            radius: 12
+          }
         },
         fill: {
           opacity: 1

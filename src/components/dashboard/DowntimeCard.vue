@@ -44,25 +44,27 @@
       </time-range-chooser>
     </div>
     <div v-else>
-      <v-card-title>
-        Equipment Availability
-        <v-spacer></v-spacer>
-        <v-btn
-          class="ml-1"
-          color="primary"
-          @click="showDowntimeChart = true"
-        >
-          Downtime
-        </v-btn>
-        <v-btn
-          v-if="canAddAvailabilityPlanTime"
-          class="ml-1"
-          color="primary"
-          @click="showPlanTimeForm = true"
-        >
-          Set Plan Time
-        </v-btn>
-      </v-card-title>
+      <template v-if="$route.name==='dashboard-product'">
+        <v-card-title>
+          Equipment Availability
+          <v-spacer></v-spacer>
+          <v-btn
+            class="ml-1"
+            color="primary"
+            @click="showDowntimeChart = true"
+          >
+            Downtime
+          </v-btn>
+          <v-btn
+            v-if="canAddAvailabilityPlanTime"
+            class="ml-1"
+            color="primary"
+            @click="showPlanTimeForm = true"
+          >
+            Set Plan Time
+          </v-btn>
+        </v-card-title>
+      </template>
       <v-card-text>
         <apexchart
           key="availability-chart"
@@ -172,7 +174,8 @@ export default {
           bar: {
             borderRadius: 0,
             columnWidth: '70%',
-            horizontal: false
+            horizontal: false,
+            endingShape: 'rounded'
           }
         },
         dataLabels: {
@@ -191,7 +194,10 @@ export default {
           }
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          markers: {
+            radius: 12
+          }
         },
         colors: this.getSeriesColors,
         fill: {
