@@ -29,12 +29,14 @@
 
 <script>
 import { mapActions } from 'vuex'
-import barGraphStore from './store'
+import Store from './store'
+import dynamicStoreMixin from '../dynamicStoreMixin'
 
 const COMMON_GRAPHS = ['barGraph-id1', 'barGraph-portableChiller-id1', 'barGraph-t50-id1', 'barGraph-vtc-id1', 'barGraph-vtc-id3']
 
 export default {
   name: 'BarGraph',
+  mixins: [dynamicStoreMixin],
   props: {
     namespace: {
       type: String,
@@ -74,6 +76,10 @@ export default {
     }
   },
   computed: {
+    Store() {
+      // dynamic vuex store generators for the mixin
+      return Store
+    },
     state() {
       return this.$store.state[this.namespace]
     },
@@ -81,7 +87,6 @@ export default {
       return this.state['isLoading']
     },
     series() {
-
       if (COMMON_GRAPHS.includes(this.namespace)) {
         const series = { data: this.state['items'] }
 
@@ -222,11 +227,6 @@ export default {
       }
     }
   },
-  created() {
-    if (!this.isModuleCreated([this.namespace])) {
-      this.registerModule()
-    }
-  },
   mounted() {
     this.getSeries({ serialNumber: this.serialNumber, machineId: this.machineId })
   },
@@ -235,24 +235,7 @@ export default {
       getSeries(dispatch, payload) {
         return dispatch(this.namespace + '/getSeries', payload)
       }
-    }),
-    isModuleCreated(path) {
-      let m = this.$store._modules.root
-
-      return path.every((p) => {
-        m = m._children[p]
-
-        return m
-      })
-    },
-    registerModule() {
-      this.$store.registerModule(this.namespace, {
-        namespaced: true,
-        state: barGraphStore.barGraphState(),
-        actions: barGraphStore.barGraphActions(this.fetch),
-        mutations: barGraphStore.barGraphMutations()
-      })
-    }
+    })
   }
 }
 </script>

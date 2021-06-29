@@ -25,7 +25,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions"
+                v-for="(item, i) in timeRangeOptions"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -52,8 +52,6 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
 
 export default {
   props: {
@@ -91,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('machines', ['timeRageOptions']),
+    ...mapState('machines', ['timeRangeOptions']),
     ...mapGetters('machines', ['timeRangeFromTo']),
     groupedTags() {
       if (this.noAlarms) {
@@ -99,13 +97,13 @@ export default {
       } else {
         const ts = this.tags
         const importantTags = this.tags.filter((t) => t.divided_by)
-      
+
         ts.splice(importantTags.length, 0, { divider: true })
         ts.splice(importantTags.length + 1, 0, { header: 'Alarms' })
 
         return ts
       }
-      
+
     }
   },
   watch: {
@@ -117,9 +115,10 @@ export default {
     },
     locTimeRangeOption (newValue) {
       if (newValue !== 'custom') {
+        const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
         const tR = {
           timeRangeOption: newValue,
-          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+          dates: [TODAY, TODAY]
         }
 
         this.dates = [

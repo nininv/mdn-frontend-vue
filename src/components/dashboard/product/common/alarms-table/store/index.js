@@ -1,9 +1,9 @@
-import alarmsTableState from './state'
-import alarmsTableActions from './actions'
-import alarmsTableMutations from './mutations'
+import generateState from './state'
+import generateActions from './actions'
+import generateMutations from './mutations'
 
 export default {
-  alarmsTableState,
-  alarmsTableActions,
-  alarmsTableMutations
+  generateState,
+  generateActions,
+  generateMutations
 }

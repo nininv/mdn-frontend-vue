@@ -60,7 +60,7 @@
           </div>
           <toolbar-user />
           <v-spacer></v-spacer>
-          <toolbar-alarms v-if="!(isAcsUser && selectedCompany && selectedCompany.id === 0)" />
+          <toolbar-alarms v-if="!(isSuperUser || (isAcsUser && selectedCompany && selectedCompany.id === 0))" />
         </div>
       </v-card>
     </v-app-bar>
@@ -109,7 +109,7 @@ export default {
       logoFile: (state) => state.settings.logoFile,
       selectedCompany: (state) => state.machines.selectedCompany
     }),
-    ...mapGetters('auth', ['isAcsUser']),
+    ...mapGetters('auth', ['isAcsUser', 'isSuperUser']),
     userMenu() {
       switch (this.userRole) {
       case 'super_admin':

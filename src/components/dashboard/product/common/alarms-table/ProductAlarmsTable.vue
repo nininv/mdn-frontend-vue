@@ -55,10 +55,12 @@
 |
 */
 import { mapState, mapGetters, mapActions } from 'vuex'
-import alarmsTableStore from './store'
+import Store from './store'
+import dynamicStoreMixin from '../dynamicStoreMixin'
 
 export default {
   name: 'AlarmsTable',
+  mixins: [dynamicStoreMixin],
   props: {
     namespace: {
       type: String,
@@ -87,22 +89,24 @@ export default {
     }
   },
   computed: {
+    Store() {
+      // dynamic vuex store generators for the mixin
+      return Store
+    },
+    state() {
+      return this.$store.state[this.namespace]
+    },
     loadingAlarmsTable() {
-      return this.$store.state[this.namespace]['loadingAlarmsTable']
+      return this.state['loadingAlarmsTable']
     },
     alarmTypes() {
-      return this.$store.state[this.namespace]['alarmTypes']
+      return this.state['alarmTypes']
     },
     alarms() {
-      return this.$store.state[this.namespace]['alarms']
+      return this.state['alarms']
     },
     tableItems() {
       return this.alarms.filter((alarm) => alarm.active)
-    }
-  },
-  created() {
-    if (!this.isModuleCreated([this.namespace])) {
-      this.registerModule()
     }
   },
   mounted() {
@@ -114,23 +118,6 @@ export default {
         return dispatch(this.namespace + '/getProductAlarms', payload)
       }
     }),
-    isModuleCreated(path) {
-      let m = this.$store._modules.root
-
-      return path.every((p) => {
-        m = m._children[p]
-
-        return m
-      })
-    },
-    registerModule() {
-      this.$store.registerModule(this.namespace, {
-        namespaced: true,
-        state: alarmsTableStore.alarmsTableState(),
-        actions: alarmsTableStore.alarmsTableActions(this.fetch),
-        mutations: alarmsTableStore.alarmsTableMutations()
-      })
-    },
     open() {
       this.getProductAlarms({
         serialNumber: this.serialNumber,

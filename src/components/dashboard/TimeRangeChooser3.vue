@@ -9,7 +9,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions.slice(0, 5)"
+                v-for="(item, i) in timeRangeOptions.slice(0, 5)"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -21,7 +21,7 @@
               v-model="locTimeRangeOption"
             >
               <v-radio
-                v-for="(item, i) in timeRageOptions.slice(5, 10)"
+                v-for="(item, i) in timeRangeOptions.slice(5, 10)"
                 :key="i"
                 :label="item.label"
                 :value="item.value"
@@ -152,7 +152,7 @@
 <script>
 import { mapState } from 'vuex'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   props: {
@@ -165,8 +165,8 @@ export default {
       default: () => {
         return {
           timeRangeOption: 'last24Hours',
-          dateFrom: dateTimeIsoString,
-          dateTo: dateTimeIsoString,
+          dateFrom: TODAY,
+          dateTo: TODAY,
           timeFrom: '00:00',
           timeTo: '00:00'
         }
@@ -184,7 +184,7 @@ export default {
       locTimeFrom: this.timeRange.timeFrom,
       locDateTo: this.timeRange.dateTo,
       locTimeTo: this.timeRange.timeTo,
-      timeRageOptions: [
+      timeRangeOptions: [
         {
           label: 'Last 30 minutes',
           value: 'last30Min'

@@ -35,13 +35,13 @@
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
-      <time-range-chooser
+      <time-range-chooser4
         :dlg="showTimeRangeChooser"
         :time-range="selectedTimeRange"
         @close="showTimeRangeChooser = false"
         @submit="onTimeRangeChanged"
       >
-      </time-range-chooser>
+      </time-range-chooser4>
     </div>
     <div v-else>
       <template v-if="$route.name==='dashboard-product'">
@@ -84,10 +84,10 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import TimeRangeChooser from './TimeRangeChooser4'
+import TimeRangeChooser4 from './TimeRangeChooser4'
 import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 const seriesColors = [{
   name: 'No Demand',
@@ -114,7 +114,7 @@ const seriesColors = [{
 
 export default {
   components: {
-    TimeRangeChooser,
+    TimeRangeChooser4,
     AvailabilityPlanTimeForm
   },
   data() {
@@ -123,8 +123,8 @@ export default {
       showPlanTimeForm: false,
       selectedTimeRange: {
         timeRangeOption: 'last24Hours',
-        dateFrom: dateTimeIsoString,
-        dateTo: dateTimeIsoString,
+        dateFrom: TODAY,
+        dateTo: TODAY,
         timeFrom: '00:00',
         timeTo: '00:00'
       },
@@ -262,19 +262,20 @@ export default {
     },
     getTimeRange() {
       if (this.selectedTimeRange && this.selectedTimeRange.timeRangeOption !== 'custom') {
+        const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
         const tR = {
           timeRangeOption: this.selectedTimeRange.timeRangeOption,
-          dates: [new Date().toISOString().substr(0, 10), new Date().toISOString().substr(0, 10)]
+          dates: [TODAY, TODAY]
         }
 
         const from = new Date(this.timeRangeFromTo(tR).from)
         const to = new Date(this.timeRangeFromTo(tR).to)
 
         const timeRange = {
-          dateFrom: from.toLocaleDateString(),
-          dateTo: to.toLocaleDateString(),
-          timeFrom: from.toLocaleTimeString(),
-          timeTo: to.toLocaleTimeString()
+          dateFrom: from.toLocaleDateString('en-US'),
+          dateTo: to.toLocaleDateString('en-US'),
+          timeFrom: from.toLocaleTimeString('en-US'),
+          timeTo: to.toLocaleTimeString('en-US')
         }
 
         return timeRange

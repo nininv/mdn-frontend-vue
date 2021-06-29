@@ -311,6 +311,7 @@ const module = {
 
       return currentRole ? currentRole.name : ''
     },
+    isSuperUser: (state) => state.user.role === 'super_admin',
     isAcsUser: (state) => ['acs_admin', 'acs_manager', 'acs_viewer'].includes(state.user.role),
     canCreateAcsUser: (state) => state.user.role === 'acs_admin',
     canCreateCompanies: (state) => ['acs_admin', 'acs_manager'].includes(state.user.role),

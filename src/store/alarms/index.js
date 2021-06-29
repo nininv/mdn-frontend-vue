@@ -1,6 +1,7 @@
 import alarmAPI from '../../services/api/alarm'
 import * as Sentry from '@sentry/vue'
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
+
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 const module = {
   namespaced: true,
@@ -14,7 +15,7 @@ const module = {
     isAlarmsReportLoading: false,
     alarmsReports: {},
     alarmsCount: 0,
-    timeRageOptions: [
+    timeRangeOptions: [
       {
         label: 'Last 30 minutes',
         value: 'last30Min'
@@ -64,8 +65,8 @@ const module = {
     alamrsPerMachine: [],
 
     timeRange: 'last24Hours',
-    dateFrom: dateTimeIsoString,
-    dateTo: dateTimeIsoString,
+    dateFrom: TODAY,
+    dateTo: TODAY,
     timeFrom: '00:00',
     timeTo: '00:00',
 
@@ -298,14 +299,15 @@ const module = {
     },
 
     SET_ALARMS_REPORTS(state, data) {
-      state.alarmsReports = data.activeAlarms
+      state.alarmsReports = data.active_alarms
       state.alarmsCount = data.alarmsCount
     }
   },
 
   getters: {
     timeRangeLabel(state) {
-      return state.timeRange !== 'custom' ? state.timeRageOptions.find((range) => range.value === state.timeRange).label : `${state.dateFrom} ${state.timeFrom} ~ ${state.dateTo} ${state.timeTo}`
+      return state.timeRange !== 'custom' ? state.timeRageOptions.find((range) => range.value === state.timeRange).label :
+        `${state.dateFrom} ${state.timeFrom} ~ ${state.dateTo} ${state.timeTo}`
     }
   }
 }

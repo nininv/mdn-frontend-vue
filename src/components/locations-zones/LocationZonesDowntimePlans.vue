@@ -131,8 +131,6 @@ import states from '../../services/data/states'
 
 import { mapState, mapActions } from 'vuex'
 
-const dateTimeIsoString = new Date().toISOString().substr(0, 10)
-
 export default {
   components: {
   },
@@ -238,7 +236,7 @@ export default {
     getTimeFromTimestamp(timestamp) {
       const date = timestamp !== -1 ? new Date(timestamp * 1000) : ''
 
-      return date !== '' ? `${date.toLocaleDateString()} ${date.toLocaleTimeString()}` : ''
+      return date !== '' ? `${date.toLocaleDateString('en-US')} ${date.toLocaleTimeString('en-US')}` : ''
     },
     getDowntimeReason(item) {
       const _reason = this.downtimeReasons.find((reason) => {

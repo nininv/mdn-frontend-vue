@@ -1,9 +1,9 @@
-import overviewState from './state'
-import overviewActions from './actions'
-import overviewMutations from './mutations'
+import generateState from './state'
+import generateActions from './actions'
+import generateMutations from './mutations'
 
 export default {
-  overviewState,
-  overviewActions,
-  overviewMutations
+  generateState,
+  generateActions,
+  generateMutations
 }
