@@ -68,7 +68,7 @@
       <v-card-text>
         <apexchart
           key="availability-chart"
-          height="400"
+          height="420"
           :series="chartOptions2.series"
           :options="chartOptions2"
         ></apexchart>
@@ -238,6 +238,7 @@ export default {
         },
         yaxis: {
           forceNiceScale: true,
+          min:0,
           labels: {
             offsetX: 10,
             formatter: (value) => {

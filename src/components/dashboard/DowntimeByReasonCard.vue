@@ -9,11 +9,11 @@
     <v-card-title>
       Downtime by Reason
     </v-card-title>
-    <v-card-text>
+    <v-card-text style="padding-bottom: 30px">
       <apexchart
         :options="chartOptions"
         :series="getDowntimeByReasonSeries"
-        height="400"
+        height="390"
       ></apexchart>
     </v-card-text>
   </v-card>
