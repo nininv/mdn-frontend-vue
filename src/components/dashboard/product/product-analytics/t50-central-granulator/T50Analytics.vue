@@ -24,19 +24,6 @@
         </area-graph>
       </v-col>
       <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-t50-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="4">
         <t50-running
           :loading="loadingT50Runnings"
           :states="t50Runnings"
@@ -110,7 +97,6 @@ export default {
     return {
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption,
       getT50BearingTemp: api.getT50BearingTemp,
       tempOptions: {
         plotOptions: {

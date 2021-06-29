@@ -16,14 +16,16 @@
         >
           <v-icon>$mdi-filter</v-icon>
         </v-btn>
-        <v-btn
-          v-if="canViewEquipmentAvailability || isNotOverrallOption"
-          class="ml-1"
-          color="primary"
-          @click="showDowntimeChart = false"
-        >
-          Equipment Availability
-        </v-btn>
+        <template v-if="$route.name==='dashboard-product'">
+          <v-btn
+            v-if="canViewEquipmentAvailability || isNotOverrallOption"
+            class="ml-1"
+            color="primary"
+            @click="showDowntimeChart = false"
+          >
+            Equipment Availability
+          </v-btn>
+        </template>
       </v-card-title>
       <v-card-text>
         <apexchart
@@ -42,29 +44,31 @@
       </time-range-chooser4>
     </div>
     <div v-else>
-      <v-card-title>
-        Equipment Availability
-        <v-spacer></v-spacer>
-        <v-btn
-          class="ml-1"
-          color="primary"
-          @click="showDowntimeChart = true"
-        >
-          Downtime
-        </v-btn>
-        <v-btn
-          v-if="canAddAvailabilityPlanTime"
-          class="ml-1"
-          color="primary"
-          @click="showPlanTimeForm = true"
-        >
-          Set Plan Time
-        </v-btn>
-      </v-card-title>
+      <template v-if="$route.name==='dashboard-product'">
+        <v-card-title>
+          Equipment Availability
+          <v-spacer></v-spacer>
+          <v-btn
+            class="ml-1"
+            color="primary"
+            @click="showDowntimeChart = true"
+          >
+            Downtime
+          </v-btn>
+          <v-btn
+            v-if="canAddAvailabilityPlanTime"
+            class="ml-1"
+            color="primary"
+            @click="showPlanTimeForm = true"
+          >
+            Set Plan Time
+          </v-btn>
+        </v-card-title>
+      </template>
       <v-card-text>
         <apexchart
           key="availability-chart"
-          height="400"
+          height="420"
           :series="chartOptions2.series"
           :options="chartOptions2"
         ></apexchart>
@@ -170,7 +174,8 @@ export default {
           bar: {
             borderRadius: 0,
             columnWidth: '70%',
-            horizontal: false
+            horizontal: false,
+            endingShape: 'rounded'
           }
         },
         dataLabels: {
@@ -189,7 +194,10 @@ export default {
           }
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          markers: {
+            radius: 12
+          }
         },
         colors: this.getSeriesColors,
         fill: {
@@ -230,6 +238,7 @@ export default {
         },
         yaxis: {
           forceNiceScale: true,
+          min:0,
           labels: {
             offsetX: 10,
             formatter: (value) => {

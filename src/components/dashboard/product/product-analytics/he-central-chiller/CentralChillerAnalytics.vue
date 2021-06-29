@@ -39,19 +39,6 @@
         </area-graph>
       </v-col>
       <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-centralChiller-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="4">
         <bar-graph
           namespace="barGraph-centralChiller-id1"
           title="Chiller temperature"
@@ -99,7 +86,6 @@ export default {
     return {
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption,
       getChillerTemperature: api.getChillerTemperature,
 
       circuits: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {

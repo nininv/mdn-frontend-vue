@@ -24,19 +24,6 @@
         </area-graph>
       </v-col>
       <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-ngxDryer-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="4">
         <hopper-states
           :loading="loadingStates"
           :hopper-states="hopperStates"
@@ -125,8 +112,6 @@ export default {
       getRegionAirTemperature: api.getRegionAirTemperature,
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption,
-
       temperatureOptions: {
         plotOptions: {
           bar: {

@@ -23,18 +23,19 @@
         >
         </area-graph>
       </v-col>
-      <v-col v-if="parameters.includes(2)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-accumeterBlender-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
+      <v-col v-if="parameters.includes(6)" cols="12" md="8">
+        <bar-graph
+          namespace="barGraph-accumeterBlender-recipe"
+          :persist="false"
+          title="Actual Target Recipe"
+          :height="360"
+          :fetch="getRecipe"
           :machine-id="machineId"
           :serial-number="serialNumber"
-          :names="['Energy Consumption']"
+          :names="['Actual', 'Target']"
+          :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6']"
         >
-        </area-graph>
+        </bar-graph>
       </v-col>
       <v-col v-if="parameters.includes(3)" cols="12" md="4">
         <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
@@ -54,20 +55,6 @@
           :names="['Process Rate']"
         >
         </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(6)" cols="12" md="8">
-        <bar-graph
-          namespace="barGraph-accumeterBlender-recipe"
-          :persist="false"
-          title="Actual Target Recipe"
-          :height="360"
-          :fetch="getRecipe"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Actual', 'Target']"
-          :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6']"
-        >
-        </bar-graph>
       </v-col>
       <v-col md="4" sm="12">
       </v-col>
@@ -112,7 +99,6 @@ export default {
     return {
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption,
       getProductionRate: api.getProductionRate,
       getRecipe: api.getRecipe
     }

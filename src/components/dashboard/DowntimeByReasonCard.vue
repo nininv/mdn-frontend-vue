@@ -9,11 +9,11 @@
     <v-card-title>
       Downtime by Reason
     </v-card-title>
-    <v-card-text>
+    <v-card-text style="padding-bottom: 30px">
       <apexchart
         :options="chartOptions"
         :series="getDowntimeByReasonSeries"
-        height="400"
+        height="390"
       ></apexchart>
     </v-card-text>
   </v-card>
@@ -81,7 +81,8 @@ export default {
               offsetX: -80
             },
             distributed: true,
-            space: 0.25
+            space: 0.25,
+            endingShape: 'rounded'
           }
         },
         xaxis: {
@@ -93,7 +94,9 @@ export default {
         colors: this.getSeriesColors,
         legend: {
           position: 'bottom',
-          offsetY: 10
+          markers: {
+            radius: 12
+          }
         },
         fill: {
           opacity: 1

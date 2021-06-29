@@ -24,19 +24,6 @@
         </area-graph>
       </v-col>
       <v-col cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-gpPortable-consumption"
-          title="Energy Consumption"
-          :height="220"
-          unit="kWH"
-          :fetch="getEnergyConsumption"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Energy Consumption']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="4">
         <bar-graph
           namespace="barGraph-portableChiller-id1"
           title="Process out temperature"
@@ -85,7 +72,6 @@ export default {
     return {
       getOverview: commonApi.getOverview,
       getUtilization: commonApi.getUtilization,
-      getEnergyConsumption: commonApi.getEnergyConsumption,
       getProcessOutTemperature: api.getProcessOutTemperature,
 
       temperatureOptions: {
