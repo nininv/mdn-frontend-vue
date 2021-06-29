@@ -6,6 +6,9 @@
   >
     <v-card-title>
       Device Downtimes
+      <template v-if="downtimeTableData.min_max">
+        ({{ getTimeFromTimestamp(downtimeTableData.min_max.start_value) }} - {{ getTimeFromTimestamp(downtimeTableData.min_max.end_value) }})
+      </template>
       <v-spacer></v-spacer>
       <v-btn
         class="ml-1"
