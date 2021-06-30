@@ -3,7 +3,7 @@
     <v-card-title>Amp</v-card-title>
     {{ graphSeries }}
     <v-card-text class="px-2">
-<!--       <apexchart
+      <!--       <apexchart
         v-if="!loading"
         type="radialBar"
         :height="300"
@@ -37,7 +37,7 @@ export default {
           type: 'radialBar'
         },
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary]
+          colors: [this.$vuetify.theme.themes.light.secondary]
         },
         plotOptions: {
           radialBar: {

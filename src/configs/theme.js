@@ -20,9 +20,9 @@ export default {
   // dark theme colors
   dark: {
     background: '#05090c',
-    surface: '#111b27',
-    primary: '#0096c7',
-    secondary: '#829099',
+    surface: '#5a5d61',
+    primary: '#c8c62e',
+    secondary: '#c8c62e',
     accent: '#82B1FF',
     error: '#ea344e',
     info: '#2196F3',
@@ -31,13 +31,13 @@ export default {
   },
   light: {
     background: '#ffffff',
-    surface: '#f2f5f8', //background on screen behind chart
-    surface2: '#bac8d2',
-    primary: '#092954', // darker accent color
-    secondary: '#508FF0', //lighter color // 002855
-    accent: '#003066', //almost same as primary
-    error: '#ea344e',
-    info: '#2196F3',
+    surface: '#5a5d61', //background on screen behind chart
+    surface2: '#eeeeef',
+    primary: '#0f2d52', // darker accent color
+    secondary: '#c8c62e', //lighter color // 002855
+    accent: '#096288', //almost same as primary
+    error: '#623266',
+    info: '#29b1b8',
     success: '#06d6a0',
     warning: '#ffd166',
     // custom colors

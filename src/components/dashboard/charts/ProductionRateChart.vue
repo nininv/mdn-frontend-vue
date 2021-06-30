@@ -44,7 +44,7 @@ export default {
           type: 'radialBar'
         },
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary]
+          colors: [this.$vuetify.theme.themes.light.secondary]
         },
         plotOptions: {
           radialBar: {

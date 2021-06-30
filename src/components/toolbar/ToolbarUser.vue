@@ -8,7 +8,6 @@
           v-on="on"
         >
           <v-avatar
-            color="primary"
             size="28"
           >
             <span class="white--text">{{ username | initials }}</span>

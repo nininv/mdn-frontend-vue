@@ -111,9 +111,9 @@ export default {
             endingShape: 'rounded'
           }
         },
-        colors: ['#1c526b', '#cf5717'],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary],
         fill: {
-          colors: ['#1c526b', '#cf5717']
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary]
         },
         xaxis: {
           categories: ['Bearing Temp 1', 'Bearing Temp 2'],

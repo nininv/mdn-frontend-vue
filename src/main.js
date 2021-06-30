@@ -43,7 +43,6 @@ import 'animate.css/animate.min.css'
 
 // Set this to false to prevent the production tip on Vue startup.
 Vue.config.productionTip = false
-
 /*
 |---------------------------------------------------------------------
 | Main Vue Instance

@@ -262,19 +262,19 @@ export default {
         }, {
           name: 'Primary',
           key: 'color_primary',
-          color: '#ffffff'
+          color: '#096288'
         }, {
           name: 'Secondary',
           key: 'color_secondary',
-          color: '#ffffff'
+          color: '#c8c62e'
         }, {
           name: 'Accent',
           key: 'color_accent',
-          color: '#ffffff'
+          color: '#0f2d52'
         }, {
           name: 'Surface',
           key: 'color_surface',
-          color: '#ffffff'
+          color: '#29b1b8'
         }
       ]
     }
@@ -383,10 +383,10 @@ export default {
       this.resetSettings().then(() => {
         this.setInitialSetting({}).then(() => {
           this.$vuetify.theme.themes.light.background = '#ffffff'
-          this.$vuetify.theme.themes.light.primary = '#092954'
-          this.$vuetify.theme.themes.light.secondary = '#508FF0'
-          this.$vuetify.theme.themes.light.accent = '#003066'
-          this.$vuetify.theme.themes.light.surface = '#f2f5f8'
+          this.$vuetify.theme.themes.light.primary = '#096288'
+          this.$vuetify.theme.themes.light.secondary = '#c8c62e'
+          this.$vuetify.theme.themes.light.accent = '#0f2d52'
+          this.$vuetify.theme.themes.light.surface = '#29b1b8'
         })
       })
     },
