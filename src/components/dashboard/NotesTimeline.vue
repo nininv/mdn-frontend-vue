@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="primary--text">Notes & Timeline</span>
+      <span>Notes & Timeline</span>
     </v-card-title>
     <v-card-text>
       <v-timeline>

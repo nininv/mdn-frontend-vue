@@ -116,8 +116,9 @@ export default {
             }
           }
         },
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.secondary],
         fill: {
-          colors: ['#FF0000', '#FFDD00', '#00AAFF']
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.secondary]
         },
         labels: this.labels,
         legend: {

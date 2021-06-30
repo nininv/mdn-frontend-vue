@@ -142,22 +142,22 @@ import DowntimeLegend from './dashboard-tables/DashboardMachinesTableLegend'
 
 const seriesColors = [{
   name: 'No Demand',
-  color: '#a4bcbb'
+  color: '#eeeeef'
 }, {
   name: 'Preventative Maintenance',
-  color: '#508FF0'
+  color: '#0f2d52'
 }, {
   name: 'Machine Failure',
-  color: '#06d6a0'
+  color: '#29b1b8'
 }, {
   name: 'Power Outage',
-  color: '#505554'
+  color: '#5a5d61'
 }, {
   name: 'Other',
-  color: '#ffd166'
+  color: '#c8c62e'
 }, {
   name: 'Change Over',
-  color: '#ea344e'
+  color: '#623666'
 }]
 
 export default {
@@ -291,7 +291,7 @@ export default {
             show: false
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+        colors: [this.$vuetify.theme.themes.light.background, this.$vuetify.theme.themes.light.accent, this.$vuetify.theme.themes.light.surface, '#5a5d61', this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         noData: {
           text: 'No Data From Devce'
         },

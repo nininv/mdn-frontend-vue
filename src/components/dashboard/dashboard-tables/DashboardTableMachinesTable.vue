@@ -106,22 +106,22 @@ import DowntimeLegend from './DashboardTableDowntimeLegend'
 
 const seriesColors = [{
   name: 'No Demand',
-  color: '#a4bcbb'
+  color: '#eeeeef'
 }, {
   name: 'Preventative Maintenance',
-  color: '#508FF0'
+  color: '#012d52'
 }, {
   name: 'Machine Failure',
-  color: '#06d6a0'
+  color: '#29b1b8'
 }, {
   name: 'Power Outage',
-  color: '#505554'
+  color: '#5a5d61'
 }, {
   name: 'Other',
-  color: '#ffd166'
+  color: '#c8c62e'
 }, {
   name: 'Change Over',
-  color: '#ea344e'
+  color: '#623666'
 }]
 
 export default {

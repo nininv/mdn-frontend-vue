@@ -93,9 +93,9 @@ export default {
             endingShape: 'rounded'
           }
         },
-        colors: ['#1c526b', '#cf5717', '#b5880d'],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         fill: {
-          colors: ['#1c526b', '#cf5717', '#b5880d']
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error]
         },
         xaxis: {
           categories: ['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1'],

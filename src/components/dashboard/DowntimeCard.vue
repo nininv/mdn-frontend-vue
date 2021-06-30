@@ -91,22 +91,22 @@ const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 const seriesColors = [{
   name: 'No Demand',
-  color: '#a4bcbb'
+  color: '#eeeeef'
 }, {
   name: 'Preventative Maintenance',
-  color: '#508FF0'
+  color: '#0f2d52'
 }, {
   name: 'Machine Failure',
-  color: '#06d6a0'
+  color: '#29b1b8'
 }, {
   name: 'Power Outage',
-  color: '#505554'
+  color: '#5a5d61'
 }, {
   name: 'Other',
-  color: '#ffd166'
+  color: '#c8c62e'
 }, {
   name: 'Change Over',
-  color: '#ea344e'
+  color: '#623266'
 }, {
   name: 'Average Downtime',
   color: '#ba7d55'
@@ -299,7 +299,7 @@ export default {
           return data.name === item.name
         })
 
-        _colors.push(seriesColor ? seriesColor.color : '#fff')
+        _colors.push(seriesColor ? seriesColor.color : '#f1f1cb')
 
         return _colors
       })
