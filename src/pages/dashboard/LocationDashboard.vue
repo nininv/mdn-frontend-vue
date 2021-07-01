@@ -147,7 +147,7 @@ export default {
 
       this.$router.push({
         name: 'acs-machines'
-      })
+      }).catch((error) => {})
 
     }
   }

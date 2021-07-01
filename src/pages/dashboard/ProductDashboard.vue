@@ -282,7 +282,48 @@ export default {
       }
     }
   },
+  watch: {
+    async $route(to, from) {
+      if (this.canViewCompanies)
+        this.initAcsDashboard()
+      this.getLocations()
+      this.getZones()
 
+      await this.getDeviceConfiguration(to.params.productId)
+      const now = new Date().getTime()
+      const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+
+      this.getDowntimeGraphData({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        machine_id: to.params.configurationId,
+        serial_number: to.params.productId,
+        from: nowMinus24Hours,
+        to: now
+      })
+
+      this.getDowntimeByTypeGraphSeries({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        machine_id: to.params.configurationId,
+        serial_number: to.params.productId,
+        from: nowMinus24Hours,
+        to: now
+      })
+
+      this.getDowntimeByReasonGraphSeries({
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: 0,
+        machine_id: to.params.configurationId,
+        serial_number: to.params.productId,
+        from: nowMinus24Hours,
+        to: now
+      })
+      if (!this.error) {
+        this.getNotes(to.params.productId)
+      }
+    }
+  },
   async mounted() {
     if (this.canViewCompanies)
       this.initAcsDashboard()

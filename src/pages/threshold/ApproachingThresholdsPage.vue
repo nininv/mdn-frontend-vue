@@ -69,7 +69,7 @@ export default {
     return {
       headers: [
         { text: 'Id', sortable: false, value: 'id' },
-        { text: 'Device name', sortable: false, value: 'device_name' },
+        { text: 'Machine name', sortable: false, value: 'machine_name' },
         { text: 'Condition', sortable: false, value: 'option' },
         { text: 'Last Triggered at (EST)', value: 'approaching_triggered_time' }
       ],

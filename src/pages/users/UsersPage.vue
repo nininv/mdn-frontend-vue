@@ -137,7 +137,7 @@ export default {
       isLoading: false,
       breadcrumbs: [{
         text: 'Users',
-        disabled: false,
+        disabled: true,
         href: '#'
       }, {
         text: 'List'

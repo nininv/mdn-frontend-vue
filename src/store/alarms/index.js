@@ -13,7 +13,7 @@ const module = {
     dateRange: {},
     selectedMachineName: {},
     isAlarmsReportLoading: false,
-    alarmsReports: {},
+    alarmsReports: [],
     alarmsCount: 0,
     timeRangeOptions: [
       {

@@ -295,13 +295,13 @@ export default {
     rowClicked(item) {
       switch (this.tableType) {
       case 'location':
-        this.$router.push({ path: item.id.toString(), append: true })
+        this.$router.push({ path: item.id.toString(), append: true }).catch((error) => {})
         break
       case 'zone':
-        this.$router.push({ path: item.id.toString(), append: true })
+        this.$router.push({ path: item.id.toString(), append: true }).catch((error) => {})
         break
       case 'machine':
-        this.$router.push({ path: item.machine_id + '/' + item.serial_number, append: true })
+        this.$router.push({ path: item.machine_id + '/' + item.serial_number, append: true }).catch((error) => {})
         break
       default:
         break 

@@ -73,7 +73,7 @@ export default {
             configurationId: item.machine_id,
             productId: item.device_id
           }
-        })
+        }).catch ((error) => {})
       } else {
         this.$router.push({
           name: 'product-details',
@@ -81,7 +81,7 @@ export default {
             configurationId: item.machine_id,
             productId: item.device_id
           }
-        })
+        }).catch((error) => {})
       }
 
       this.$emit('close')
