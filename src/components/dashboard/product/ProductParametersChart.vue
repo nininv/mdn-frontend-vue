@@ -137,7 +137,7 @@ export default {
           showForSingleSeries: true,
           showForNullSeries: true,
           showForZeroSeries: true,
-          horizontalAlign: 'left',
+          horizontalAlign: 'center',
           offsetX: 40,
           markers: {
             fillColors: this.colors

@@ -101,9 +101,9 @@
   </v-dialog>
 </template>
 <script>
-import { mapState } from 'vuex'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREWEEK = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   props: {
@@ -115,8 +115,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          timeRangeOption: 'last24Hours',
-          dateFrom: TODAY,
+          timeRangeOption: 'last7Days',
+          dateFrom: BEFOREWEEK,
           dateTo: TODAY,
           timeFrom: '00:00',
           timeTo: '00:00'

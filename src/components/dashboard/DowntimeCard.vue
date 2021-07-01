@@ -31,7 +31,7 @@
         <apexchart
           key="downtimegraph"
           :series="chartOptions1.series"
-          height="400"
+          height="420"
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
@@ -65,10 +65,10 @@
           </v-btn>
         </v-card-title>
       </template>
-      <v-card-text>
+      <v-card-text style="padding-bottom: 30px;">
         <apexchart
           key="availability-chart"
-          height="420"
+          height="400"
           :series="chartOptions2.series"
           :options="chartOptions2"
         ></apexchart>
@@ -83,11 +83,12 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import TimeRangeChooser4 from './TimeRangeChooser4'
 import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREWEEK = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
 
 const seriesColors = [{
   name: 'No Demand',
@@ -122,8 +123,8 @@ export default {
       showTimeRangeChooser: false,
       showPlanTimeForm: false,
       selectedTimeRange: {
-        timeRangeOption: 'last24Hours',
-        dateFrom: TODAY,
+        timeRangeOption: 'last7Days',
+        dateFrom: BEFOREWEEK,
         dateTo: TODAY,
         timeFrom: '00:00',
         timeTo: '00:00'
@@ -195,6 +196,7 @@ export default {
         },
         legend: {
           position: 'bottom',
+          offsetY:-8,
           markers: {
             radius: 12
           }
@@ -257,7 +259,8 @@ export default {
           }
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          offsetY:-13
         }
       }
     },
@@ -272,23 +275,19 @@ export default {
         const from = new Date(this.timeRangeFromTo(tR).from)
         const to = new Date(this.timeRangeFromTo(tR).to)
 
-        const timeRange = {
+        return {
           dateFrom: from.toLocaleDateString('en-US'),
           dateTo: to.toLocaleDateString('en-US'),
           timeFrom: from.toLocaleTimeString('en-US'),
           timeTo: to.toLocaleTimeString('en-US')
         }
-
-        return timeRange
       } else {
-        const timeRange = {
+        return {
           dateFrom: this.selectedTimeRange.dateFrom,
           dateTo: this.selectedTimeRange.dateTo,
           timeFrom: this.selectedTimeRange.timeFrom,
           timeTo: this.selectedTimeRange.timeTo
         }
-
-        return timeRange
       }
     },
     getSeriesColors() {
@@ -323,6 +322,27 @@ export default {
     },
     isNotOverrallOption() {
       return this.selectedCompany && this.selectedCompany.id !== 0
+    },
+    routeParams() {
+      const location_id = this.$route.params.location ? this.$route.params.location : 0
+      const zone_id = this.$route.params.zone ? this.$route.params.zone : 0
+
+      if (this.$route.name === 'dashboard-product') {
+        return {
+          location_id,
+          zone_id,
+          company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+          machine_id: this.$route.params.configurationId,
+          serial_number: this.$route.params.productId
+        }
+      }
+
+      return {
+        location_id,
+        zone_id,
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0
+      }
+
     }
   },
   methods: {
@@ -349,12 +369,9 @@ export default {
       } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
         this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
       } else {
-        const location_id = this.$route.params.location ? this.$route.params.location : 0
-        const zone_id = this.$route.params.zone ? this.$route.params.zone : 0
-
-        this.getDowntimeGraphData({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
-        this.getDowntimeByTypeGraphSeries({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
-        this.getDowntimeByReasonGraphSeries({ to, from, company_id: this.selectedCompany ? this.selectedCompany.id : 0, location_id, zone_id })
+        this.getDowntimeGraphData({ to, from, ...this.routeParams })
+        this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
+        this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })
         this.showTimeRangeChooser = false
       }
     },

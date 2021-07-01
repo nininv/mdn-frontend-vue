@@ -40,7 +40,7 @@ const timeRangeDataToolLabel = (state) => (timeRange) => {
 const timeRangeFromTo = (state) => (timeRange) => {
   if (timeRange.timeRangeOption !== 'custom') {
     const tr = state.timeRangeOptions.find((item) => item.value === timeRange.timeRangeOption)
-    const trOption = tr ? tr.value : 'last24Hours'
+    const trOption = tr ? tr.value : 'last7Days'
     const dateGetTime = new Date().getTime()
 
     switch (trOption) {
