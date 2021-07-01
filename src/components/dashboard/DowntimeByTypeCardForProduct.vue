@@ -26,7 +26,7 @@
     <v-card-text style="padding-bottom: 50px;">
       <apexchart
         :options="chartOptions"
-        height="370"
+        height="380"
         :series="getDowntimeByTypeSeries"
       ></apexchart>
     </v-card-text>
@@ -88,6 +88,7 @@ export default {
         colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         legend: {
           position: 'bottom',
+          offsetY:8,
           markers: {
             radius: 12,
             offsetY: 40

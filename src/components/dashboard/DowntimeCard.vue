@@ -31,7 +31,7 @@
         <apexchart
           key="downtimegraph"
           :series="chartOptions1.series"
-          height="400"
+          height="420"
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
@@ -65,10 +65,10 @@
           </v-btn>
         </v-card-title>
       </template>
-      <v-card-text>
+      <v-card-text style="padding-bottom: 30px;">
         <apexchart
           key="availability-chart"
-          height="420"
+          height="400"
           :series="chartOptions2.series"
           :options="chartOptions2"
         ></apexchart>
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import TimeRangeChooser4 from './TimeRangeChooser4'
 import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
@@ -195,6 +195,7 @@ export default {
         },
         legend: {
           position: 'bottom',
+          offsetY:-8,
           markers: {
             radius: 12
           }
@@ -257,7 +258,8 @@ export default {
           }
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          offsetY:-13
         }
       }
     },
@@ -272,23 +274,19 @@ export default {
         const from = new Date(this.timeRangeFromTo(tR).from)
         const to = new Date(this.timeRangeFromTo(tR).to)
 
-        const timeRange = {
+        return {
           dateFrom: from.toLocaleDateString('en-US'),
           dateTo: to.toLocaleDateString('en-US'),
           timeFrom: from.toLocaleTimeString('en-US'),
           timeTo: to.toLocaleTimeString('en-US')
         }
-
-        return timeRange
       } else {
-        const timeRange = {
+        return {
           dateFrom: this.selectedTimeRange.dateFrom,
           dateTo: this.selectedTimeRange.dateTo,
           timeFrom: this.selectedTimeRange.timeFrom,
           timeTo: this.selectedTimeRange.timeTo
         }
-
-        return timeRange
       }
     },
     getSeriesColors() {

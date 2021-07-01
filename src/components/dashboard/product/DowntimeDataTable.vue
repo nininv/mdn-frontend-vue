@@ -88,42 +88,38 @@
         :options.sync="options"
         @update:options="updateDowntimeData"
       >
-        <template v-slot:item.device_id="{ item }">
-          <span>{{ item.machine_name }}</span>
-        </template>
-
-        <template v-slot:item.location="{ item }">
-          <span>{{ item.location_name }}</span>
-        </template>
-
-        <template v-slot:item.zone="{ item }">
-          <span>{{ item.zone_name }}</span>
-        </template>
-
-        <template v-slot:item.start_time="{ item }">
-          <span>{{ getTimeFromTimestamp(item.start_time) }}</span>
-        </template>
-
-        <template v-slot:item.end_time="{ item }">
-          <span>{{ getTimeFromTimestamp(item.end_time) }}</span>
-        </template>
-
-        <template v-slot:item.type="{ item }">
-          <span>{{ item.downtime_type_name }}</span>
-        </template>
-
-        <template v-slot:item.reason_id="{ item }">
-          <span>{{ getDowntimeReason(item) }}</span>
-        </template>
-
-        <template v-slot:item.comment="{ item }">
-          <span>{{ printComment(item) }}</span>
-        </template>
-
-        <template v-slot:item.actions="{ item }">
-          <v-btn icon @click="editPlan(item)">
-            <v-icon small>$mdi-pencil</v-icon>
-          </v-btn>
+        <template v-slot:item="{ item }">
+          <tr :class="getDowntimeReason(item)">
+            <td>
+              <span>{{ item.machine_name }}</span>
+            </td>
+            <td>
+              <span>{{ item.location_name }}</span>
+            </td>
+            <td>
+              <span>{{ item.zone_name }}</span>
+            </td>
+            <td>
+              <span>{{ getTimeFromTimestamp(item.start_time) }}</span>
+            </td>
+            <td>
+              <span>{{ getTimeFromTimestamp(item.end_time) }}</span>
+            </td>
+            <td>
+              <span>{{ item.downtime_type_name }}</span>
+            </td>
+            <td>
+              <span>{{ getDowntimeReason(item) }}</span>
+            </td>
+            <td>
+              <span>{{ printComment(item) }}</span>
+            </td>
+            <td>
+              <v-btn icon @click="editPlan(item)">
+                <v-icon small>$mdi-pencil</v-icon>
+              </v-btn>
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </v-card-text>
@@ -265,3 +261,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+tr.Other{
+  background-color: #eedc5b;
+}
+</style>
