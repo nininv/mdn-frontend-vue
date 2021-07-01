@@ -380,7 +380,7 @@ export default {
             configurationId: item.machine_id,
             productId: item.serial_number
           }
-        })
+        }).catch((error) => {})
       } else {
         this.$router.push({
           name: 'product-details',
@@ -388,7 +388,7 @@ export default {
             configurationId: item.machine_id,
             productId: item.serial_number
           }
-        })
+        }).catch((error) => {})
       }
     },
     remove (item) {
