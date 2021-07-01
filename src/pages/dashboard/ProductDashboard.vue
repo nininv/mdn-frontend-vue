@@ -292,13 +292,14 @@ export default {
       await this.getDeviceConfiguration(to.params.productId)
       const now = new Date().getTime()
       const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
 
       this.getDowntimeGraphData({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         machine_id: to.params.configurationId,
         serial_number: to.params.productId,
-        from: nowMinus24Hours,
+        from: before7days,
         to: now
       })
 
@@ -307,7 +308,7 @@ export default {
         location_id: 0,
         machine_id: to.params.configurationId,
         serial_number: to.params.productId,
-        from: nowMinus24Hours,
+        from: before7days,
         to: now
       })
 
@@ -316,7 +317,7 @@ export default {
         location_id: 0,
         machine_id: to.params.configurationId,
         serial_number: to.params.productId,
-        from: nowMinus24Hours,
+        from: before7days,
         to: now
       })
       if (!this.error) {
