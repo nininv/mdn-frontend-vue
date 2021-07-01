@@ -23,7 +23,7 @@
         <downtime-data-table @closed="showDowntimeTable=false"></downtime-data-table>
       </v-dialog>
     </v-card-title>
-    <v-card-text>
+    <v-card-text style="padding-bottom: 35px;">
       <apexchart
         :options="chartOptions"
         height="400"
@@ -88,7 +88,10 @@ export default {
         },
         legend: {
           position: 'bottom',
-          offsetY: 10
+          offsetY: 7,
+          markers: {
+            radius: 12
+          }
         },
         fill: {
           opacity: 1
