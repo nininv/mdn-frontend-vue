@@ -163,6 +163,7 @@ export default {
   data () {
     return {
       headers: [
+        { text: 'Machine Name', value: 'machine_name' },
         { text: 'Condition', sortable: false, value: 'tag_name' },
         { text: 'Operator', value: 'operator' },
         { text: 'Value', value: 'value' },
