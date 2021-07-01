@@ -260,7 +260,7 @@ export default {
         },
         legend: {
           position: 'bottom',
-          offsetY:-13
+          offsetY:-5
         }
       }
     },
