@@ -286,15 +286,15 @@ export default {
   async mounted() {
     if (this.canViewCompanies)
       this.initAcsDashboard()
-    await this.getLocations()
-    await this.getZones()
+    this.getLocations()
+    this.getZones()
 
     await this.getDeviceConfiguration(this.$route.params.productId)
 
     const now = new Date().getTime()
     const nowMinus24Hours = now - 60 * 60 * 24 * 1000
 
-    await this.getDowntimeGraphData({
+    this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
       machine_id: this.$route.params.configurationId,
@@ -303,7 +303,7 @@ export default {
       to: now
     })
 
-    await this.getDowntimeByTypeGraphSeries({
+    this.getDowntimeByTypeGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
       machine_id: this.$route.params.configurationId,
@@ -312,7 +312,7 @@ export default {
       to: now
     })
 
-    await this.getDowntimeByReasonGraphSeries({
+    this.getDowntimeByReasonGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
       machine_id: this.$route.params.configurationId,
@@ -321,7 +321,7 @@ export default {
       to: now
     })
     if (!this.error) {
-      await this.getNotes(this.$route.params.productId)
+      this.getNotes(this.$route.params.productId)
     }
   },
 
