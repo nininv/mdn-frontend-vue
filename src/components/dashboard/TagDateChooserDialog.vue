@@ -19,29 +19,14 @@
           class="my-2"
         >
         </v-autocomplete>
-        <v-row>
-          <v-col cols="5">
-            <v-radio-group
-              v-model="locTimeRangeOption"
-            >
-              <v-radio
-                v-for="(item, i) in timeRangeOptions"
-                :key="i"
-                :label="item.label"
-                :value="item.value"
-              ></v-radio>
-            </v-radio-group>
-          </v-col>
-          <v-col cols="7">
-            <v-date-picker
-              id="picker2"
-              v-model="dates"
-              range
-              :disabled="locTimeRangeOption!=='custom'"
-              class="mt-6"
-            ></v-date-picker>
-          </v-col>
-        </v-row>
+
+        <date-range-chooser
+          :time-range="locTimeRange"
+          allow-custom
+          show-short-intervals
+          @change="onChange"
+        />
+
         <div class="text-right">
           <v-btn color="primary" text @click="$emit('close')">Cancel</v-btn>
           <v-btn color="primary" @click="apply">Apply</v-btn>
@@ -52,8 +37,14 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
+import DateRangeChooser from '../common/DateRangeChooser.vue'
+
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
+  components: {
+    DateRangeChooser
+  },
   props: {
     dlg: {
       type: Boolean,
@@ -84,12 +75,15 @@ export default {
   data () {
     return {
       locTimeRangeOption: this.timeRange.timeRangeOption,
+      locDateFrom: this.timeRange.dateFrom,
+      locDateTo: this.timeRange.dateTo,
       dates: this.timeRange.dates,
-      locSelectedTags: this.selectedTags
+      locSelectedTags: this.selectedTags,
+      locTimeRange: this.timeRange
     }
   },
   computed: {
-    ...mapState('machines', ['timeRangeOptions']),
+    // ...mapState('machines', ['timeRangeOptions']),
     ...mapGetters('machines', ['timeRangeFromTo']),
     groupedTags() {
       if (this.noAlarms) {
@@ -112,23 +106,31 @@ export default {
     },
     timeRange (newValue) {
       this.locTimeRangeOption = newValue.timeRangeOption
+
+      this.locTimeRange = {
+        timeRangeOption: newValue.timeRangeOption,
+        dateFrom: newValue.dates[0],
+        dateTo: newValue.dates[1]
+      }
     },
     locTimeRangeOption (newValue) {
       if (newValue !== 'custom') {
-        const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
         const tR = {
           timeRangeOption: newValue,
           dates: [TODAY, TODAY]
         }
 
-        this.dates = [
-          new Date(this.timeRangeFromTo(tR).from).toISOString().substr(0, 10),
-          new Date(this.timeRangeFromTo(tR).to).toISOString().substr(0, 10)
-        ]
+        this.locDateFrom = new Date(this.timeRangeFromTo(tR).from).toISOString().substr(0, 10)
+        this.locDateTo = new Date(this.timeRangeFromTo(tR).to).toISOString().substr(0, 10)
       }
     }
   },
   methods: {
+    onChange(newValue) {
+      this.locTimeRangeOption = newValue.timeRangeOption
+      this.locDateFrom = newValue.dateFrom
+      this.locDateTo = newValue.dateTo
+    },
     dlgBtnClicked() {
       this.$emit('close')
     },
@@ -136,7 +138,10 @@ export default {
       this.$emit('submit', {
         timeRange: {
           timeRangeOption: this.locTimeRangeOption,
-          dates: this.dates
+          dates: [
+            this.locDateFrom,
+            this.locDateTo
+          ]
         },
         selectedTags: this.locSelectedTags
       })

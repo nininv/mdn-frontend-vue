@@ -34,26 +34,27 @@
       >
       </apexchart>
     </v-card-text>
-    <time-range-chooser
+    <date-range-chooser-dialog
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
+      show-short-intervals
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
     >
-    </time-range-chooser>
+    </date-range-chooser-dialog>
   </v-card>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Store from './store'
-import TimeRangeChooser from '../../../TimeRangeChooser'
+import DateRangeChooserDialog from '../../../../common/DateRangeChooserDialog.vue'
 import dynamicStoreMixin from '../dynamicStoreMixin'
 
 export default {
   name: 'AreaGraph',
   components: {
-    TimeRangeChooser
+    DateRangeChooserDialog
   },
   mixins: [dynamicStoreMixin],
   props: {

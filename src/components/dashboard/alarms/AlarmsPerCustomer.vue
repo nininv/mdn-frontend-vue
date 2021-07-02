@@ -35,13 +35,6 @@
             >
             </v-select>
           </v-col>
-          <!-- <time-range-chooser
-            :dlg="showTimeRangeChooser"
-            :time-range="timeRange"
-            @close="showTimeRangeChooser = false"
-            @submit="onTimeRangeChanged"
-          >
-          </time-range-chooser> -->
         </v-row>
         <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
       </v-card-text>
@@ -52,16 +45,9 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-// import TimeRangeChooser from '../TimeRangeChooser1'
-
 export default {
-  components: {
-    // TimeRangeChooser
-  },
-
   data() {
     return {
-      showTimeRangeChooser: false,
       loading: false,
       selectedCompany: 0,
       selectedConfiguration: 1

@@ -1,0 +1,284 @@
+<template>
+  <div
+    :class="{
+      'd-flex': horizontalLayout
+    }"
+  >
+    <!-- range options -->
+    <v-radio-group v-model="locTimeRangeOption" class="datetime-range-options flex-grow-1">
+      <v-radio
+        v-for="(item, i) in rangeOptions"
+        :key="i"
+        :label="item.label"
+        :value="item.value"
+      ></v-radio>
+    </v-radio-group>
+
+    <!-- custom pickers -->
+    <v-expand-transition v-if="allowCustom">
+      <div v-show="locTimeRangeOption === 'custom'" class="flex-grow-1">
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <v-menu
+              ref="dateFrom"
+              v-model="dateFromMenu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              width="250px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="locDateFrom"
+                  label="From Date"
+                  prepend-icon="$mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="locDateFrom"
+                no-title
+                scrollable
+                @input="dateFromMenu = false"
+              >
+              </v-date-picker>
+            </v-menu>
+            <v-menu
+              ref="dateTo"
+              v-model="dateToMenu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              width="250px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="locDateTo"
+                  label="To Date"
+                  prepend-icon="$mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="locDateTo"
+                no-title
+                scrollable
+                @input="dateToMenu = false"
+              >
+              </v-date-picker>
+            </v-menu>
+          </div>
+          <div v-if="hasTimePicker" class="flex-grow-1">
+            <v-menu
+              ref="timeFrom"
+              v-model="timeFromMenu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="locTimeFrom"
+              transition="scale-transition"
+              offset-y
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="locTimeFrom"
+                  label="From Time"
+                  prepend-icon="$mdi-clock-time-four-outline"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-time-picker
+                v-if="timeFromMenu"
+                v-model="locTimeFrom"
+                @click:minute="$refs.timeFrom.save(locTimeFrom)"
+              ></v-time-picker>
+            </v-menu>
+
+            <v-menu
+              ref="timeTo"
+              v-model="timeToMenu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="locTimeTo"
+              transition="scale-transition"
+              offset-y
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="locTimeTo"
+                  label="To Time"
+                  prepend-icon="$mdi-clock-time-four-outline"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-time-picker
+                v-if="timeToMenu"
+                v-model="locTimeTo"
+                @click:minute="$refs.timeTo.save(locTimeTo)"
+              ></v-time-picker>
+            </v-menu>
+          </div>
+        </div>
+      </div>
+    </v-expand-transition>
+  </div>
+</template>
+
+<script>
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const DATE_PRESET = [{
+  label: 'Last 24 hours',
+  value: 'last24Hours'
+}, {
+  label: 'Last 48 hours',
+  value: 'last48Hours'
+}, {
+  label: 'Last 3 days',
+  value: 'last3Days'
+}, {
+  label: 'Last 7 days',
+  value: 'last7Days'
+}, {
+  label: 'Last 14 days',
+  value: 'last14Days'
+}, {
+  label: 'Last 24 days',
+  value: 'last24Days'
+}]
+
+const DATETIME_PRESET = [{
+  label: 'Last 30 minutes',
+  value: 'last30Min'
+}, {
+  label: 'Last hour',
+  value: 'lastHour'
+}, {
+  label: 'Last 4 hours',
+  value: 'last4Hours'
+}, {
+  label: 'Last 12 hours',
+  value: 'last12Hours'
+},
+...DATE_PRESET
+]
+
+export default {
+  props: {
+    allowCustom: {
+      type: Boolean,
+      default: false
+    },
+    hasTimePicker: {
+      type: Boolean,
+      default: false
+    },
+    showShortIntervals: {
+      type: Boolean,
+      default: false
+    },
+    limitTwoWeeks: {
+      type: Boolean,
+      default: false
+    },
+    timeRangeOptions: {
+      type: Array,
+      default: () => []
+    },
+    timeRange: {
+      type: Object,
+      default: () => {
+        return {
+          timeRangeOption: 'last24Hours',
+          dateFrom: TODAY,
+          dateTo: TODAY,
+          timeFrom: '00:00',
+          timeTo: '00:00'
+        }
+      }
+    },
+    horizontalLayout: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      locTimeRangeOption: this.timeRange.timeRangeOption,
+      dateFromMenu: false,
+      timeFromMenu: false,
+      dateToMenu: false,
+      timeToMenu: false,
+      locDateFrom: this.timeRange.dateFrom,
+      locTimeFrom: this.timeRange.timeFrom,
+      locDateTo: this.timeRange.dateTo,
+      locTimeTo: this.timeRange.timeTo
+    }
+  },
+  computed: {
+    rangeOptions() {
+      let options = []
+
+      if (this.timeRangeOptions.length > 0) {
+        options = this.timeRangeOptions
+      } else {
+        options = this.showShortIntervals ? DATETIME_PRESET.slice(0) : DATE_PRESET.slice(0)
+      }
+
+      if (this.limitTwoWeeks) {
+        options.pop()
+      }
+
+      if (this.allowCustom) {
+        options.push({
+          label: 'Custom',
+          value: 'custom'
+        })
+      }
+
+      return options
+    }
+  },
+  watch: {
+    timeRange (newValue) {
+      this.locTimeRangeOption = newValue.timeRangeOption
+      this.locDateFrom = newValue.dateFrom
+      this.locTimeFrom = newValue.timeFrom
+      this.locDateTo = newValue.dateTo
+      this.locTimeTo = newValue.timeTo
+    },
+    locTimeRangeOption() { this.onChange() },
+    locDateFrom() { this.onChange() },
+    locTimeFrom() { this.onChange() },
+    locDateTo() { this.onChange() },
+    locTimeTo() { this.onChange() }
+
+  },
+  methods: {
+    onChange() {
+      this.$emit('change', {
+        timeRangeOption: this.locTimeRangeOption,
+        dateFrom: this.locDateFrom,
+        dateTo: this.locDateTo,
+        timeFrom: this.locTimeFrom,
+        timeTo: this.locTimeTo
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.datetime-range-options {
+  .v-input--radio-group__input {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+</style>

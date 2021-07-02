@@ -1,6 +1,14 @@
 <template>
   <div>
-    <report-time-range-chooser ref="timeRange"></report-time-range-chooser>
+    <date-range-chooser
+      allow-custom
+      show-short-intervals
+      has-time-picker
+      limit-two-weeks
+      horizontal-layout
+      :time-range="timeRange"
+      @change="onChange"
+    />
     <v-card>
       <v-card-title class="pb-0">Date and Time</v-card-title>
       <v-card-text class="mt-0">Select Date and Time for the report</v-card-text>
@@ -44,14 +52,13 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
-
-import ReportTimeRangeChooser from './ReportTimeRangeChooser'
+import DateRangeChooser from '@/components/common/DateRangeChooser.vue'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   components: {
-    ReportTimeRangeChooser
+    DateRangeChooser
   },
   props: {
     selectedTags: {
@@ -76,6 +83,9 @@ export default {
     })
   },
   methods: {
+    onChange(newValue) {
+      this.timeRange = newValue
+    },
     getMachineName(id) {
       const machine =  this.reportMachines.find((machine) => machine.device_id === parseInt(id))
 
@@ -83,12 +93,6 @@ export default {
     },
     handleNext() {
       let customRange = 0
-
-      this.timeRange['timeRangeOption'] = this.$refs.timeRange.locTimeRangeOption
-      this.timeRange['dateFrom'] = this.$refs.timeRange.locDateFrom
-      this.timeRange['dateTo'] = this.$refs.timeRange.locDateTo
-      this.timeRange['timeFrom'] = this.$refs.timeRange.locTimeFrom
-      this.timeRange['timeTo'] = this.$refs.timeRange.locTimeTo
 
       if (this.timeRange.timeRangeOption === 'custom') {
         customRange = new Date(`${this.timeRange.dateTo} ${this.timeRange.timeTo}`).getTime() - new Date(`${this.timeRange.dateFrom} ${this.timeRange.timeFrom}`).getTime()

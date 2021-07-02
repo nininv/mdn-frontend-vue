@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-card-title>{{ getLocationName() }}</v-card-title>
-    <report-time-range-chooser ref="timeRange"></report-time-range-chooser>
+    <date-range-chooser
+      show-short-intervals
+      :time-range="timeRange"
+      @change="onChange"
+    />
     <v-card>
       <v-card-title class="pb-0">Date and Time</v-card-title>
       <v-card-text class="mt-0">Select Date and Time for the report</v-card-text>
@@ -15,14 +19,13 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
-
-import ReportTimeRangeChooser from './ReportTimeRangeChooser'
+import DateRangeChooser from '@/components/common/DateRangeChooser.vue'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   components: {
-    ReportTimeRangeChooser
+    DateRangeChooser
   },
   props: {
     selectedTags: {
@@ -51,13 +54,10 @@ export default {
     })
   },
   methods: {
+    onChange(newValue) {
+      this.timeRange = newValue
+    },
     handleNext() {
-      this.timeRange['timeRangeOption'] = this.$refs.timeRange.locTimeRangeOption
-      this.timeRange['dateFrom'] = this.$refs.timeRange.locDateFrom
-      this.timeRange['dateTo'] = this.$refs.timeRange.locDateTo
-      this.timeRange['timeFrom'] = this.$refs.timeRange.locTimeFrom
-      this.timeRange['timeTo'] = this.$refs.timeRange.locTimeTo
-
       this.$emit('setSelectedTimeRange', this.timeRange)
     },
     getLocationName() {

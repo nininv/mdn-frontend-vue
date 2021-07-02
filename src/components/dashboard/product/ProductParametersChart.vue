@@ -1,14 +1,13 @@
 <template>
   <div>
-    <time-range-chooser2
+    <tag-date-chooser-dialog
       :dlg="showTimeRangeChooser"
       :time-range="dataToolTimeRange"
       :tags="tags"
       :selected-tags="selectedTags"
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
-    >
-    </time-range-chooser2>
+    />
     <v-card
       :loading="loadingDataToolSeries"
       :disabled="loadingDataToolSeries"
@@ -40,11 +39,11 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import TimeRangeChooser2 from '../TimeRangeChooser2'
+import TagDateChooserDialog from '../TagDateChooserDialog.vue'
 
 export default {
   components: {
-    TimeRangeChooser2
+    TagDateChooserDialog
   },
   props: {
     machineId: {
