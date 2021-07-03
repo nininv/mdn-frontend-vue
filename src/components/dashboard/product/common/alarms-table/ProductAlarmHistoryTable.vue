@@ -43,13 +43,16 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <time-range-chooser3
+    <date-range-chooser
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
+      allow-custom
+      has-time-picker
+      show-short-intervals
+      limit-two-weeks
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
-    >
-    </time-range-chooser3>
+    />
   </v-card>
 </template>
 
@@ -63,13 +66,13 @@
 |
 */
 import { mapState, mapGetters, mapActions } from 'vuex'
-import TimeRangeChooser3 from '../../../TimeRangeChooser3'
+import DateRangeChooser from '../../../../common/DateRangeChooserDialog.vue'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
 export default {
   components: {
-    TimeRangeChooser3
+    DateRangeChooser
   },
   props: {
     serialNumber: {

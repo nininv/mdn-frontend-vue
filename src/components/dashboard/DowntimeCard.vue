@@ -35,16 +35,18 @@
           :options="chartOptions1"
         ></apexchart>
       </v-card-text>
-      <time-range-chooser4
+      <date-range-chooser-dialog
         :dlg="showTimeRangeChooser"
         :time-range="selectedTimeRange"
+        allow-custom
+        limit-two-weeks
         @close="showTimeRangeChooser = false"
         @submit="onTimeRangeChanged"
       >
-      </time-range-chooser4>
+      </date-range-chooser-dialog>
     </div>
     <div v-else>
-      <template v-if="$route.name==='dashboard-product'">
+      <template v-if="$route.name === 'dashboard-product'">
         <v-card-title>
           Equipment Availability
           <v-spacer></v-spacer>
@@ -84,7 +86,8 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import TimeRangeChooser4 from './TimeRangeChooser4'
+// import TimeRangeChooser4 from './TimeRangeChooser4'
+import DateRangeChooserDialog from '../common/DateRangeChooserDialog.vue'
 import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
@@ -115,7 +118,7 @@ const seriesColors = [{
 
 export default {
   components: {
-    TimeRangeChooser4,
+    DateRangeChooserDialog,
     AvailabilityPlanTimeForm
   },
   data() {
