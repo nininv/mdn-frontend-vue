@@ -121,8 +121,6 @@ export default {
     series() {
       if (this.names.length)
         if (this.names[0] === 'Utilization') {
-          console.log('debug --------------- ', this.state['items'])
-
           return this.state['items'] ? this.state['items'] : [[]]
         } else {
           return this.names.map((name, index) => {
