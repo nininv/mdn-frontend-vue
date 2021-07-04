@@ -37,6 +37,9 @@
             :disabled="isProductLoading || !selectedZone"
             @change="handleProductChange"
           >
+            <template slot="item" slot-scope="data">
+              {{ getDeviceName(data.item.name) }}
+            </template>
           </v-select>
         </div>
         <div>
@@ -299,6 +302,9 @@ export default {
       this.getMachineTags({
         deviceIds: [this.selectedProduct]
       })
+    },
+    getDeviceName(deviceName) {
+      return deviceName.split('/')[0]
     },
     async handleSubmit() {
       await this.addThreshold({

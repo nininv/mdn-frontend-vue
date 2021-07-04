@@ -27,7 +27,7 @@
     </v-card-title>
     <v-card-text>
       <apexchart
-        type="area"
+        type="line"
         :height="height"
         :options="chartOptions"
         :series="series"
@@ -120,14 +120,21 @@ export default {
     },
     series() {
       if (this.names.length)
-        return this.names.map((name, index) => {
-          return {
-            name,
-            data: (this.state['items'].length) ? (this.state['items'][index]) : []
-          }
-        })
-      else
+        if (this.names[0] === 'Utilization') {
+          console.log('debug --------------- ', this.state['items'])
+
+          return this.state['items'] ? this.state['items'] : [[]]
+        } else {
+          return this.names.map((name, index) => {
+            return {
+              name,
+              data: (this.state['items'].length) ? (this.state['items'][index]) : []
+            }
+          })
+        }
+      else {
         return (this.state['items']) ? (this.state['items']) : [[]]
+      }
     },
     graphUnit() {
       if (this.unit === 'imperial-metric')
@@ -138,7 +145,7 @@ export default {
     chartOptions() {
       return {
         chart: {
-          type: 'area',
+          type: 'line',
           animations: {
             speed: 400
           },
@@ -147,6 +154,10 @@ export default {
           }
         },
         colors: [this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.primary.surface, this.$vuetify.theme.themes.light.warning],
+        fill: {
+          type:'solid',
+          opacity: [0.35, 1]
+        },
         noData: {
           text: 'No Data From Devce'
         },
@@ -160,7 +171,7 @@ export default {
         },
         stroke: {
           curve: 'smooth',
-          width: 2
+          width: [2, 2]
         },
         xaxis: {
           type: 'datetime',
