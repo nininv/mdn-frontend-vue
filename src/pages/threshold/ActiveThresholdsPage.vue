@@ -38,8 +38,10 @@
         :loading="loading"
         :search="searchQuery"
       >
-      </v-data-table>
-    </v-card>
+        <template v-slot:item.device_name="{ item }">
+          <span v-if="item.device_name">{{ getDeviceName(item.device_name) }}</span>
+        </template>
+      </v-data-table></v-card>
   </div>
 </template>
 
@@ -70,7 +72,7 @@ export default {
     return {
       headers: [
         { text: 'Id', sortable: false, value: 'id' },
-        { text: 'Machine name', sortable: false, value: 'machine_name' },
+        { text: 'Machine name', sortable: false, value: 'device_name' },
         { text: 'Condition', sortable: false, value: 'option' },
         { text: 'Last Triggered at (EST)', value: 'last_triggered_at' }
       ],
@@ -93,6 +95,9 @@ export default {
       getActiveThresholds: 'thresholds/getActiveThresholds',
       clearThresholds: 'thresholds/clearThresholds'
     }),
+    getDeviceName(deviceName) {
+      return deviceName.split('/')[0]
+    },
     async handleSubmit() {
       try {
         await this.clearThresholds({

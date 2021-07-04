@@ -6,6 +6,10 @@
         :items="thresholds"
         :loading="loading"
       >
+        <template v-slot:item.device_name="{ item }">
+          <span v-if="item.device_name">{{ getDeviceName(item.device_name) }}</span>
+        </template>
+        
         <template v-slot:item.condition="{ item }">
           {{ item.option }}
         </template>
@@ -163,7 +167,7 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Machine Name', value: 'machine_name' },
+        { text: 'Machine Name', value: 'device_name' },
         { text: 'Condition', sortable: false, value: 'tag_name' },
         { text: 'Operator', value: 'operator' },
         { text: 'Value', value: 'value' },
@@ -237,6 +241,9 @@ export default {
       this.selectedThresholdId = item.id
       this.editedItem = Object.assign({}, this.editedItem, item)
       this.editDialog = true
+    },
+    getDeviceName(deviceName) {
+      return deviceName.split('/')[0]
     },
     async handleSubmit() {
       try {
