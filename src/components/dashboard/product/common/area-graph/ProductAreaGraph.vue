@@ -27,7 +27,7 @@
     </v-card-title>
     <v-card-text>
       <apexchart
-        type="line"
+        type="area"
         :height="height"
         :options="chartOptions"
         :series="series"
@@ -143,7 +143,7 @@ export default {
     chartOptions() {
       return {
         chart: {
-          type: 'line',
+          type: 'area',
           animations: {
             speed: 400
           },
@@ -166,6 +166,10 @@ export default {
         },
         dataLabels: {
           enabled: false
+        },
+        legend: {
+          show: true,
+          showForSingleSeries: true
         },
         stroke: {
           curve: 'smooth',

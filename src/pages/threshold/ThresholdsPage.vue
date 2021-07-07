@@ -7,7 +7,12 @@
         :loading="loading"
       >
         <template v-slot:item.device_name="{ item }">
-          <span v-if="item.device_name">{{ getDeviceName(item.device_name) }}</span>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-if="item.device_name" v-bind="attrs" v-on="on">{{ getDeviceName(item.device_name) }}</span>
+            </template>
+            <span v-if="item.device_name">{{ item.device_name }}</span>
+          </v-tooltip>
         </template>
         
         <template v-slot:item.condition="{ item }">
