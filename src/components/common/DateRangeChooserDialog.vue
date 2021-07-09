@@ -4,6 +4,7 @@
       <v-card-title class="primary white--text">Time Range</v-card-title>
       <v-card-text>
         <date-range-chooser
+          ref="dateRangeChooser"
           :allow-custom="allowCustom"
           :has-time-picker="hasTimePicker"
           :time-range="timeRange"
@@ -77,6 +78,9 @@ export default {
     }
   },
   methods: {
+    getTimes() {
+      return this.$refs.dateRangeChooser.getTimes()
+    },
     onChange(newValue) {
       this.locTimeRangeOption = newValue.timeRangeOption
       this.locDateFrom = newValue.dateFrom

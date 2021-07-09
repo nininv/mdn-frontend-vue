@@ -36,6 +36,7 @@
         ></apexchart>
       </v-card-text>
       <date-range-chooser-dialog
+        ref="dateRangeChooser"
         :dlg="showTimeRangeChooser"
         :time-range="selectedTimeRange"
         allow-custom
@@ -357,26 +358,12 @@ export default {
     }),
     onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange
-      let to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
-      let from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
+      const { from, to } = this.$refs.dateRangeChooser.getTimes()
 
-      if (this.selectedTimeRange.timeRangeOption === 'custom') {
-        to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo} GMT+00:00`).getTime() + 60 * 60 * 24 * 1000
-        from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom} GMT+00:00`).getTime()
-      }
-
-      const customRange = to - from
-
-      if (customRange < 0) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Please check your time range selection' } }, { root: true })
-      } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
-      } else {
-        this.getDowntimeGraphData({ to, from, ...this.routeParams })
-        this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
-        this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })
-        this.showTimeRangeChooser = false
-      }
+      this.getDowntimeGraphData({ to, from, ...this.routeParams })
+      this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
+      this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })
+      this.showTimeRangeChooser = false
     },
     handleSetPlanTime(data) {
       const timestamp = new Date(`${data.dateFrom} 00:00:00 GMT+00:00`).getTime()

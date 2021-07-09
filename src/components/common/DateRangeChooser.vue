@@ -258,10 +258,52 @@ export default {
     locTimeFrom() { this.onChange() },
     locDateTo() { this.onChange() },
     locTimeTo() { this.onChange() }
-
   },
   methods: {
+    getTimes() {
+      const from = new Date(`${this.locDateFrom} ${this.locTimeFrom}`).getTime()
+      let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
+
+      // validate custom input
+      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+        if (!this.hasTimePicker) {
+          const oneDayInMs = (24 * 3600000) - 1
+
+          // add 24 hours
+          to = to + oneDayInMs
+        }
+      }
+
+      return {
+        from,
+        to
+      }
+    },
     onChange() {
+      const { from, to } = this.getTimes()
+      const oneDayInMs = (24 * 3600000) - 1
+
+      // validate custom input
+      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+        const customRange = to - from
+
+        if (customRange < 0) {
+          this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'To date must be greater than the From date' } }, { root: true })
+
+          this.locDateTo = this.timeRange.dateTo
+          this.locTimeTo = this.timeRange.timeTo
+
+          return
+        } else if (this.limitTwoWeeks && customRange > oneDayInMs * 14) {
+          this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
+
+          this.locDateTo = this.timeRange.dateTo
+          this.locTimeTo = this.timeRange.timeTo
+
+          return
+        }
+      }
+
       this.$emit('change', {
         timeRangeOption: this.locTimeRangeOption,
         dateFrom: this.locDateFrom,
