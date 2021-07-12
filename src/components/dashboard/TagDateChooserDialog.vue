@@ -83,7 +83,6 @@ export default {
     }
   },
   computed: {
-    // ...mapState('machines', ['timeRangeOptions']),
     ...mapGetters('machines', ['timeRangeFromTo']),
     groupedTags() {
       if (this.noAlarms) {

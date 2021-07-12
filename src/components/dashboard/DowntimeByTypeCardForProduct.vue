@@ -52,7 +52,6 @@ export default {
       downtimeByTypeGraphSeries: (state) => state.devices.downtimeByTypeGraphSeries,
       isDowntimeByTypeGraphLoading: (state) => state.devices.isDowntimeByTypeGraphLoading
     }),
-    ...mapGetters('machines', ['timeRangeFromTo']),
     chartOptions() {
       return {
         chart: {

@@ -44,6 +44,7 @@
       </v-data-table>
     </v-card-text>
     <date-range-chooser
+      ref="dateRangeChooser"
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
       allow-custom
@@ -162,25 +163,17 @@ export default {
     },
     onTimeRangeChanged(newTimeRange) {
       this.selectedTimeRange = newTimeRange
-      const to = new Date(`${this.getTimeRange.dateTo} ${this.getTimeRange.timeTo}`).getTime()
-      const from = new Date(`${this.getTimeRange.dateFrom} ${this.getTimeRange.timeFrom}`).getTime()
 
-      const customRange = to - from
+      const { from, to } = this.$refs.dateRangeChooser.getTimes()
 
-      if (customRange < 0) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Please check your time range selection' } }, { root: true })
-      } else if (customRange > 60 * 60 * 24 * 14 * 1000) {
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Time range selection is limited to two weeks' } }, { root: true })
-      } else {
-        this.getAlarmHistory({
-          serialNumber: this.serialNumber,
-          machineId: this.machineId,
-          from,
-          to
-        })
+      this.getAlarmHistory({
+        serialNumber: this.serialNumber,
+        machineId: this.machineId,
+        from,
+        to
+      })
 
-        this.showTimeRangeChooser = false
-      }
+      this.showTimeRangeChooser = false
     }
   }
 }
