@@ -89,7 +89,7 @@ export default {
       if (this.noAlarms) {
         return this.tags
       } else {
-        const ts = this.tags
+        const ts = [...this.tags]
         const importantTags = this.tags.filter((t) => t.divided_by)
 
         ts.splice(importantTags.length, 0, { divider: true })
