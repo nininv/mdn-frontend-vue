@@ -108,11 +108,11 @@ const getDashboardMachinesTable = async ({ commit }, data) => {
   }
 }
 
-const getTags = async ({ commit }, machineId) => {
+const getTags = async ({ commit }, payload) => {
   try {
-    const response = await machineAPI.getTags(machineId)
+    const response = await machineAPI.getTags(payload)
 
-    commit('SET_TAGS', response.tags)
+    commit('SET_TAGS', response)
   } catch (error) {
     Sentry.captureException(error)
     throw new Error(error)

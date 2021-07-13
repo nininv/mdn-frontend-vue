@@ -150,7 +150,10 @@ export default {
     this.loading = true
 
     try {
-      await this.getTags(this.machineId)
+      await this.getTags({
+        machineId: this.machineId,
+        serialNumber: this.serialNumber
+      })
       await this.getDataToolSeries({
         machineId: this.machineId,
         serialNumber: this.serialNumber,
