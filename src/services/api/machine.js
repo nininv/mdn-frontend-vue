@@ -22,8 +22,8 @@ export default {
   getWeeklyRunningHours(id) {
     return api.$get(`/analytics/weekly-running-hours/${id}`)
   },
-  getTags(id) {
-    return api.$get(`/machine-tags/${id}`)
+  getTags(data) {
+    return api.$post('/machine-tags', data)
   },
   getDataToolSeries(data) {
     return api.$post('/analytics/data-tool-series', data)
