@@ -3,7 +3,7 @@
     <tag-date-chooser-dialog
       :dlg="showTimeRangeChooser"
       :time-range="dataToolTcuTimeRange"
-      :tags="tags"
+      :tags="tcuTags"
       :selected-tags="selectedTcuTags"
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
@@ -64,7 +64,7 @@ export default {
   },
 
   computed: {
-    ...mapState('machines', ['tags', 'dataToolSeriesForTcu', 'dataToolTcuTimeRange', 'selectedTcuTags', 'loadingDataToolSeries']),
+    ...mapState('machines', ['tcuTags', 'dataToolSeriesForTcu', 'dataToolTcuTimeRange', 'selectedTcuTags', 'loadingDataToolSeries']),
     ...mapGetters('machines', ['timeRangeDataToolLabel', 'timeRangeFromTo']),
     yaxis() {
       return this.selectedTcuTags.map((t, i) => {
