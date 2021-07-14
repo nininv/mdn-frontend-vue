@@ -86,6 +86,7 @@
                 <v-btn
                   icon
                   :loading="isSaveMachineLoading"
+                  :disabled="overview.teltonikaDevice && overview.teltonikaDevice.id === 0"
                   v-bind="attrs"
                   v-on="on"
                   @click="saveMachine({ deviceId: overview.teltonikaDevice.id })"

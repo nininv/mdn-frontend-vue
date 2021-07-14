@@ -112,7 +112,7 @@ const getTags = async ({ commit }, payload) => {
   try {
     const response = await machineAPI.getTags(payload)
 
-    commit('SET_TAGS', response)
+    payload.machineId === 11 ? commit('SET_TCU_TAGS', response) : commit('SET_TAGS', response)
   } catch (error) {
     Sentry.captureException(error)
     throw new Error(error)
@@ -125,7 +125,7 @@ const getDataToolSeries = async ({ commit }, payload) => {
   try {
     const response = await machineAPI.getDataToolSeries(payload)
 
-    commit('SET_DATA_TOOL_SERIES', response.series)
+    payload.machineId === 11 ? commit('SET_DATA_TOOL_SERIES_FOR_TCU', response.series) : commit('SET_DATA_TOOL_SERIES', response.series)
   } catch (error) {
     Sentry.captureException(error)
     throw new Error(error)
@@ -136,6 +136,10 @@ const getDataToolSeries = async ({ commit }, payload) => {
 
 const updateDataToolOptions = async ({ commit }, payload) => {
   commit('SET_DATA_TOOL_OPTIONS', payload)
+}
+
+const updateTcuDataToolOptions = async ({ commit }, payload) => {
+  commit('SET_TCU_DATA_TOOL_OPTIONS', payload)
 }
 
 const updateHopperSetting = async ({ commit }, payload) => {
@@ -300,6 +304,7 @@ export default {
   getTags,
   getDataToolSeries,
   updateDataToolOptions,
+  updateTcuDataToolOptions,
   requestService,
   saveMachine,
   getSavedStatus,

@@ -17,10 +17,10 @@
         >
           <v-col cols="7">
             <span
-              :class="`font-weight-bold ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`"
+              class="font-weight-bold"
             >Pump Status</span>
           </v-col>
-          <v-col :class="`d-flex text-body-2 ${machine.vent_status === 0 ? 'red--text' : 'primary--text'}`">
+          <v-col class="d-flex text-body-2">
             <v-icon
               small
               left

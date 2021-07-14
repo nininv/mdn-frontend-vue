@@ -79,14 +79,12 @@
                   <product-parameters-chart
                     :machine-id="deviceConfiguration.plcMachineId"
                     :serial-number="parseInt(deviceConfiguration.plcSerialNumber)"
-                    :enabled-graphs="deviceConfiguration.plcEnabledPropertiesGraphs"
-                    :graphs="deviceConfiguration.plcPropertiesGraphs"
                   >
                   </product-parameters-chart>
                 </v-col>
               </v-row>
             </v-tab-item>
-            <v-tab-item>
+            <v-tab-item reverse-transition>
               <v-row class="flex-grow-0" dense>
                 <v-col cols="12">
                   <product-analytics
@@ -126,13 +124,11 @@
                   <div class="text-h4">Parameters & Points</div>
                 </v-col>
                 <v-col cols="12">
-                  <product-parameters-chart
+                  <product-parameters-chart-for-tcu
                     :machine-id="11"
                     :serial-number="parseInt(deviceConfiguration.tcuSerialNumber)"
-                    :enabled-graphs="deviceConfiguration.tcuEnabledPropertiesGraphs"
-                    :graphs="deviceConfiguration.tcuPropertiesGraphs"
                   >
-                  </product-parameters-chart>
+                  </product-parameters-chart-for-tcu>
                 </v-col>
               </v-row>
             </v-tab-item>
@@ -178,6 +174,7 @@ import AlarmsTable from '../../components/dashboard/product/common/alarms-table/
 
 // import AlarmTable from '../../components/dashboard/product/AlarmTable'
 import ProductParametersChart from '../../components/dashboard/product/ProductParametersChart'
+import ProductParametersChartForTcu from '../../components/dashboard/product/ProductParametersChartForTcu'
 import ProductAnalytics from '../../components/dashboard/product/ProductAnalytics'
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
@@ -190,6 +187,7 @@ export default {
   components: {
     CompanyMenu,
     ProductParametersChart,
+    ProductParametersChartForTcu,
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
