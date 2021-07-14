@@ -73,7 +73,7 @@ export default {
   SET_DATA_TOOL_SERIES(state, series) { state.dataToolSeries = series },
   SET_TAGS(state, data) {
     state.tags = data.tags
-    state.selectedTags = data.customization === [] ? data.tags.slice(0, 6) : data.customization
+    state.selectedTags = data.customization.length ? data.customization : data.tags.slice(0, 6)
   },
   SET_DATA_TOOL_OPTIONS(state, option) {
     state.dataToolTimeRange = option.timeRange
