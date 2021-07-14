@@ -71,13 +71,22 @@ export default {
 
   SET_LOADING_DATA_TOOL_SERIES(state, loading) { state.loadingDataToolSeries = loading },
   SET_DATA_TOOL_SERIES(state, series) { state.dataToolSeries = series },
+  SET_DATA_TOOL_SERIES_FOR_TCU(state, series) { state.dataToolSeriesForTcu = series },
   SET_TAGS(state, data) {
     state.tags = data.tags
     state.selectedTags = data.customization.length ? data.customization : data.tags.slice(0, 6)
   },
+  SET_TCU_TAGS(state, data) {
+    state.tcuTags = data.tags
+    state.selectedTcuTags = data.customization.length ? data.customization : data.tags.slice(0, 6)
+  },
   SET_DATA_TOOL_OPTIONS(state, option) {
     state.dataToolTimeRange = option.timeRange
     state.selectedTags = option.selectedTags
+  },
+  SET_TCU_DATA_TOOL_OPTIONS(state, option) {
+    state.dataToolTcuTimeRange = option.timeRange
+    state.selectedTcuTags = option.selectedTags
   },
   SET_HOPPER_SETTING(state, option) {
     state.hopperSettingTimeRange = option.timeRange

@@ -104,9 +104,16 @@ const state = {
 
   loadingDataToolSeries: false,
   dataToolSeries: [],
+  dataToolSeriesForTcu: [],
   tags: [],
+  tcuTags: [],
   selectedTags: [],
+  selectedTcuTags: [],
   dataToolTimeRange: {
+    timeRangeOption: 'last24Hours',
+    dates: [TODAY, TODAY]
+  },
+  dataToolTcuTimeRange: {
     timeRangeOption: 'last24Hours',
     dates: [TODAY, TODAY]
   },
