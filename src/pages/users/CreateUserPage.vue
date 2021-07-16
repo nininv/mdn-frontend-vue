@@ -11,192 +11,196 @@
       <v-tab>Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items>
-      <v-card v-show="tab === 0" class="my-2">
-        <v-card-title>Basic Information</v-card-title>
-        <v-card-text>
-          <div class="d-flex flex-column flex-sm-row">
-            <div>
-              <v-avatar
-                v-if="user.name"
-                color="primary"
-                size="68"
-              >
-                <span class="white--text text-h5">{{ user.name | initials }}</span>
-              </v-avatar>
-            </div>
-            <v-form
-              ref="accountForm"
-              v-model="isAccountFormValid"
-              lazy-validation
-              class="flex-grow-1 pt-2 pa-sm-2"
-              @submit.prevent="save"
-            >
-              <v-text-field
-                v-model="user.name"
-                label="Display name"
-                placeholder="name"
-                :rules="[$rules.required]"
-                outlined
-                dense
-                @input="clearError"
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="user.email"
-                label="Email"
-                placeholder="Email"
-                :rules="[$rules.required, $rules.emailFormat]"
-                outlined
-                dense
-                @input="clearError"
-              >
-              </v-text-field>
-              <v-select
-                v-model="user.role"
-                :items="availableRoles"
-                label="Role"
-                placeholder="Role"
-                item-value="id"
-                item-text="name"
-                :rules="[$rules.required]"
-                outlined
-                dense
-                @input="clearError"
-              >
-              </v-select>
-
-              <div v-if="user.role !== 4">
-                <div
-                  v-for="(location, i) in locations"
-                  :key="i"
-                >
-                  <v-checkbox
-                    v-model="selectedLocations"
-                    :value="location.id"
-                    :label="location.name"
-                    class="shrink mr-2 mt-0"
-                    hide-details
-                  ></v-checkbox>
-                  <div
-                    v-if="selectedLocations.includes(location.id)"
-                    class="d-flex flex-wrap px-2"
-                  >
-                    <v-chip-group
-                      v-model="selectedZones"
-                      multiple
-                      column
-                    >
-                      <v-chip
-                        v-for="(zone, j) in zonesOfLocation(location.id)"
-                        :key="j"
-                        :value="zone.id"
-                        filter
-                        outlined
-                        small
-                        color="primary"
-                      >
-                        {{ zone.name }}
-                      </v-chip>
-                    </v-chip-group>
-                  </div>
-                </div>
-              </div>
-
-              <error-component :error="errorMessages"></error-component>
-
-              <div class="mt-2">
-                <v-btn
+    <v-tabs-items v-model="tab" class="overflow-visible my-2">
+      <v-tab-item>
+        <v-card>
+          <v-card-title>Basic Information</v-card-title>
+          <v-card-text>
+            <div class="d-flex flex-column flex-sm-row">
+              <div>
+                <v-avatar
+                  v-if="user.name"
                   color="primary"
-                  :loading="isBtnLoading"
-                  :disabled="isBtnLoading"
-                  @click="submit"
-                >Save</v-btn>
+                  size="68"
+                >
+                  <span class="white--text text-h5">{{ user.name | initials }}</span>
+                </v-avatar>
               </div>
-            </v-form>
-          </div>
-        </v-card-text>
-      </v-card>
-
-      <v-card v-show="tab === 1" class="my-2">
-        <v-card-title>User Information</v-card-title>
-        <v-card-text>
-          <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
-            <v-row>
-              <v-col cols="12" md="6">
+              <v-form
+                ref="accountForm"
+                v-model="isAccountFormValid"
+                lazy-validation
+                class="flex-grow-1 pt-2 pa-sm-2"
+                @submit.prevent="save"
+              >
                 <v-text-field
-                  v-model="user.address_1"
-                  label="Address"
+                  v-model="user.name"
+                  label="Display name"
+                  placeholder="name"
                   :rules="[$rules.required]"
                   outlined
                   dense
+                  @input="clearError"
+                >
+                </v-text-field>
+                <v-text-field
+                  v-model="user.email"
+                  label="Email"
+                  placeholder="Email"
+                  :rules="[$rules.required, $rules.emailFormat]"
+                  outlined
+                  dense
+                  @input="clearError"
                 >
                 </v-text-field>
                 <v-select
-                  v-model="user.state"
-                  label="State"
-                  :items="states"
+                  v-model="user.role"
+                  :items="availableRoles"
+                  label="Role"
+                  placeholder="Role"
+                  item-value="id"
+                  item-text="name"
                   :rules="[$rules.required]"
                   outlined
                   dense
-                  @change="onStateChange"
+                  @input="clearError"
                 >
                 </v-select>
-                <v-combobox
-                  v-if="user.state"
-                  v-model="user.city"
-                  :items="cities"
-                  label="City"
-                  item-text="city"
-                  :return-object="false"
-                  :rules="[$rules.required]"
-                  :disabled="loadingCities"
-                  :loading="loadingCities"
-                  outlined
-                  dense
-                ></v-combobox>
-                <v-text-field
-                  :value="zipCode"
-                  label="Zip Code"
-                  :rules="[$rules.required]"
-                  :disabled="!user.state || !user.city"
-                  outlined
-                  dense
-                  readonly
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="user.country"
-                  label="Country"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                  readonly
-                >
-                </v-text-field>
-              </v-col>
 
-              <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="user.phone"
-                  v-mask="'###-###-####'"
-                  label="Phone"
-                  placeholder="123-456-7890"
-                  outlined
-                  dense
-                  :rules="[$rules.required, $rules.phoneFormat]"
-                >
-                </v-text-field>
-              </v-col>
-            </v-row>
+                <div v-if="user.role !== 4">
+                  <div
+                    v-for="(location, i) in locations"
+                    :key="i"
+                  >
+                    <v-checkbox
+                      v-model="selectedLocations"
+                      :value="location.id"
+                      :label="location.name"
+                      class="shrink mr-2 mt-0"
+                      hide-details
+                    ></v-checkbox>
+                    <div
+                      v-if="selectedLocations.includes(location.id)"
+                      class="d-flex flex-wrap px-2"
+                    >
+                      <v-chip-group
+                        v-model="selectedZones"
+                        multiple
+                        column
+                      >
+                        <v-chip
+                          v-for="(zone, j) in zonesOfLocation(location.id)"
+                          :key="j"
+                          :value="zone.id"
+                          filter
+                          outlined
+                          small
+                          color="primary"
+                        >
+                          {{ zone.name }}
+                        </v-chip>
+                      </v-chip-group>
+                    </div>
+                  </div>
+                </div>
 
-            <div class="d-flex">
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="onBack">Back</v-btn>
+                <error-component :error="errorMessages"></error-component>
+
+                <div class="mt-2">
+                  <v-btn
+                    color="primary"
+                    :loading="isBtnLoading"
+                    :disabled="isBtnLoading"
+                    @click="submit"
+                  >Save</v-btn>
+                </div>
+              </v-form>
             </div>
-          </v-form>
-        </v-card-text>
-      </v-card>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <v-tab-item>
+        <v-card>
+          <v-card-title>User Information</v-card-title>
+          <v-card-text>
+            <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="user.address_1"
+                    label="Address"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                  >
+                  </v-text-field>
+                  <v-select
+                    v-model="user.state"
+                    label="State"
+                    :items="states"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                    @change="onStateChange"
+                  >
+                  </v-select>
+                  <v-combobox
+                    v-if="user.state"
+                    v-model="user.city"
+                    :items="cities"
+                    label="City"
+                    item-text="city"
+                    :return-object="false"
+                    :rules="[$rules.required]"
+                    :disabled="loadingCities"
+                    :loading="loadingCities"
+                    outlined
+                    dense
+                  ></v-combobox>
+                  <v-text-field
+                    :value="zipCode"
+                    label="Zip Code"
+                    :rules="[$rules.required]"
+                    :disabled="!user.state || !user.city"
+                    outlined
+                    dense
+                    readonly
+                  >
+                  </v-text-field>
+                  <v-text-field
+                    v-model="user.country"
+                    label="Country"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                    readonly
+                  >
+                  </v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="user.phone"
+                    v-mask="'###-###-####'"
+                    label="Phone"
+                    placeholder="123-456-7890"
+                    outlined
+                    dense
+                    :rules="[$rules.required, $rules.phoneFormat]"
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+
+              <div class="d-flex">
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="onBack">Back</v-btn>
+              </div>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>

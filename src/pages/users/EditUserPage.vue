@@ -27,7 +27,7 @@
       <v-tab to="#tabs-information">Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="overflow-visible my-2">
       <v-tab-item value="tabs-account">
         <account-tab
           :user="user"

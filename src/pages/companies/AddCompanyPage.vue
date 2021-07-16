@@ -16,139 +16,143 @@
       <v-tab>Information</v-tab>
     </v-tabs>
 
-    <v-tabs-items>
-      <v-card v-show="tab === 0" class="my-2">
-        <v-card-title>Basic Information</v-card-title>
-        <v-card-text>
-          <div class="d-flex flex-column flex-sm-row">
-            <div class="flex-grow-1 pt-2 pa-sm-2">
-              <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
-                <v-combobox
-                  v-model="company.companyName"
-                  :items="companies"
-                  label="Company"
-                  placeholder="Type in new company name or choose from existing for ex: Acme Inc"
-                  item-text="name"
-                  :return-object="false"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                  @input="clearError"
-                ></v-combobox>
-                <v-text-field
-                  v-model="company.administratorName"
-                  :rules="[$rules.required]"
-                  :validate-on-blur="false"
-                  label="Administrator Name"
-                  placeholder="Jane Doe"
-                  outlined
-                  dense
-                  @input="clearError"
-                ></v-text-field>
-                <v-text-field
-                  v-model="company.administratorEmail"
-                  :rules="[$rules.required, $rules.emailFormat]"
-                  :validate-on-blur="false"
-                  label="Administrator Email"
-                  placeholder="jane.doe@example.com"
-                  outlined
-                  dense
-                  @input="clearError"
-                ></v-text-field>
+    <v-tabs-items v-model="tab" class="overflow-visible my-2">
+      <v-tab-item>
+        <v-card>
+          <v-card-title>Basic Information</v-card-title>
+          <v-card-text>
+            <div class="d-flex flex-column flex-sm-row">
+              <div class="flex-grow-1 pt-2 pa-sm-2">
+                <v-form ref="accountForm" v-model="isAccountFormValid" lazy-validation @submit.prevent="submit">
+                  <v-combobox
+                    v-model="company.companyName"
+                    :items="companies"
+                    label="Company"
+                    placeholder="Type in new company name or choose from existing for ex: Acme Inc"
+                    item-text="name"
+                    :return-object="false"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                    @input="clearError"
+                  ></v-combobox>
+                  <v-text-field
+                    v-model="company.administratorName"
+                    :rules="[$rules.required]"
+                    :validate-on-blur="false"
+                    label="Administrator Name"
+                    placeholder="Jane Doe"
+                    outlined
+                    dense
+                    @input="clearError"
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="company.administratorEmail"
+                    :rules="[$rules.required, $rules.emailFormat]"
+                    :validate-on-blur="false"
+                    label="Administrator Email"
+                    placeholder="jane.doe@example.com"
+                    outlined
+                    dense
+                    @input="clearError"
+                  ></v-text-field>
 
-                <error-component :error="errorMessages"></error-component>
+                  <error-component :error="errorMessages"></error-component>
 
-                <div class="mt-2">
-                  <v-btn
-                    type="submit"
-                    color="primary"
-                    :loading="buttonLoading"
-                  >Save</v-btn>
-                </div>
-              </v-form>
+                  <div class="mt-2">
+                    <v-btn
+                      type="submit"
+                      color="primary"
+                      :loading="buttonLoading"
+                    >Save</v-btn>
+                  </div>
+                </v-form>
+              </div>
             </div>
-          </div>
-        </v-card-text>
-      </v-card>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
-      <v-card v-show="tab === 1" class="my-2">
-        <v-card-title>Account Information</v-card-title>
-        <v-card-text ref="b">
-          <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="company.address_1"
-                  label="Address"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-select
-                  v-model="company.state"
-                  label="State"
-                  :items="states"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                  @change="onStateChange"
-                >
-                </v-select>
-                <v-combobox
-                  v-if="company.state"
-                  v-model="company.city"
-                  :items="cities"
-                  label="City"
-                  item-text="city"
-                  :return-object="false"
-                  :rules="[$rules.required]"
-                  :disabled="loadingCities"
-                  :loading="loadingCities"
-                  outlined
-                  dense
-                ></v-combobox>
-                <v-text-field
-                  :value="zipCode"
-                  label="Zip Code"
-                  :rules="[$rules.required]"
-                  :disabled="!company.state || !company.city"
-                  outlined
-                  dense
-                  readonly
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="company.country"
-                  :rules="[$rules.required]"
-                  label="Country"
-                  outlined
-                  dense
-                  disabled
-                >
-                </v-text-field>
-              </v-col>
+      <v-tab-item>
+        <v-card>
+          <v-card-title>Account Information</v-card-title>
+          <v-card-text ref="b">
+            <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="company.address_1"
+                    label="Address"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                  >
+                  </v-text-field>
+                  <v-select
+                    v-model="company.state"
+                    label="State"
+                    :items="states"
+                    :rules="[$rules.required]"
+                    outlined
+                    dense
+                    @change="onStateChange"
+                  >
+                  </v-select>
+                  <v-combobox
+                    v-if="company.state"
+                    v-model="company.city"
+                    :items="cities"
+                    label="City"
+                    item-text="city"
+                    :return-object="false"
+                    :rules="[$rules.required]"
+                    :disabled="loadingCities"
+                    :loading="loadingCities"
+                    outlined
+                    dense
+                  ></v-combobox>
+                  <v-text-field
+                    :value="zipCode"
+                    label="Zip Code"
+                    :rules="[$rules.required]"
+                    :disabled="!company.state || !company.city"
+                    outlined
+                    dense
+                    readonly
+                  >
+                  </v-text-field>
+                  <v-text-field
+                    v-model="company.country"
+                    :rules="[$rules.required]"
+                    label="Country"
+                    outlined
+                    dense
+                    disabled
+                  >
+                  </v-text-field>
+                </v-col>
 
-              <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="company.phone"
-                  v-mask="'###-###-####'"
-                  placeholder="123-456-7890"
-                  :rules="[$rules.required, $rules.phoneFormat]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-              </v-col>
-            </v-row>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="company.phone"
+                    v-mask="'###-###-####'"
+                    placeholder="123-456-7890"
+                    :rules="[$rules.required, $rules.phoneFormat]"
+                    outlined
+                    dense
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
 
-            <div class="d-flex">
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="onBack">Back</v-btn>
-            </div>
-          </v-form>
-        </v-card-text>
-      </v-card>
+              <div class="d-flex">
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="onBack">Back</v-btn>
+              </div>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>

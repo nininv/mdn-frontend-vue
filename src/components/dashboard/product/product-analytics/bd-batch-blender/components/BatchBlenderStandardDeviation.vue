@@ -16,7 +16,7 @@
         {{ hopper.name }}
       </v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tabs">
+    <v-tabs-items v-model="tabs" class="my-2">
       <v-tab-item
         v-for="(hopper, id) in selectedHoppers"
         :key="id"

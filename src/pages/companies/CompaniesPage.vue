@@ -14,7 +14,7 @@
 
     <v-card>
       <v-row dense class="pa-2 align-center" justify="end">
-        <v-col sm="12" md="6" class="d-flex text-right align-center">
+        <v-col cols="12" md="6" class="d-flex text-right align-center">
           <v-text-field
             v-model="searchQuery"
             append-icon="$mdi-magnify"
