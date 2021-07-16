@@ -227,22 +227,26 @@ export default {
   },
   methods: {
     getTimes() {
-      const from = new Date(`${this.locDateFrom} ${this.locTimeFrom}`).getTime()
-      let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
+      if (this.locTimeRangeOption !== 'custom') {
+        return this.timeFromTo()
+      } else {
+        const from = new Date(`${this.locDateFrom} ${this.locTimeFrom}`).getTime()
+        let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
 
-      // validate custom input
-      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
-        if (!this.hasTimePicker) {
-          const oneDayInMs = (24 * 3600000) - 1
+        // validate custom input
+        if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+          if (!this.hasTimePicker) {
+            const oneDayInMs = (24 * 3600000) - 1
 
-          // add 24 hours
-          to = to + oneDayInMs
+            // add 24 hours
+            to = to + oneDayInMs
+          }
         }
-      }
 
-      return {
-        from,
-        to
+        return {
+          from,
+          to
+        }
       }
     },
     onChange() {
@@ -277,9 +281,71 @@ export default {
         timeFrom: this.locTimeFrom,
         timeTo: this.locTimeTo
       })
+    },
+    timeFromTo() {
+      const dateGetTime = new Date().getTime()
+
+      switch (this.locTimeRangeOption) {
+      case 'last30Min':
+        return {
+          from: dateGetTime - (30 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'lastHour':
+        return {
+          from: dateGetTime - (60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last4Hours':
+        return {
+          from: dateGetTime - (4 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last12Hours':
+        return {
+          from: dateGetTime - (12 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last24Hours':
+        return {
+          from: dateGetTime - (24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last48Hours':
+        return {
+          from: dateGetTime - (48 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last3Days':
+        return {
+          from: dateGetTime - (3 * 24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last7Days':
+        return {
+          from: dateGetTime - (7 * 24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last14Days':
+        return {
+          from: dateGetTime - (14 * 24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last24Days':
+        return {
+          from: dateGetTime - (24 * 24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      default:
+        return {
+          from: dateGetTime - (24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      }
     }
   }
 }
+
 </script>
 
 <style lang="scss">
