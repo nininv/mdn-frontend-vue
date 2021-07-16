@@ -238,7 +238,13 @@ export default {
           stackType: '100%',
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         plotOptions: {
           bar: {
@@ -278,12 +284,15 @@ export default {
       utilizationOptions: {
         chart: {
           type: 'area',
-          animations: {
-            speed: 400
-          },
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         colors: [this.$vuetify.theme.themes.light.background, this.$vuetify.theme.themes.light.accent, this.$vuetify.theme.themes.light.surface, '#5a5d61', this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         noData: {

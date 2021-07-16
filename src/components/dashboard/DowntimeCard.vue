@@ -221,7 +221,13 @@ export default {
           },
           zoom: {
             enabled: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         colors: ['#FF1654', '#247BA0'],
         series: this.availabilityGraphData,

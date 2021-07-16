@@ -98,7 +98,13 @@ export default {
           },
           zoom: {
             enabled: true
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         stroke: {
           show: false
