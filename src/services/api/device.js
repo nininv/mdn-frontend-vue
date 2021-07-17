@@ -332,5 +332,26 @@ export default {
    */
   setAvailabilityPlanTime(data) {
     return api.post('devices/set-availability-plan-time', data)
+  },
+
+  /**
+   * Set default headers of machines table
+   * 
+   * @example
+   * 
+   *    setMachinesTableDefaultHeader({
+   *      name: 'device-analytics',
+   *      headers: ['Locations']
+   *    }) 
+   */
+  setMachinesTableDefaultHeader(data) {
+    return api.$post('devices/set-machines-table-default-headers', data)
+  },
+
+  /**
+   * Get machines table headers
+   */
+  getMachinesTableHeaders(data) {
+    return api.$post('devices/get-machines-table-headers', data)
   }
 }

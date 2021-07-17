@@ -1,6 +1,8 @@
 import deviceAPI from '../../services/api/device'
 import * as Sentry from '@sentry/vue'
+
 const ITEM_PER_PAGE = 10
+const MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Locations', 'Zones']
 const module = {
   namespaced: true,
   state: {
@@ -60,7 +62,9 @@ const module = {
     locations: [],
     zones: [],
     downtimeReasons: [],
-    isUpdatingDowntime: false
+    isUpdatingDowntime: false,
+
+    machinesTableHeaders: []
   },
 
   actions: {
@@ -482,6 +486,24 @@ const module = {
       } finally {
         commit('SET_ADDING_AVAILABILITY_PLAN_TIME', false)
       }
+    },
+
+    async updateMachineTableHeader({ commit }, data) {
+      try {
+        await deviceAPI.setMachinesTableDefaultHeader(data)
+      } catch (error) {
+        Sentry.captureException(error)
+      }
+    },
+
+    async getMachinesTableHeaders({ commit }, data) {
+      try {
+        const response = await deviceAPI.getMachinesTableHeaders(data)
+
+        commit('SET_MACHINES_TABLE_HEADERS', response.headers)
+      } catch (error) {
+        Sentry.captureException(error)
+      }
     }
   },
 
@@ -647,7 +669,10 @@ const module = {
     SET_LOCATIONS(state, data) { state.locations = data },
     SET_DOWNTIME_REASONS(state, data) { state.downtimeReasons = data },
     SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status },
-    SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status }
+    SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status },
+    SET_MACHINES_TABLE_HEADERS(state, headers) {
+      state.machinesTableHeaders = headers === null ? MACHINES_TABLE_DEFAULT_HEADERS : headers
+    }
   },
 
   getters: {

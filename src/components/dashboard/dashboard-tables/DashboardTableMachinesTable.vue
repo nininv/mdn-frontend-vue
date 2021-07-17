@@ -1,10 +1,32 @@
 <template>
   <v-card :disabled="loading">
     <v-card-title>Machine Status</v-card-title>
+    <v-combobox
+      v-model="machinesTableHeaders"
+      :items="dashboardComboboxValues"
+      chips
+      solo
+      label="Add/Remove Coloumns"
+      multiple
+      class="flex-grow-0 ma-1"
+    >
+      <template v-slot:selection="{ attrs, item }">
+        <v-chip
+          v-bind="attrs"
+          close
+          small
+          color="primary lighten-2"
+          outlined
+          @click:close="remove(item)"
+        >
+          {{ item }}
+        </v-chip>
+      </template>
+    </v-combobox>
     <v-card-text>
       <v-data-table
         :loading="loading"
-        :headers="headers"
+        :headers="filtedHeaders"
         :items="devices"
         :items-per-page="5"
         :page.sync="page"
@@ -47,23 +69,9 @@
         <template v-slot:item.configuration="{ item }">
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
-        <template v-slot:item.rate="{ item }">
-          <production-rate-chart
-            :height="120"
-            :series="[item.rate]"
-          >
-          </production-rate-chart>
-        </template>
-        <template v-slot:item.downtimeAvailability="{ item }">
-          <div class="d-flex justify-center mx-auto" style="width: 180px;">
-            <apexchart
-              key="availability-chart"
-              type="line"
-              width="160"
-              :options="availabilityChartOptions"
-              :series="item.downtimeAvailability"
-            >
-            </apexchart>
+        <template v-slot:item.capacityUtilization="{ item }">
+          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+            <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
           </div>
         </template>
         <template v-slot:item.downtimeByReason="{ item }">
@@ -100,9 +108,9 @@
 
 import { mapState, mapActions } from 'vuex'
 
-import ProductionRateChart from '../charts/ProductionRateChart'
 import NoDowntime from './DashboardTableNoDowntime'
 import DowntimeLegend from './DashboardTableDowntimeLegend'
+import { debounce } from '../../../plugins/debounce'
 
 const seriesColors = [{
   name: 'No Demand',
@@ -126,7 +134,7 @@ const seriesColors = [{
 
 export default {
   components: {
-    ProductionRateChart, NoDowntime, DowntimeLegend
+    NoDowntime, DowntimeLegend
   },
   props: {
   },
@@ -137,7 +145,10 @@ export default {
         { text: 'Machines', value: 'customer_assigned_name' },
         { text: 'Machine Type', value: 'configuration' },
         { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
-        { text: 'Availability', align: 'center', value: 'downtimeAvailability' }
+        { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' }
+      ],
+      dashboardComboboxValues: [
+        'Machine Type', 'Capacity Utilization', 'Downtime By Reason'
       ],
       deviceStatus: {
         machineRunning: {
@@ -292,9 +303,32 @@ export default {
       devices: (state) => state.devices.data,
       totalDevices: (state) => state.devices.totalDevices,
       pageCount: (state) => state.devices.pageCount
-    })
+    }),
+    filtedHeaders() {
+      const headerColumns = ['Running', 'Machines', ...this.machinesTableHeaders]
+
+      return this.headers.filter((header) => {
+        return headerColumns.includes(header.text)
+      })
+    },
+    machinesTableHeaders: {
+      get () {
+        return this.$store.state.devices.machinesTableHeaders
+      },
+      set (value) {
+        this.$store.commit('devices/SET_MACHINES_TABLE_HEADERS', value)
+      }
+    }
   },
-  mounted() {
+  watch: {
+    machinesTableHeaders (newValue) {
+      this.customizeTableHeader()
+    }
+  },
+  async mounted() {
+    await this.getMachinesTableHeaders({
+      name: this.$route.name
+    })
     this.getDashboardMachinesTable({
       location: this.$route.params.location,
       zone: this.$route.params.zone,
@@ -304,7 +338,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDashboardMachinesTable: 'machines/getDashboardMachinesTable'
+      getDashboardMachinesTable: 'machines/getDashboardMachinesTable',
+      getMachinesTableHeaders: 'devices/getMachinesTableHeaders',
+      updateMachineTableHeader: 'devices/updateMachineTableHeader'
     }),
     getDevices() {
       this.getDashboardMachinesTable({
@@ -371,6 +407,26 @@ export default {
     },
     getText(status) {
       return this.deviceStatus[status] ? this.deviceStatus[status].text : ''
+    },
+    remove (item) {
+      const headerColumnValues = [...this.machinesTableHeaders]
+
+      headerColumnValues.splice(headerColumnValues.indexOf(item), 1)
+      this.machinesTableHeaders = [...headerColumnValues]
+    },
+    setDefaultHeaders() {
+      this.updateMachineTableHeader({
+        name: this.$route.name,
+        headers: this.machinesTableHeaders
+      })
+    },
+
+    customizeTableHeader() {
+      debounce(this.setDefaultHeaders)
+    },
+
+    getCapacityUtilizationValue(item) {
+      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
     }
   }
 }

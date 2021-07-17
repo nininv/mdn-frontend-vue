@@ -5,8 +5,8 @@
       <br />
       <br />
       <v-combobox
-        v-model="headerColumnValues"
-        :items="headerColumns"
+        v-model="machinesTableHeaders"
+        :items="dashboardComboboxValues"
         chips
         solo
         label="Add/Remove Coloumns"
@@ -36,9 +36,13 @@
         :loading="loadingDashboardDevicesTable"
         :items-per-page="50"
         :page.sync="page"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :sort-options.sync="sortOptions"
         class="link-table"
         hide-default-footer
         @click:row="productView"
+        @update:options="updateTableSortOption"
       >
         <template v-slot:header.status="{ header }">
           <v-icon color="primary">$mdi-chevron-double-right</v-icon>
@@ -131,6 +135,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import NoDowntime from './dashboard-tables/DashboardTableNoDowntime'
 import DowntimeLegend from './dashboard-tables/DashboardMachinesTableLegend'
+import { debounce } from '../../plugins/debounce'
 /*
 |---------------------------------------------------------------------
 | Machines Table Card Component
@@ -182,19 +187,19 @@ export default {
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
+      dashboardComboboxValues: [
+        'Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Locations', 'Zones'
+      ],
+      locationComboboxValues: [
+        'Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Zones'
+      ],
+      sortBy: '',
+      sortDesc: '',
+      sortOptions: '',
       page: 1,
       hours: 8,
       searchQuery: '',
       row: '',
-      headerColumnValues: [
-        'Running',
-        'Machine Name',
-        'Machine Type',
-        'Capacity Utilization',
-        'Downtime By Reason',
-        'Locations',
-        'Zones'
-      ],
       deviceStatus: {
         machineRunning: {
           color: 'green',
@@ -341,15 +346,33 @@ export default {
       zoneName: 'zones/zoneName'
     }),
     filtedHeaders() {
+      const headerColumns = ['Running', 'Machine Name', ...this.machinesTableHeaders]
+
       return this.headers.filter((header) => {
-        return this.headerColumnValues.includes(header.text)
+        return headerColumns.includes(header.text)
       })
     },
     headerColumns() {
       return this.headers.map((header) => header.text)
+    },
+    machinesTableHeaders: {
+      get () {
+        return this.$store.state.devices.machinesTableHeaders
+      },
+      set (value) {
+        this.$store.commit('devices/SET_MACHINES_TABLE_HEADERS', value)
+      }
     }
   },
-  mounted() {
+  watch: {
+    machinesTableHeaders (newValue) {
+      this.customizeTableHeader()
+    }
+  },
+  async mounted() {
+    await this.getMachinesTableHeaders({
+      name: this.$route.name
+    })
     this.getDevicesAnalytics({
       page: this.page,
       location_id: this.location,
@@ -358,7 +381,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDevicesAnalytics: 'devices/getDevicesAnalytics'
+      getDevicesAnalytics: 'devices/getDevicesAnalytics',
+      updateMachineTableHeader: 'devices/updateMachineTableHeader',
+      getMachinesTableHeaders: 'devices/getMachinesTableHeaders'
     }),
     open(item) { },
     getColor(status) {
@@ -392,8 +417,10 @@ export default {
       }
     },
     remove (item) {
-      this.headerColumnValues.splice(this.headerColumnValues.indexOf(item), 1)
-      this.headerColumnValues = [...this.headerColumnValues]
+      const headerColumnValues = [...this.machinesTableHeaders]
+
+      headerColumnValues.splice(headerColumnValues.indexOf(item), 1)
+      this.machinesTableHeaders = [...headerColumnValues]
     },
     getDowntimeSeries(data) {
       const series = []
@@ -449,6 +476,30 @@ export default {
       })
 
       return sum === 0
+    },
+
+    setDefaultHeaders() {
+      this.updateMachineTableHeader({
+        name: this.$route.name,
+        headers: this.machinesTableHeaders
+      })
+    },
+
+    customizeTableHeader() {
+      debounce(this.setDefaultHeaders)
+    },
+
+    // getComboboxValues() {
+    //   if (this.$route.name === 'dashboard-analytics') {
+    //     return this.dashboardComboboxValues
+    //   } else if (this.$route.name === 'location-dashboard') {
+    //     return this.locationComboboxValues
+    //   } else {
+    //     return this.dashboardComboboxValues
+    //   }
+    // },
+
+    updateTableSortOption() {
     }
   }
 }
