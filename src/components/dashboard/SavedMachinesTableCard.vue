@@ -1,7 +1,7 @@
 <template>
   <v-card :disabled="loadingDashboardSavedMachinesTable">
     <v-card-title>
-      Saved Machines
+      Favorite Machines in Company
       <br />
       <br />
       <v-combobox

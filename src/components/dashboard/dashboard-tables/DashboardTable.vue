@@ -13,7 +13,7 @@
           <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
-        
+
         <template v-slot:item.name="{ item }">
           <span class="primary--text font-weight-bold">{{ item.name }}</span>
         </template>
@@ -214,7 +214,7 @@ export default {
       return [
         { text: this.headerLabel, value: 'name' },
         { text: 'Alarms', align: 'center', value: 'alarmsCount' },
-        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Availability', align: 'center', value: 'downtimeAvailability' }
       ]
     },
@@ -240,7 +240,7 @@ export default {
 
         return sum
       })
-      
+
       return sum === 0
     },
 
@@ -304,7 +304,7 @@ export default {
         this.$router.push({ path: item.machine_id + '/' + item.serial_number, append: true }).catch((error) => {})
         break
       default:
-        break 
+        break
       }
     }
   }

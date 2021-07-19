@@ -1,40 +1,43 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="surface2" class="my-n8 pt-9 py-7">
-      <v-container class="pb-0">
-        <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
-          <v-breadcrumbs :items="acsBreadcrumbItems">
-            <template v-slot:item="{ item }">
-              <v-breadcrumbs-item
-                :disabled="item.disabled"
-              >
-                {{ item.text }}
-              </v-breadcrumbs-item>
-            </template>
-          </v-breadcrumbs>
-          <v-spacer></v-spacer>
-          <company-menu
-            :companies="companies"
-            @companyChanged="onCompanyChanged"
-          >
-          </company-menu>
-        </div>
-        <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
-        <top-card></top-card>
-      </v-container>
-    </v-sheet>
-
     <v-container>
+      <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
+        <v-breadcrumbs :items="acsBreadcrumbItems">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item
+              :disabled="item.disabled"
+            >
+              {{ item.text }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+        <v-spacer></v-spacer>
+        <company-menu
+          :companies="companies"
+          @companyChanged="onCompanyChanged"
+        >
+        </company-menu>
+      </div>
+      <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
+      <v-card-title>
+        Location Summary
+      </v-card-title>
       <dashboard-table
         :loading="loadingLocationsTable"
         :items="locations"
         table-type="location"
       >
       </dashboard-table>
-
       <br>
       <saved-machines-table-card></saved-machines-table-card>
-      <br>
+    </v-container>
+    <v-sheet color="surface2" class="my-n8 py-7">
+      <v-container class="pb-0">
+        <top-card></top-card>
+      </v-container>
+    </v-sheet>
+
+    <v-container>
       <machines-table-card></machines-table-card>
     </v-container>
   </div>

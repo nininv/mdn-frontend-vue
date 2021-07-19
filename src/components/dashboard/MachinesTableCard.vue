@@ -1,7 +1,7 @@
 <template>
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
-      Machine Status
+      Favourite Machines in Location
       <br />
       <br />
       <v-combobox

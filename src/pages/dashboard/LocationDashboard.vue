@@ -12,17 +12,19 @@
           </company-menu>
         </div>
         <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
+        <dashboard-table
+          :loading="loadingZonesTable"
+          :items="zones"
+          table-type="zone"
+        >
+        </dashboard-table>
+        <br>
+        <machines-table-card :location="parseInt($route.params.location)"></machines-table-card>
+        <br>
         <top-card></top-card>
       </v-container>
     </v-sheet>
     <v-container>
-      <dashboard-table
-        :loading="loadingZonesTable"
-        :items="zones"
-        table-type="zone"
-      >
-      </dashboard-table>
-
       <br>
 
       <machines-table-card :location="parseInt($route.params.location)"></machines-table-card>
