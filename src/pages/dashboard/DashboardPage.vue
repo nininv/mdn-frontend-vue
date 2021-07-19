@@ -38,7 +38,7 @@
     </v-sheet>
 
     <v-container>
-      <machines-table-card></machines-table-card>
+      <machines-table-card machine-table-title="Machines"></machines-table-card>
     </v-container>
   </div>
 </template>

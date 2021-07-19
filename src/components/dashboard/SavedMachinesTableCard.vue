@@ -126,7 +126,7 @@ export default {
   data () {
     return {
       headers: [
-        { text: 'Running', align: 'center', value: 'status' },
+        { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },

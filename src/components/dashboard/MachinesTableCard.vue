@@ -1,7 +1,7 @@
 <template>
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
-      Favourite Machines in Location
+      {{ machineTableTitle }}
       <br />
       <br />
       <v-combobox
@@ -174,6 +174,11 @@ export default {
     location: {
       type: Number,
       default: 0
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    machineTableTitle:{
+      type:String,
+      default: 'Favourite Machines in Location'
     }
   },
   data () {
