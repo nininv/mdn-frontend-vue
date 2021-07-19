@@ -352,8 +352,6 @@ export default {
   methods: {
     ...mapActions({
       getDowntimeGraphData: 'devices/getDowntimeGraphData',
-      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
-      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries',
       setAvailabilityPlanTime: 'devices/setAvailabilityPlanTime'
     }),
     onTimeRangeChanged(newTimeRange) {
@@ -361,8 +359,6 @@ export default {
       const { from, to } = this.$refs.dateRangeChooser.getTimes()
 
       this.getDowntimeGraphData({ to, from, ...this.routeParams })
-      this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
-      this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })
       this.showTimeRangeChooser = false
     },
     handleSetPlanTime(data) {

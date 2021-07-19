@@ -117,6 +117,7 @@ export default {
     const now = new Date().getTime()
     const nowMinus24Hours = now - 60 * 60 * 24 * 1000
     const before7days =  now - 7 * 60 * 60 * 24 * 1000
+    const before8hours = now - 8 * 60 * 24 * 1000
 
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
@@ -128,14 +129,14 @@ export default {
     this.getDowntimeByTypeGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      from: before7days,
+      from: before8hours,
       to: now
     })
 
     this.getDowntimeByReasonGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      from: before7days,
+      from: before8hours,
       to: now
     })
   },
@@ -172,12 +173,14 @@ export default {
 
       const now = new Date().getTime()
       const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
+      const before8hours = now - 8 * 60 * 24 * 1000
 
       this.getDowntimeGraphData({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before7days,
         to: now
       })
 
@@ -185,7 +188,7 @@ export default {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before8hours,
         to: now
       })
 
@@ -193,7 +196,7 @@ export default {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before8hours,
         to: now
       })
     }
