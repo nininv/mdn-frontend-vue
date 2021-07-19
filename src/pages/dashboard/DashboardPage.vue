@@ -1,41 +1,44 @@
 <template>
   <div class="d-flex flex-grow-1 flex-column">
-    <v-sheet color="surface2" class="my-n8 pt-9 py-7">
-      <v-container class="pb-0">
-        <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
-          <v-breadcrumbs :items="acsBreadcrumbItems">
-            <template v-slot:item="{ item }">
-              <v-breadcrumbs-item
-                :disabled="item.disabled"
-              >
-                {{ item.text }}
-              </v-breadcrumbs-item>
-            </template>
-          </v-breadcrumbs>
-          <v-spacer></v-spacer>
-          <company-menu
-            :companies="companies"
-            @companyChanged="onCompanyChanged"
-          >
-          </company-menu>
-        </div>
-        <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
-        <top-card></top-card>
-      </v-container>
-    </v-sheet>
-
     <v-container>
+      <div v-if="$route.name === 'acs-machines'" class="d-flex mt-2 align-center">
+        <v-breadcrumbs :items="acsBreadcrumbItems">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item
+              :disabled="item.disabled"
+            >
+              {{ item.text }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+        <v-spacer></v-spacer>
+        <company-menu
+          :companies="companies"
+          @companyChanged="onCompanyChanged"
+        >
+        </company-menu>
+      </div>
+      <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
+      <v-card-title>
+        Location Summary
+      </v-card-title>
       <dashboard-table
         :loading="loadingLocationsTable"
         :items="locations"
         table-type="location"
       >
       </dashboard-table>
-
       <br>
       <saved-machines-table-card></saved-machines-table-card>
-      <br>
-      <machines-table-card></machines-table-card>
+    </v-container>
+    <v-sheet color="surface2" class="my-n8 py-7">
+      <v-container class="pb-0">
+        <top-card></top-card>
+      </v-container>
+    </v-sheet>
+
+    <v-container>
+      <machines-table-card machine-table-title="Machines"></machines-table-card>
     </v-container>
   </div>
 </template>
@@ -114,6 +117,7 @@ export default {
     const now = new Date().getTime()
     const nowMinus24Hours = now - 60 * 60 * 24 * 1000
     const before7days =  now - 7 * 60 * 60 * 24 * 1000
+    const before8hours = now - 8 * 60 * 24 * 1000
 
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
@@ -125,14 +129,14 @@ export default {
     this.getDowntimeByTypeGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      from: before7days,
+      from: before8hours,
       to: now
     })
 
     this.getDowntimeByReasonGraphSeries({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: 0,
-      from: before7days,
+      from: before8hours,
       to: now
     })
   },
@@ -169,12 +173,14 @@ export default {
 
       const now = new Date().getTime()
       const nowMinus24Hours = now - 60 * 60 * 24 * 1000
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
+      const before8hours = now - 8 * 60 * 24 * 1000
 
       this.getDowntimeGraphData({
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before7days,
         to: now
       })
 
@@ -182,7 +188,7 @@ export default {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before8hours,
         to: now
       })
 
@@ -190,7 +196,7 @@ export default {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: 0,
         zone_id: 0,
-        from: nowMinus24Hours,
+        from: before8hours,
         to: now
       })
     }

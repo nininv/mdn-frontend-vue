@@ -1,7 +1,7 @@
 <template>
   <v-card :disabled="loadingDashboardDevicesTable">
     <v-card-title>
-      Machine Status
+      {{ machineTableTitle }}
       <br />
       <br />
       <v-combobox
@@ -174,24 +174,29 @@ export default {
     location: {
       type: Number,
       default: 0
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    machineTableTitle:{
+      type:String,
+      default: 'Favourite Machines in Location'
     }
   },
   data () {
     return {
       headers: [
-        { text: 'Running', align: 'center', value: 'status' },
+        { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
-        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
       ],
       dashboardComboboxValues: [
-        'Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Locations', 'Zones'
+        'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Locations', 'Zones'
       ],
       locationComboboxValues: [
-        'Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Zones'
+        'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Zones'
       ],
       sortBy: '',
       sortDesc: '',

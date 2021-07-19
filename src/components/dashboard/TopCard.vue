@@ -1,5 +1,11 @@
 <template>
   <v-row class="flex-grow-0" dense>
+    <v-col md="6" sm="6">
+      <downtime-by-type-card></downtime-by-type-card>
+    </v-col>
+    <v-col md="6" sm="6">
+      <downtime-by-reason-card></downtime-by-reason-card>
+    </v-col>
     <v-col md="12" sm="12">
       <v-row dense class="my-0">
         <v-col
@@ -10,12 +16,6 @@
           <downtime-card></downtime-card>
         </v-col>
       </v-row>
-    </v-col>
-    <v-col md="6" sm="6">
-      <downtime-by-type-card></downtime-by-type-card>
-    </v-col>
-    <v-col md="6" sm="6">
-      <downtime-by-reason-card></downtime-by-reason-card>
     </v-col>
   </v-row>
 </template>

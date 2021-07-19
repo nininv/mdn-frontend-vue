@@ -134,20 +134,17 @@
 <script>
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 const DATE_PRESET = [{
+  label: 'Last 8 hours',
+  value: 'last8Hours'
+}, {
+  label: 'Last 12 hours',
+  value: 'last12Hours'
+}, {
   label: 'Last 24 hours',
   value: 'last24Hours'
 }, {
-  label: 'Last 48 hours',
-  value: 'last48Hours'
-}, {
-  label: 'Last 3 days',
-  value: 'last3Days'
-}, {
   label: 'Last 7 days',
   value: 'last7Days'
-}, {
-  label: 'Last 14 days',
-  value: 'last14Days'
 }, {
   label: 'Last 24 days',
   value: 'last24Days'

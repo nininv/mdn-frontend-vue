@@ -8,7 +8,25 @@
   >
     <v-card-title>
       Downtime by Reason
+      <v-spacer></v-spacer>
+      <v-btn
+        icon
+        class=" ml-2"
+        @click="showTimeRangeChooser = true"
+      >
+        <v-icon>$mdi-filter</v-icon>
+      </v-btn>
     </v-card-title>
+    <date-range-chooser-dialog
+      ref="dateRangeChooserType"
+      :dlg="showTimeRangeChooser"
+      :time-range="selectedTimeRange"
+      allow-custom
+      limit-two-weeks
+      @close="showTimeRangeChooser = false"
+      @submit="onTimeRangeChanged"
+    >
+    </date-range-chooser-dialog>
     <v-card-text style="padding-bottom: 30px">
       <apexchart
         :options="chartOptions"
@@ -20,7 +38,11 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+import DateRangeChooserDialog from '../common/DateRangeChooserDialog.vue'
+
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
 
 const seriesColors = [{
   name: 'No Demand',
@@ -43,10 +65,19 @@ const seriesColors = [{
 }]
 
 export default {
+  components: {
+    DateRangeChooserDialog
+  },
   data() {
     return {
       showTimeRangeChooser: false,
-      selectedTimeRange: {},
+      selectedTimeRange: {
+        timeRangeOption: 'last8Hours',
+        dateFrom: BEFOREEIGHTHOURS,
+        dateTo: TODAY,
+        timeFrom: '00:00',
+        timeTo: '00:00'
+      },
       showChart: true
     }
   },
@@ -129,11 +160,25 @@ export default {
 
       return _colors
     }
+  },
+  methods: {
+    ...mapActions({
+      getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
+      getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
+    }),
+    onTimeRangeChanged(newTimeRange) {
+      this.selectedTimeRange = newTimeRange
+      const { from, to } = this.$refs.dateRangeChooserType.getTimes()
+
+      this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
+      this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })
+      this.showTimeRangeChooser = false
+    }
   }
 }
 </script>
 <style scoped>
-  .v-card__title {
-    word-break: break-word;
-  }
+.v-card__title {
+  word-break: break-word;
+}
 </style>
