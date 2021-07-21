@@ -23,7 +23,7 @@ const timeRangeLabel = (state) => (timeRange) => {
 
     return tr ? tr.label : ''
   } else {
-    return timeRange.dateFrom + ' ' + timeRange.timeFrom + ' ~ ' + timeRange.dateTo + ' ' + timeRange.timeTo
+    return timeRange.dateFrom + ' ~ ' + timeRange.dateTo
   }
 }
 
@@ -33,7 +33,7 @@ const timeRangeDataToolLabel = (state) => (timeRange) => {
 
     return tr ? tr.label : ''
   } else {
-    return timeRange.dates[0] + ' ~ ' + timeRange.dates[1]
+    return timeRange.dateFrom + ' ~ ' + timeRange.dateTo
   }
 }
 
@@ -102,8 +102,8 @@ const timeRangeFromTo = (state) => (timeRange) => {
     }
   } else {
     return {
-      from: new Date(timeRange.dates[0]).getTime(),
-      to: new Date(timeRange.dates[1]).getTime()
+      from: new Date(`${timeRange.dateFrom} 00:00:00`).getTime(),
+      to: new Date(`${timeRange.dateTo} 23:59:59`).getTime()
     }
   }
 }

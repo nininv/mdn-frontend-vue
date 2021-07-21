@@ -108,8 +108,8 @@ export default {
 
       this.locTimeRange = {
         timeRangeOption: newValue.timeRangeOption,
-        dateFrom: newValue.dates[0],
-        dateTo: newValue.dates[1]
+        dateFrom: newValue.dateFrom,
+        dateTo: newValue.dateTo
       }
     },
     locTimeRangeOption (newValue) {
@@ -137,10 +137,8 @@ export default {
       this.$emit('submit', {
         timeRange: {
           timeRangeOption: this.locTimeRangeOption,
-          dates: [
-            this.locDateFrom,
-            this.locDateTo
-          ]
+          dateFrom: this.locDateFrom,
+          dateTo: this.locDateTo
         },
         selectedTags: this.locSelectedTags
       })
