@@ -23,7 +23,7 @@ const timeRangeLabel = (state) => (timeRange) => {
 
     return tr ? tr.label : ''
   } else {
-    return timeRange.dateFrom + ' ' + timeRange.timeFrom + ' ~ ' + timeRange.dateTo + ' ' + timeRange.timeTo
+    return timeRange.dateFrom + ' ~ ' + timeRange.dateTo
   }
 }
 
