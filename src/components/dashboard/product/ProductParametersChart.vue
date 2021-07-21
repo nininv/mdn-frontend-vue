@@ -59,7 +59,15 @@ export default {
     return {
       showTimeRangeChooser: false,
       loading: false,
-      colors: ['#008ffb', '#00e396', '#feb019', '#ff4560', '#775dd0', '#adbcc9']
+      colors: ['#008ffb', '#00e396', '#feb019', '#ff4560', '#775dd0', '#adbcc9'],
+      defaultTimeRange: {
+        timeRangeOption: 'last8Hours',
+        dateFrom: '2021-07-21',
+        dateTo: '2021-07-21',
+        timeFrom: '00-00',
+        timeTo: '00-00',
+        dates: ['', '']
+      }
     }
   },
 
@@ -150,6 +158,10 @@ export default {
     this.loading = true
 
     try {
+      await this.updateDataToolOptions({
+        timeRange: this.defaultTimeRange,
+        selectedTags: this.selectedTags
+      })
       await this.getTags({
         machineId: this.machineId,
         serialNumber: this.serialNumber
@@ -158,7 +170,7 @@ export default {
         machineId: this.machineId,
         serialNumber: this.serialNumber,
         selectedTags: this.selectedTags,
-        timeRange: this.dataToolTimeRange
+        timeRange: this.defaultTimeRange
       })
     } catch (err) {
       console.log(err)
