@@ -71,8 +71,8 @@ const state = {
       value: 'last24Hours'
     },
     {
-      label: 'Last 48 hours',
-      value: 'last48Hours'
+      label: 'Last 8 hours',
+      value: 'last8Hours'
     },
     {
       label: 'Last 3 days',

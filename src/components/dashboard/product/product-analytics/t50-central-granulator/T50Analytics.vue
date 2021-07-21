@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-t50-utilization"
           title="Capacity Utilization"
@@ -51,6 +51,22 @@
         >
         </bar-graph>
       </v-col>
+      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
+        <v-card-title>
+          Downtime Data
+        </v-card-title>
+        <v-row class="flex-grow-0" dense>
+          <v-col v-if="parameters.includes(20)" md="4" sm="12">
+            <downtime-card></downtime-card>
+          </v-col>
+          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+            <downtime-by-type-card></downtime-by-type-card>
+          </v-col>
+          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+            <downtime-by-reason-card></downtime-by-reason-card>
+          </v-col>
+        </v-row>
+      </v-col>
       <!-- <v-col cols="12" md="4">
         <t50-amp
           :loading="loadingT50Amps"
@@ -70,6 +86,9 @@ import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import Overview from '../../common/overview/ProductOverview'
 import T50Running from './components/T50Running'
 import T50Hours from './components/T50Hours'
+import DowntimeCard from '../../../DowntimeCard'
+import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
+import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
 // import T50Amp from './components/T50Amp'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -80,7 +99,10 @@ export default {
     BarGraph,
     Overview,
     T50Running,
-    T50Hours
+    T50Hours,
+    DowntimeCard,
+    DowntimeByTypeCard,
+    DowntimeByReasonCard
     // T50Amp
   },
   props: {
@@ -91,6 +113,10 @@ export default {
     serialNumber: {
       type: Number,
       default: 0
+    },
+    parameters: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

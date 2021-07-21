@@ -29,7 +29,7 @@
       >
       </dashboard-table>
       <br>
-      <saved-machines-table-card></saved-machines-table-card>
+      <saved-machines-table-card :table-title="'Favorite Machines in Company'"></saved-machines-table-card>
     </v-container>
     <v-sheet color="surface2" class="my-n8 py-7">
       <v-container class="pb-0">
@@ -117,7 +117,7 @@ export default {
     const now = new Date().getTime()
     const nowMinus24Hours = now - 60 * 60 * 24 * 1000
     const before7days =  now - 7 * 60 * 60 * 24 * 1000
-    const before8hours = now - 8 * 60 * 24 * 1000
+    const before8hours = now - 8 * 60 * 60 * 1000
 
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,

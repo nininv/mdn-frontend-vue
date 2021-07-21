@@ -37,7 +37,7 @@ export default {
     },
     allowCustom: {
       type: Boolean,
-      default: false
+      default: true
     },
     hasTimePicker: {
       type: Boolean,

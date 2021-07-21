@@ -19,7 +19,7 @@
         >
         </dashboard-table>
         <br>
-        <machines-table-card :location="parseInt($route.params.location)"></machines-table-card>
+        <saved-machines-table-card :table-title="'Favorite Machines in Location'"></saved-machines-table-card>
         <br>
         <top-card></top-card>
       </v-container>
@@ -41,13 +41,15 @@ import CompanyMenu from '../../components/dashboard/CompanyMenu'
 import MachinesTableCard from '../../components/dashboard/MachinesTableCard'
 import DashboardTable from '../../components/dashboard/dashboard-tables/DashboardTable'
 import TopCard from '../../components/dashboard/TopCard'
+import SavedMachinesTableCard from '../../components/dashboard/SavedMachinesTableCard'
 
 export default {
   components: {
     CompanyMenu,
     MachinesTableCard,
     DashboardTable,
-    TopCard
+    TopCard,
+    SavedMachinesTableCard
   },
   data() {
     return {

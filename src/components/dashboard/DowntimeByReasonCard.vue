@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import DateRangeChooserDialog from '../common/DateRangeChooserDialog.vue'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
@@ -86,6 +86,7 @@ export default {
       downtimeByReasonGraphSeries: (state) => state.devices.downtimeByReasonGraphSeries,
       isDowntimeByReasonGraphLoading: (state) => state.devices.isDowntimeByReasonGraphLoading
     }),
+    ...mapGetters('machines', ['timeRangeFromTo']),
     chartOptions() {
       return {
         chart: {
@@ -159,6 +160,27 @@ export default {
       })
 
       return _colors
+    },
+    routeParams() {
+      const location_id = this.$route.params.location ? this.$route.params.location : 0
+      const zone_id = this.$route.params.zone ? this.$route.params.zone : 0
+
+      if (this.$route.name === 'dashboard-product') {
+        return {
+          location_id,
+          zone_id,
+          company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+          machine_id: this.$route.params.configurationId,
+          serial_number: this.$route.params.productId
+        }
+      }
+
+      return {
+        location_id,
+        zone_id,
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0
+      }
+
     }
   },
   methods: {
@@ -167,8 +189,16 @@ export default {
       getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
     onTimeRangeChanged(newTimeRange) {
+      let from, to
+
       this.selectedTimeRange = newTimeRange
-      const { from, to } = this.$refs.dateRangeChooserType.getTimes()
+      if (newTimeRange.timeRangeOption === 'custom') {
+        from = this.$refs.dateRangeChooserType.getTimes().from
+        to = this.$refs.dateRangeChooserType.getTimes().to
+      } else {
+        from = this.timeRangeFromTo(newTimeRange).from
+        to = this.timeRangeFromTo(newTimeRange).to
+      }
 
       this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
       this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })

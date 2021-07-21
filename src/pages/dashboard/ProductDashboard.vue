@@ -51,22 +51,6 @@
                   </product-analytics>
                 </v-col>
                 <v-col cols="12">
-                  <v-card-title>
-                    Downtime Data
-                  </v-card-title>
-                  <v-row class="flex-grow-0" dense>
-                    <v-col md="4" sm="12">
-                      <downtime-card></downtime-card>
-                    </v-col>
-                    <v-col md="4" sm="12">
-                      <downtime-by-type-card></downtime-by-type-card>
-                    </v-col>
-                    <v-col md="4" sm="12">
-                      <downtime-by-reason-card></downtime-by-reason-card>
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col cols="12">
                   <alarms-table
                     namespace="alarms-table-id1"
                     :fetch="getProductAlarms"
@@ -179,9 +163,6 @@ import ProductAnalytics from '../../components/dashboard/product/ProductAnalytic
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
-import DowntimeCard from '../../components/dashboard/DowntimeCard'
-import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCardForProduct'
-import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
 
 export default {
   components: {
@@ -191,10 +172,7 @@ export default {
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
-    AlarmsTable,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
+    AlarmsTable
   },
   props:{
 

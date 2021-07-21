@@ -10,7 +10,7 @@
         >
         </overview>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col v-if="parameters.includes(1)" cols="12" md="4">
         <area-graph
           namespace="areaGraph-vtc-utilization"
           title="Capacity Utilization"
@@ -23,7 +23,7 @@
         >
         </area-graph>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(3)" cols="12" md="6">
         <bar-graph
           namespace="barGraph-vtc-id1"
           title="Pump Hours"
@@ -36,7 +36,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(4)" cols="12" md="6">
         <bar-graph
           namespace="barGraph-vtc-id2"
           title="Pump Hours Oil Change"
@@ -50,7 +50,7 @@
         >
         </bar-graph>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(5)" cols="12" md="6">
         <bar-graph
           namespace="barGraph-vtc-id3"
           title="Online Life"
@@ -63,7 +63,21 @@
         >
         </bar-graph>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
+        <v-card-title>
+          Downtime Data
+        </v-card-title>
+        <v-row class="flex-grow-0" dense>
+          <v-col v-if="parameters.includes(20)" md="4" sm="12">
+            <downtime-card></downtime-card>
+          </v-col>
+          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+            <downtime-by-type-card></downtime-by-type-card>
+          </v-col>
+          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+            <downtime-by-reason-card></downtime-by-reason-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -75,6 +89,9 @@ import commonApi from '../../common/fetches/api'
 import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
+import DowntimeCard from '../../../DowntimeCard'
+import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
+import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -82,7 +99,10 @@ export default {
   components: {
     BarGraph,
     AreaGraph,
-    Overview
+    Overview,
+    DowntimeCard,
+    DowntimeByTypeCard,
+    DowntimeByReasonCard
   },
   props: {
     machineId: {
