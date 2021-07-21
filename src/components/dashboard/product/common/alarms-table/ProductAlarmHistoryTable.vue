@@ -88,7 +88,7 @@ export default {
   data () {
     return {
       timeRange: {
-        timeRangeOption: 'last24Hours',
+        timeRangeOption: 'last8Hours',
         dateFrom: TODAY,
         dateTo: TODAY,
         timeFrom: '00:00',
