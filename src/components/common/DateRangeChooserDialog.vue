@@ -59,7 +59,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          timeRangeOption: 'last24Hours',
+          timeRangeOption: 'last8Hours',
           dateFrom: TODAY,
           dateTo: TODAY,
           timeFrom: '00:00',

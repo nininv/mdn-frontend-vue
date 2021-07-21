@@ -97,7 +97,14 @@ export default {
   },
   data() {
     return {
-      showTimeRangeChooser: false
+      showTimeRangeChooser: false,
+      defaultTimeRange: {
+        timeRangeOption: 'last8Hours',
+        dateFrom: '',
+        dateTo: '',
+        timeFrom: '',
+        timeTo: ''
+      }
     }
   },
   computed: {
@@ -204,7 +211,7 @@ export default {
       this.getSeries({
         machineId: this.machineId,
         serialNumber: this.serialNumber,
-        timeRange: this.timeRange
+        timeRange: this.defaultTimeRange
       })
     },
     onTimeRangeChanged(newTimeRange) {
