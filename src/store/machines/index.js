@@ -110,15 +110,15 @@ const state = {
   selectedTags: [],
   selectedTcuTags: [],
   dataToolTimeRange: {
-    timeRangeOption: 'last24Hours',
+    timeRangeOption: 'last8Hours',
     dates: [TODAY, TODAY]
   },
   dataToolTcuTimeRange: {
-    timeRangeOption: 'last24Hours',
+    timeRangeOption: 'last8Hours',
     dates: [TODAY, TODAY]
   },
   hopperSettingTimeRange: {
-    timeRangeOption: 'last24Hours',
+    timeRangeOption: 'last8Hours',
     dates: [TODAY, TODAY]
   },
   selectedHoppers: [{
