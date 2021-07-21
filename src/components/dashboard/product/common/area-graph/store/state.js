@@ -2,7 +2,7 @@ function defaultTimeRange() {
   const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 
   return {
-    timeRangeOption: 'last24Hours',
+    timeRangeOption: 'last8Hours',
     dateFrom: TODAY,
     dateTo: TODAY,
     timeFrom: '00:00',
