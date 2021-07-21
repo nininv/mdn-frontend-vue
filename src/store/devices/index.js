@@ -2,7 +2,8 @@ import deviceAPI from '../../services/api/device'
 import * as Sentry from '@sentry/vue'
 
 const ITEM_PER_PAGE = 10
-const MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Capacity Utilization', 'Downtime By Reason', 'Locations', 'Zones']
+const MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Locations', 'Zones']
+const SAVED_MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Downtime By Type', 'Capacity Utilization', 'Locations', 'Zones']
 const module = {
   namespaced: true,
   state: {
@@ -64,7 +65,8 @@ const module = {
     downtimeReasons: [],
     isUpdatingDowntime: false,
 
-    machinesTableHeaders: []
+    machinesTableHeaders: [],
+    savedMachinesTableHeaders: []
   },
 
   actions: {
@@ -119,7 +121,7 @@ const module = {
       }
     },
 
-    async updateEnabledProperties(payload) {
+    async updateEnabledProperties({ commit }, payload) {
       try {
         await deviceAPI.updateEnabledProperties(payload)
       } catch (error) {
@@ -504,6 +506,24 @@ const module = {
       } catch (error) {
         Sentry.captureException(error)
       }
+    },
+
+    async updateSavedMachineTableHeader({ commit }, data) {
+      try {
+        await deviceAPI.setSavedMachinesTableDefaultHeader(data)
+      } catch (error) {
+        Sentry.captureException(error)
+      }
+    },
+
+    async getSavedMachinesTableHeaders({ commit }, data) {
+      try {
+        const response = await deviceAPI.getSavedMachinesTableHeaders(data)
+
+        commit('SET_SAVED_MACHINES_TABLE_HEADERS', response.headers)
+      } catch (error) {
+        Sentry.captureException(error)
+      }
     }
   },
 
@@ -672,6 +692,9 @@ const module = {
     SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status },
     SET_MACHINES_TABLE_HEADERS(state, headers) {
       state.machinesTableHeaders = headers === null ? MACHINES_TABLE_DEFAULT_HEADERS : headers
+    },
+    SET_SAVED_MACHINES_TABLE_HEADERS(state, headers) {
+      state.savedMachinesTableHeaders = headers === null ? SAVED_MACHINES_TABLE_DEFAULT_HEADERS : headers
     }
   },
 

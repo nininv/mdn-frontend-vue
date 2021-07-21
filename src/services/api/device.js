@@ -353,5 +353,19 @@ export default {
    */
   getMachinesTableHeaders(data) {
     return api.$post('devices/get-machines-table-headers', data)
+  },
+
+  /**
+   * Set saved machines table default headers
+   */
+  setSavedMachinesTableDefaultHeader(data) {
+    return api.$post('devices/set-saved-machines-table-default-headers', data)
+  },
+
+  /**
+   * Get saved machines table headers
+   */
+  getSavedMachinesTableHeaders(data) {
+    return api.$post('devices/get-saved-machines-table-headers', data)
   }
 }

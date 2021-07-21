@@ -351,7 +351,7 @@ export default {
       zoneName: 'zones/zoneName'
     }),
     filtedHeaders() {
-      const headerColumns = ['Running', 'Machine Name', ...this.machinesTableHeaders]
+      const headerColumns = ['Status', 'Machine Name', ...this.machinesTableHeaders]
 
       return this.headers.filter((header) => {
         return headerColumns.includes(header.text)

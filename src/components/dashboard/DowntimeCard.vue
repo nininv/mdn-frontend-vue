@@ -355,8 +355,16 @@ export default {
       setAvailabilityPlanTime: 'devices/setAvailabilityPlanTime'
     }),
     onTimeRangeChanged(newTimeRange) {
+      let from, to
+
       this.selectedTimeRange = newTimeRange
-      const { from, to } = this.$refs.dateRangeChooser.getTimes()
+      if (newTimeRange.timeRangeOption === 'custom') {
+        from = this.$refs.dateRangeChooserType.getTimes().from
+        to = this.$refs.dateRangeChooserType.getTimes().to
+      } else {
+        from = this.timeRangeFromTo(newTimeRange).from
+        to = this.timeRangeFromTo(newTimeRange).to
+      }
 
       this.getDowntimeGraphData({ to, from, ...this.routeParams })
       this.showTimeRangeChooser = false

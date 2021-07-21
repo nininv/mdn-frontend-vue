@@ -1,12 +1,12 @@
 <template>
   <v-card :disabled="loadingDashboardSavedMachinesTable">
     <v-card-title>
-      Favorite Machines in Company
+      {{ tableTitle }}
       <br />
       <br />
       <v-combobox
-        v-model="headerColumnValues"
-        :items="headerColumns"
+        v-model="savedMachinesTableHeaders"
+        :items="headerColumnValues"
         chips
         solo
         label="Add/Remove Coloumns"
@@ -31,7 +31,7 @@
       <v-data-table
         id="saved-machines-table"
         :headers="filtedHeaders"
-        :items="savedMachines"
+        :items="filteredSavedMachines"
         :search="searchQuery"
         :loading="loadingDashboardSavedMachinesTable"
         :items-per-page="10"
@@ -79,6 +79,20 @@
             </v-tooltip>
           </v-chip>
         </template>
+        <template v-slot:item.downtimeByReason="{ item }">
+          <div v-if="item && item.downtimeByReason" class="mx-auto d-flex justify-center">
+            <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
+            <apexchart
+              v-else
+              key="downtime-chart"
+              width="240"
+              height="80"
+              :options="getSeriesOptions(item.downtimeByReason)"
+              :series="getDowntimeSeries(item.downtimeByReason)"
+            >
+            </apexchart>
+          </div>
+        </template>
         <template v-slot:item.capacityUtilization="{ item }">
           <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
             <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
@@ -94,6 +108,9 @@
           {{ zoneName(item.zone_id) }}
         </template>
       </v-data-table>
+      <div class="d-flex justify-end mr-4">
+        <downtime-legend></downtime-legend>
+      </div>
       <v-pagination
         v-model="page"
         :length="savedMachinesPageCountReport"
@@ -106,6 +123,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import DowntimeLegend from './dashboard-tables/DashboardMachinesTableLegend'
+import NoDowntime from './dashboard-tables/DashboardTableNoDowntime'
+import { debounce } from '../../plugins/debounce'
 /*
 |---------------------------------------------------------------------
 | Machines Table Card Component
@@ -114,13 +134,40 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 | Machines table card to list machines and their properties
 |
 */
+
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#eeeeef'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#0f2d52'
+}, {
+  name: 'Machine Failure',
+  color: '#29b1b8'
+}, {
+  name: 'Power Outage',
+  color: '#5a5d61'
+}, {
+  name: 'Other',
+  color: '#c8c62e'
+}, {
+  name: 'Change Over',
+  color: '#623666'
+}]
+
 export default {
   components: {
+    DowntimeLegend,
+    NoDowntime
   },
   props: {
     location: {
       type: Number,
       default: 0
+    },
+    tableTitle: {
+      type: String,
+      default: 'Favorite Machines in Company'
     }
   },
   data () {
@@ -129,6 +176,7 @@ export default {
         { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'configuration' },
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
         { text: 'Locations', align: 'center', value: 'location_id' },
         { text: 'Zones', align: 'center', value: 'zone_id' }
@@ -138,9 +186,8 @@ export default {
       searchQuery: '',
       row: '',
       headerColumnValues: [
-        'Running',
-        'Machine Name',
         'Machine Type',
+        'Downtime By Type',
         'Capacity Utilization',
         'Locations',
         'Zones'
@@ -185,6 +232,50 @@ export default {
           color: 'red',
           text: 'Machine Running - Threshold Alert',
           icon: '$mdi-alert-outline'
+        }
+      },
+      chartOptions: {
+        chart: {
+          type: 'bar',
+          stacked: true,
+          stackType: '100%',
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+              enabled: false
+            }
+          }
+        },
+        xaxis: {
+          axisBorder: {
+            show: false
+          },
+          labels: {
+            show: false
+          }
+        },
+        yaxis: {
+          floating: true,
+          labels: {
+            show: false
+          },
+          title: {
+            text: undefined
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          show: false
         }
       },
       utilizationOptions: {
@@ -246,22 +337,52 @@ export default {
       zoneName: 'zones/zoneName'
     }),
     filtedHeaders() {
+      const headerColumns = ['Status', 'Machine Name', ...this.savedMachinesTableHeaders]
+
       return this.headers.filter((header) => {
-        return this.headerColumnValues.includes(header.text)
+        return headerColumns.includes(header.text)
       })
+
     },
     headerColumns() {
       return this.headers.map((header) => header.text)
+    },
+    savedMachinesTableHeaders: {
+      get () {
+        return this.$store.state.devices.savedMachinesTableHeaders
+      },
+      set (value) {
+        this.$store.commit('devices/SET_SAVED_MACHINES_TABLE_HEADERS', value)
+      }
+    },
+    filteredSavedMachines() {
+      if (this.$route.params.location) {
+        return this.savedMachines.filter((machine) => {
+          return parseInt(machine.location_id) === parseInt(this.$route.params.location)
+        })
+      } else {
+        return this.savedMachines
+      }
     }
   },
-  mounted() {
+  watch: {
+    savedMachinesTableHeaders (newValue) {
+      this.customizeTableHeader()
+    }
+  },
+  async mounted() {
+    await this.getSavedMachinesTableHeaders({
+      name: this.$route.name
+    })
     this.getSavedMachines({
       page: this.page
     })
   },
   methods: {
     ...mapActions({
-      getSavedMachines: 'devices/getSavedMachines'
+      getSavedMachines: 'devices/getSavedMachines',
+      updateSavedMachineTableHeader: 'devices/updateSavedMachineTableHeader',
+      getSavedMachinesTableHeaders: 'devices/getSavedMachinesTableHeaders'
     }),
     open(item) { },
     getColor (status) {
@@ -298,8 +419,72 @@ export default {
       }
     },
     remove (item) {
-      this.headerColumnValues.splice(this.headerColumnValues.indexOf(item), 1)
-      this.headerColumnValues = [...this.headerColumnValues]
+      const headerColumnValues = [...this.savedMachinesTableHeaders]
+
+      headerColumnValues.splice(headerColumnValues.indexOf(item), 1)
+      this.savedMachinesTableHeaders = [...headerColumnValues]
+    },
+    hasNoDowntime(data) {
+      let sum = 0
+
+      data.map((item) => {
+        sum += item.data
+
+        return sum
+      })
+
+      return sum === 0
+    },
+
+    getSeriesOptions(series) {
+      const _colors = []
+
+      series.map((item) => {
+        const seriesColor = seriesColors.find((data) => {
+          return data.name === item.name
+        })
+
+        _colors.push(seriesColor ? seriesColor.color : '#fff')
+
+        return _colors
+      })
+
+      return {
+        ...this.chartOptions,
+        colors: _colors,
+        fill: {
+          colors: _colors,
+          opacity: 1
+        }
+      }
+    },
+
+    getDowntimeSeries(data) {
+      const series = []
+
+      data.map((item) => {
+        const temp = {
+          name: item.name,
+          data: [item.data]
+        }
+
+        series.push(temp)
+
+        return 0
+      })
+
+      return series
+    },
+
+    setDefaultHeaders() {
+      this.updateSavedMachineTableHeader({
+        name: this.$route.name,
+        headers: this.savedMachinesTableHeaders
+      })
+    },
+
+    customizeTableHeader() {
+      debounce(this.setDefaultHeaders)
     }
   }
 }

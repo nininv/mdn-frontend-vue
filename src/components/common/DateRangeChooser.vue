@@ -146,31 +146,15 @@ const DATE_PRESET = [{
   label: 'Last 7 days',
   value: 'last7Days'
 }, {
-  label: 'Last 24 days',
-  value: 'last24Days'
+  label: 'Custom',
+  value: 'custom'
 }]
-
-const DATETIME_PRESET = [{
-  label: 'Last 30 minutes',
-  value: 'last30Min'
-}, {
-  label: 'Last hour',
-  value: 'lastHour'
-}, {
-  label: 'Last 4 hours',
-  value: 'last4Hours'
-}, {
-  label: 'Last 12 hours',
-  value: 'last12Hours'
-},
-...DATE_PRESET
-]
 
 export default {
   props: {
     allowCustom: {
       type: Boolean,
-      default: false
+      default: true
     },
     hasTimePicker: {
       type: Boolean,
@@ -222,22 +206,7 @@ export default {
     rangeOptions() {
       let options = []
 
-      if (this.timeRangeOptions.length > 0) {
-        options = this.timeRangeOptions
-      } else {
-        options = this.showShortIntervals ? DATETIME_PRESET.slice(0) : DATE_PRESET.slice(0)
-      }
-
-      if (this.limitTwoWeeks) {
-        options.pop()
-      }
-
-      if (this.allowCustom) {
-        options.push({
-          label: 'Custom',
-          value: 'custom'
-        })
-      }
+      options = DATE_PRESET.slice(0)
 
       return options
     }

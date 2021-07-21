@@ -69,9 +69,9 @@ const timeRangeFromTo = (state) => (timeRange) => {
         from: dateGetTime - (24 * 60 * 60 * 1000),
         to: dateGetTime
       }
-    case 'last48Hours':
+    case 'last8Hours':
       return {
-        from: dateGetTime - (48 * 60 * 60 * 1000),
+        from: dateGetTime - (8 * 60 * 60 * 1000),
         to: dateGetTime
       }
     case 'last3Days':
