@@ -38,11 +38,9 @@
         :page.sync="page"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
-        :sort-options.sync="sortOptions"
         class="link-table"
         hide-default-footer
         @click:row="productView"
-        @update:options="updateTableSortOption"
       >
         <template v-slot:header.status="{ header }">
           <v-icon color="primary">$mdi-chevron-double-right</v-icon>
@@ -107,7 +105,7 @@
           </div>
         </template>
         <template v-slot:item.capacityUtilization="{ item }">
-          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+          <div v-if="item" class="mx-auto d-flex justify-center">
             <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
           </div>
         </template>
@@ -178,7 +176,7 @@ export default {
     // eslint-disable-next-line vue/require-default-prop
     machineTableTitle:{
       type:String,
-      default: 'Favourite Machines in Location'
+      default: 'Machines in Location'
     }
   },
   data () {
@@ -186,11 +184,11 @@ export default {
       headers: [
         { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
-        { text: 'Machine Type', align: 'start', value: 'configuration' },
+        { text: 'Machine Type', align: 'start', value: 'machineType', width: '150px' },
         { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
-        { text: 'Locations', align: 'center', value: 'location_id' },
-        { text: 'Zones', align: 'center', value: 'zone_id' }
+        { text: 'Locations', align: 'center', value: 'location_id', width: '110px' },
+        { text: 'Zones', align: 'center', value: 'zone_id', width: '95px' }
       ],
       dashboardComboboxValues: [
         'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Locations', 'Zones'
@@ -198,8 +196,6 @@ export default {
       locationComboboxValues: [
         'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Zones'
       ],
-      sortBy: '',
-      sortDesc: '',
       sortOptions: '',
       page: 1,
       hours: 8,
@@ -367,11 +363,39 @@ export default {
       set (value) {
         this.$store.commit('devices/SET_MACHINES_TABLE_HEADERS', value)
       }
+    },
+    sortBy: {
+      get () {
+        return this.$store.state.devices.machinesTableSortBy
+      },
+      set (value) {
+        this.$store.commit('devices/SET_MACHINES_TABLE_SORT_OPTIONS', {
+          sortBy: value,
+          sortDesc: this.sortDesc
+        })
+      }
+    },
+    sortDesc: {
+      get () {
+        return this.$store.state.devices.machinesTableSortDesc
+      },
+      set (value) {
+        this.$store.commit('devices/SET_MACHINES_TABLE_SORT_OPTIONS', {
+          sortBy: this.sortBy,
+          sortDesc: value
+        })
+      }
     }
   },
   watch: {
     machinesTableHeaders (newValue) {
       this.customizeTableHeader()
+    },
+    sortBy (newValue) {
+      this.customizeTableSortOption('by', newValue)
+    },
+    sortDesc (newValue) {
+      this.customizeTableSortOption('desc', newValue)
     }
   },
   async mounted() {
@@ -388,7 +412,8 @@ export default {
     ...mapActions({
       getDevicesAnalytics: 'devices/getDevicesAnalytics',
       updateMachineTableHeader: 'devices/updateMachineTableHeader',
-      getMachinesTableHeaders: 'devices/getMachinesTableHeaders'
+      getMachinesTableHeaders: 'devices/getMachinesTableHeaders',
+      updateMachineTableSortOption: 'devices/updateMachineTableSortOption'
     }),
     open(item) { },
     getColor(status) {
@@ -445,7 +470,7 @@ export default {
     },
 
     getCapacityUtilizationValue(item) {
-      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
+      return (!item) ? 'No Data From Device' : `${item} %`
     },
 
     getSeriesOptions(series) {
@@ -494,17 +519,21 @@ export default {
       debounce(this.setDefaultHeaders)
     },
 
-    // getComboboxValues() {
-    //   if (this.$route.name === 'dashboard-analytics') {
-    //     return this.dashboardComboboxValues
-    //   } else if (this.$route.name === 'location-dashboard') {
-    //     return this.locationComboboxValues
-    //   } else {
-    //     return this.dashboardComboboxValues
-    //   }
-    // },
+    customizeTableSortOption(option, event) {
+      if (option === 'by') this.sortBy = event
+      if (option === 'desc') this.sortDesc = event
 
-    updateTableSortOption() {
+      debounce(this.setDefaultSortOptions)
+    },
+
+    setDefaultSortOptions() {
+      this.updateMachineTableSortOption({
+        sortOption: {
+          sortBy: this.sortBy,
+          sortDesc: this.sortDesc
+        },
+        name: this.$route.name
+      })
     }
   }
 }

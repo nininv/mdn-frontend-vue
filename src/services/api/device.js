@@ -356,6 +356,13 @@ export default {
   },
 
   /**
+   * Update machines table sort option
+   */
+  updateMachineTableSortOption(data) {
+    return api.$post('devices/set-machines-table-default-sort-options', data)
+  },
+
+  /**
    * Set saved machines table default headers
    */
   setSavedMachinesTableDefaultHeader(data) {
