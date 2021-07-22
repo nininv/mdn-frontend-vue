@@ -702,7 +702,7 @@ const module = {
     SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status },
     SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status },
     SET_MACHINES_TABLE_HEADERS(state, data) {
-      state.machinesTableHeaders = data.headers === null ? data.pathName === 'zone-dashboard' ? MACHINES_TABLE_DEFAULT_HEADERS : [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones'] : headers
+      state.machinesTableHeaders = data.headers === null ? data.pathName === 'zone-dashboard' ? MACHINES_TABLE_DEFAULT_HEADERS : [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones'] : data.headers
     },
     SET_SAVED_MACHINES_TABLE_HEADERS(state, headers) {
       state.savedMachinesTableHeaders = headers === null ? SAVED_MACHINES_TABLE_DEFAULT_HEADERS : headers

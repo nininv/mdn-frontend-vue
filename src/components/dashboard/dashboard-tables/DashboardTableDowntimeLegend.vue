@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex align-center">
-      <div class="label font-italic text-caption">(Data displayed for last 24 hours)</div>
+      <div class="label font-italic text-caption">(Data displayed for last 8 hours)</div>
       <div>
         <v-icon class="ml-1 mr-0" color="#eeeeef" x-small>$mdi-checkbox-blank</v-icon>
         <span class="text-caption">No Demand</span>
