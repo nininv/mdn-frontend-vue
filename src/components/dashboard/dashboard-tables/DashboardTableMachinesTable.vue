@@ -70,7 +70,7 @@
           <span v-if="item.configuration">{{ item.configuration.name }}</span>
         </template>
         <template v-slot:item.capacityUtilization="{ item }">
-          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+          <div v-if="item" class="mx-auto d-flex justify-center">
             <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
           </div>
         </template>
@@ -143,12 +143,12 @@ export default {
       headers: [
         { text: 'Running', value: 'status' },
         { text: 'Machines', value: 'customer_assigned_name' },
-        { text: 'Machine Type', value: 'configuration' },
-        { text: 'Downtime By Reason', align: 'center', value: 'downtimeByReason', sortable: false },
+        { text: 'Machine Type', value: 'machineType' },
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' }
       ],
       dashboardComboboxValues: [
-        'Machine Type', 'Capacity Utilization', 'Downtime By Reason'
+        'Machine Type', 'Capacity Utilization', 'Downtime By Type'
       ],
       deviceStatus: {
         machineRunning: {
@@ -426,7 +426,7 @@ export default {
     },
 
     getCapacityUtilizationValue(item) {
-      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
+      return (item === null) ? 'No Data From Device' : `${item} %`
     }
   }
 }

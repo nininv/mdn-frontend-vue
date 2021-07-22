@@ -52,6 +52,10 @@
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
+        <template v-slot:header.downtimeByReason="{ header }">
+          <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
+          {{ header.text }}
+        </template>
         <template v-slot:header.location_id="{ header }">
           <v-icon small color="primary">$mdi-factory</v-icon>
           {{ header.text }}
@@ -94,7 +98,7 @@
           </div>
         </template>
         <template v-slot:item.capacityUtilization="{ item }">
-          <div v-if="item && item.capacityUtilization" class="mx-auto d-flex justify-center">
+          <div v-if="item" class="mx-auto d-flex justify-center">
             <span>{{ getCapacityUtilizationValue(item.capacityUtilization) }}</span>
           </div>
         </template>
@@ -175,11 +179,11 @@ export default {
       headers: [
         { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
-        { text: 'Machine Type', align: 'start', value: 'configuration' },
+        { text: 'Machine Type', align: 'start', value: 'machineType', width: '150px' },
         { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
-        { text: 'Locations', align: 'center', value: 'location_id' },
-        { text: 'Zones', align: 'center', value: 'zone_id' }
+        { text: 'Locations', align: 'center', value: 'location_id', width: '110px' },
+        { text: 'Zones', align: 'center', value: 'zone_id', width: '95px' }
       ],
       page: 1,
       hours: 8,
@@ -395,7 +399,7 @@ export default {
       return this.deviceStatus[status] ? this.deviceStatus[status].icon : ''
     },
     getCapacityUtilizationValue(item) {
-      return (item[0].length === 0) ? 'No Data From Device' : `${item[0][item[0].length - 1][1]} %`
+      return (item === null) ? 'No Data From Device' : `${item} %`
     },
     productView(item) {
       if (item.location_id && item.zone_id) {
