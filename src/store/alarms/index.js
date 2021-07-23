@@ -15,48 +15,6 @@ const module = {
     isAlarmsReportLoading: false,
     alarmsReports: [],
     alarmsCount: 0,
-    timeRangeOptions: [
-      {
-        label: 'Last 30 minutes',
-        value: 'last30Min'
-      },
-      {
-        label: 'Last hour',
-        value: 'lastHour'
-      },
-      {
-        label: 'Last 4 hours',
-        value: 'last4Hours'
-      },
-      {
-        label: 'Last 12 hours',
-        value: 'last12Hours'
-      },
-      {
-        label: 'Last 24 hours',
-        value: 'last24Hours'
-      },
-      {
-        label: 'Last 48 hours',
-        value: 'last48Hours'
-      },
-      {
-        label: 'Last 3 days',
-        value: 'last3Days'
-      },
-      {
-        label: 'Last 7 days',
-        value: 'last7Days'
-      },
-      {
-        label: 'Last 24 days',
-        value: 'last24Days'
-      },
-      {
-        label: 'Custom',
-        value: 'custom'
-      }
-    ],
 
     alarmsPerCustomerAndMachine: [],
     alarmsOverview: null,
@@ -301,13 +259,6 @@ const module = {
     SET_ALARMS_REPORTS(state, data) {
       state.alarmsReports = data.active_alarms
       state.alarmsCount = data.alarmsCount
-    }
-  },
-
-  getters: {
-    timeRangeLabel(state) {
-      return state.timeRange !== 'custom' ? state.timeRageOptions.find((range) => range.value === state.timeRange).label :
-        `${state.dateFrom} ${state.timeFrom} ~ ${state.dateTo} ${state.timeTo}`
     }
   }
 }

@@ -24,6 +24,9 @@
 <script>
 import DateRangeChooser from './DateRangeChooser.vue'
 
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
+
 export default {
   components: {
     DateRangeChooser

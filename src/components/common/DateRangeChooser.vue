@@ -133,6 +133,8 @@
 
 <script>
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
+
 const DATE_PRESET = [{
   label: 'Last 8 hours',
   value: 'last8Hours'
@@ -168,8 +170,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          timeRangeOption: 'last24Hours',
-          dateFrom: TODAY,
+          timeRangeOption: 'last8Hours',
+          dateFrom: BEFOREEIGHTHOURS,
           dateTo: TODAY,
           timeFrom: '00:00',
           timeTo: '00:00'
