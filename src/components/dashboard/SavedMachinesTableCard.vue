@@ -6,7 +6,7 @@
       <br />
       <v-combobox
         v-model="savedMachinesTableHeaders"
-        :items="headerColumnValues"
+        :items="comboboxValues"
         chips
         solo
         label="Add/Remove Coloumns"
@@ -192,9 +192,7 @@ export default {
       headerColumnValues: [
         'Machine Type',
         'Downtime By Type',
-        'Capacity Utilization',
-        'Locations',
-        'Zones'
+        'Capacity Utilization'
       ],
       deviceStatus: {
         machineRunning: {
@@ -347,6 +345,13 @@ export default {
         return headerColumns.includes(header.text)
       })
 
+    },
+    comboboxValues() {
+      if (this.$route.name === 'dashboard-analytics') {
+        return [...this.headerColumnValues, 'Locations', 'Zones']
+      } else {
+        return [...this.headerColumnValues, 'Zones']
+      }
     },
     headerColumns() {
       return this.headers.map((header) => header.text)

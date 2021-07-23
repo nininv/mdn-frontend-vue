@@ -215,7 +215,7 @@ export default {
         { text: this.headerLabel, value: 'name' },
         { text: 'Alarms', align: 'center', value: 'alarmsCount' },
         { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
-        { text: 'Availability', align: 'center', value: 'downtimeAvailability' }
+        { text: 'Availability', align: 'center', value: 'downtimeAvailability', sortable: false }
       ]
     },
     headerLabel() {

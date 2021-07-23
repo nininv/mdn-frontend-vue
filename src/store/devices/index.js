@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/vue'
 
 const ITEM_PER_PAGE = 10
 const MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Capacity Utilization', 'Downtime By Type']
-const SAVED_MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Downtime By Type', 'Capacity Utilization', 'Locations', 'Zones']
+const SAVED_MACHINES_TABLE_DEFAULT_HEADERS = ['Machine Type', 'Downtime By Type', 'Capacity Utilization']
 const module = {
   namespaced: true,
   state: {
@@ -67,7 +67,7 @@ const module = {
 
     machinesTableHeaders: [],
     machinesTableSortBy: [],
-    machinesTableSortDesc: [false],
+    machinesTableSortDesc: [true],
     savedMachinesTableHeaders: []
   },
 
@@ -523,7 +523,7 @@ const module = {
       try {
         const response = await deviceAPI.getSavedMachinesTableHeaders(data)
 
-        commit('SET_SAVED_MACHINES_TABLE_HEADERS', response.headers)
+        commit('SET_SAVED_MACHINES_TABLE_HEADERS', response)
       } catch (error) {
         Sentry.captureException(error)
       }
@@ -702,10 +702,21 @@ const module = {
     SET_UPDATING_DOWNTIME(state, status) { state.isUpdatingDowntime = status },
     SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status },
     SET_MACHINES_TABLE_HEADERS(state, data) {
-      state.machinesTableHeaders = data.headers === null ? data.pathName === 'zone-dashboard' ? MACHINES_TABLE_DEFAULT_HEADERS : [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones'] : data.headers
+      if (data.headers === null) {
+        if (data.pathName === 'dashboard-analytics') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
+        if (data.pathName === 'location-dashboard') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
+        if (data.pathName === 'zone-dashboard') state.machinesTableHeaders = MACHINES_TABLE_DEFAULT_HEADERS
+      } else {
+        state.machinesTableHeaders = data.headers
+      }
     },
-    SET_SAVED_MACHINES_TABLE_HEADERS(state, headers) {
-      state.savedMachinesTableHeaders = headers === null ? SAVED_MACHINES_TABLE_DEFAULT_HEADERS : headers
+    SET_SAVED_MACHINES_TABLE_HEADERS(state, data) {
+      if (data.headers === null) {
+        if (data.pathName === 'dashboard-analytics') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
+        if (data.pathName === 'location-dashboard') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
+      } else {
+        state.savedMachinesTableHeaders = data.headers
+      }
     },
     SET_MACHINES_TABLE_SORT_OPTIONS(state, sortOption) {
       state.machinesTableSortBy = sortOption.sortBy

@@ -6,7 +6,7 @@
       <br />
       <v-combobox
         v-model="machinesTableHeaders"
-        :items="dashboardComboboxValues"
+        :items="machinesTableComboboxValues"
         chips
         solo
         label="Add/Remove Coloumns"
@@ -191,10 +191,7 @@ export default {
         { text: 'Zones', align: 'center', value: 'zone_id', width: '95px' }
       ],
       dashboardComboboxValues: [
-        'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Locations', 'Zones'
-      ],
-      locationComboboxValues: [
-        'Machine Type', 'Capacity Utilization', 'Downtime By Type', 'Zones'
+        'Machine Type', 'Capacity Utilization', 'Downtime By Type'
       ],
       sortOptions: '',
       page: 1,
@@ -352,6 +349,15 @@ export default {
       return this.headers.filter((header) => {
         return headerColumns.includes(header.text)
       })
+    },
+    machinesTableComboboxValues() {
+      if (this.$route.name === 'dashboard-analytics') {
+        return [...this.dashboardComboboxValues, 'Locations', 'Zones']
+      } else if (this.$route.name === 'location-dashboard') {
+        return [...this.dashboardComboboxValues, 'Zones']
+      } else {
+        return this.dashboardComboboxValues
+      }
     },
     headerColumns() {
       return this.headers.map((header) => header.text)

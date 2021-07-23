@@ -122,6 +122,13 @@ export default {
         this.locDateFrom = new Date(this.timeRangeFromTo(tR).from).toISOString().substr(0, 10)
         this.locDateTo = new Date(this.timeRangeFromTo(tR).to).toISOString().substr(0, 10)
       }
+    },
+    locSelectedTags (newValue) {
+      if (this.locSelectedTags.length > 6) {
+        this.locSelectedTags.pop()
+
+        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Max options selected' } }, { root: true })
+      }
     }
   },
   methods: {
