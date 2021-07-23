@@ -7,7 +7,7 @@
     <v-card-title>
       <span>Standard Deviation and Average Error</span>
     </v-card-title>
-    <v-tabs v-model="tabs" show-arrows>
+    <v-tabs v-model="tabs" show-arrows fixed-tabs>
       <v-tab
         v-for="(hopper, id) in selectedHoppers"
         :key="id"
