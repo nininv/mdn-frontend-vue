@@ -2,7 +2,6 @@
   <div>
     <v-card-title>{{ getLocationName() }}</v-card-title>
     <date-range-chooser
-      show-short-intervals
       :time-range="timeRange"
       @change="onChange"
     />

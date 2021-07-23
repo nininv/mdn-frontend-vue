@@ -28,13 +28,13 @@
           Downtime Data
         </v-card-title>
         <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" md="4" sm="12">
+          <v-col v-if="parameters.includes(20)" cols="12" md="4">
             <downtime-card></downtime-card>
           </v-col>
-          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+          <v-col v-if="parameters.includes(21)" cols="12" md="4">
             <downtime-by-type-card></downtime-by-type-card>
           </v-col>
-          <v-col v-if="parameters.includes(21)" md="4" sm="12">
+          <v-col v-if="parameters.includes(21)" cols="12" md="4">
             <downtime-by-reason-card></downtime-by-reason-card>
           </v-col>
         </v-row>

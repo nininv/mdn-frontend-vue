@@ -22,8 +22,6 @@
 
         <date-range-chooser
           :time-range="locTimeRange"
-          allow-custom
-          show-short-intervals
           @change="onChange"
         />
 

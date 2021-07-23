@@ -18,10 +18,9 @@
       </v-btn>
     </v-card-title>
     <date-range-chooser-dialog
-      ref="dateRangeChooserType"
+      ref="dateRangeChooser"
       :dlg="showTimeRangeChooser"
       :time-range="selectedTimeRange"
-      allow-custom
       limit-two-weeks
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
@@ -38,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import DateRangeChooserDialog from '../common/DateRangeChooserDialog.vue'
 
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
@@ -86,7 +85,6 @@ export default {
       downtimeByReasonGraphSeries: (state) => state.devices.downtimeByReasonGraphSeries,
       isDowntimeByReasonGraphLoading: (state) => state.devices.isDowntimeByReasonGraphLoading
     }),
-    ...mapGetters('machines', ['timeRangeFromTo']),
     chartOptions() {
       return {
         chart: {
@@ -195,16 +193,9 @@ export default {
       getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
     onTimeRangeChanged(newTimeRange) {
-      let from, to
-
       this.selectedTimeRange = newTimeRange
-      if (newTimeRange.timeRangeOption === 'custom') {
-        from = this.$refs.dateRangeChooserType.getTimes().from
-        to = this.$refs.dateRangeChooserType.getTimes().to
-      } else {
-        from = this.timeRangeFromTo(newTimeRange).from
-        to = this.timeRangeFromTo(newTimeRange).to
-      }
+
+      const { from, to } = this.$refs.dateRangeChooser.getTimes()
 
       this.getDowntimeByTypeGraphSeries({ to, from, ...this.routeParams })
       this.getDowntimeByReasonGraphSeries({ to, from, ...this.routeParams })

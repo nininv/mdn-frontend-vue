@@ -5,11 +5,9 @@
       <v-card-text>
         <date-range-chooser
           ref="dateRangeChooser"
-          :allow-custom="allowCustom"
           :has-time-picker="hasTimePicker"
           :time-range="timeRange"
           :time-range-options="timeRangeOptions"
-          :show-short-intervals="showShortIntervals"
           :limit-two-weeks="limitTwoWeeks"
           @change="onChange"
         />
@@ -35,15 +33,7 @@ export default {
       type: Boolean,
       default: false
     },
-    allowCustom: {
-      type: Boolean,
-      default: true
-    },
     hasTimePicker: {
-      type: Boolean,
-      default: false
-    },
-    showShortIntervals: {
       type: Boolean,
       default: false
     },

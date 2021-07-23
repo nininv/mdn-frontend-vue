@@ -39,7 +39,6 @@
         ref="dateRangeChooser"
         :dlg="showTimeRangeChooser"
         :time-range="selectedTimeRange"
-        allow-custom
         limit-two-weeks
         @close="showTimeRangeChooser = false"
         @submit="onTimeRangeChanged"
@@ -361,16 +360,9 @@ export default {
       setAvailabilityPlanTime: 'devices/setAvailabilityPlanTime'
     }),
     onTimeRangeChanged(newTimeRange) {
-      let from, to
-
       this.selectedTimeRange = newTimeRange
-      if (newTimeRange.timeRangeOption === 'custom') {
-        from = this.$refs.dateRangeChooser.getTimes().from
-        to = this.$refs.dateRangeChooser.getTimes().to
-      } else {
-        from = this.timeRangeFromTo(newTimeRange).from
-        to = this.timeRangeFromTo(newTimeRange).to
-      }
+
+      const { from, to } = this.$refs.dateRangeChooser.getTimes()
 
       this.getDowntimeGraphData({ to, from, ...this.routeParams })
       this.showTimeRangeChooser = false

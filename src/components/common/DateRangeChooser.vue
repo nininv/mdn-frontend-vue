@@ -15,7 +15,7 @@
     </v-radio-group>
 
     <!-- custom pickers -->
-    <v-expand-transition v-if="allowCustom">
+    <v-expand-transition>
       <div v-show="locTimeRangeOption === 'custom'" class="flex-grow-1">
         <div class="d-flex">
           <div class="flex-grow-1">
@@ -152,15 +152,7 @@ const DATE_PRESET = [{
 
 export default {
   props: {
-    allowCustom: {
-      type: Boolean,
-      default: true
-    },
     hasTimePicker: {
-      type: Boolean,
-      default: false
-    },
-    showShortIntervals: {
       type: Boolean,
       default: false
     },
@@ -206,7 +198,11 @@ export default {
     rangeOptions() {
       let options = []
 
-      options = DATE_PRESET.slice(0)
+      if (this.timeRangeOptions.length > 0) {
+        options = this.timeRangeOptions
+      } else {
+        options = DATE_PRESET.slice(0)
+      }
 
       return options
     }
@@ -234,7 +230,7 @@ export default {
         let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
 
         // validate custom input
-        if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+        if (this.locTimeRangeOption === 'custom') {
           if (!this.hasTimePicker) {
             const oneDayInMs = (24 * 3600000) - 1
 
@@ -254,7 +250,7 @@ export default {
       const oneDayInMs = (24 * 3600000) - 1
 
       // validate custom input
-      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+      if (this.locTimeRangeOption === 'custom') {
         const customRange = to - from
 
         if (customRange < 0) {
@@ -286,19 +282,9 @@ export default {
       const dateGetTime = new Date().getTime()
 
       switch (this.locTimeRangeOption) {
-      case 'last30Min':
+      case 'last8Hours':
         return {
-          from: dateGetTime - (30 * 60 * 1000),
-          to: dateGetTime
-        }
-      case 'lastHour':
-        return {
-          from: dateGetTime - (60 * 60 * 1000),
-          to: dateGetTime
-        }
-      case 'last4Hours':
-        return {
-          from: dateGetTime - (4 * 60 * 60 * 1000),
+          from: dateGetTime - (8 * 60 * 60 * 1000),
           to: dateGetTime
         }
       case 'last12Hours':
@@ -311,29 +297,9 @@ export default {
           from: dateGetTime - (24 * 60 * 60 * 1000),
           to: dateGetTime
         }
-      case 'last48Hours':
-        return {
-          from: dateGetTime - (48 * 60 * 60 * 1000),
-          to: dateGetTime
-        }
-      case 'last3Days':
-        return {
-          from: dateGetTime - (3 * 24 * 60 * 60 * 1000),
-          to: dateGetTime
-        }
       case 'last7Days':
         return {
           from: dateGetTime - (7 * 24 * 60 * 60 * 1000),
-          to: dateGetTime
-        }
-      case 'last14Days':
-        return {
-          from: dateGetTime - (14 * 24 * 60 * 60 * 1000),
-          to: dateGetTime
-        }
-      case 'last24Days':
-        return {
-          from: dateGetTime - (24 * 24 * 60 * 60 * 1000),
           to: dateGetTime
         }
       default:
