@@ -127,7 +127,7 @@ export default {
       if (this.locSelectedTags.length > 6) {
         this.locSelectedTags.pop()
 
-        this.$store.dispatch('app/showError', { message: 'Failed: ', error: { message: 'Max options selected' } }, { root: true })
+        this.$store.dispatch('app/showError', { message: 'Alert: ', error: { message: 'Max 6 options selected' } }, { root: true })
       }
     }
   },
