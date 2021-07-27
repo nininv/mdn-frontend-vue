@@ -29,7 +29,7 @@
               <v-switch
                 v-model="item.status"
                 class="custom-red"
-                color="success"
+                color="primary"
                 @click="handleChangeStatus(item.id)"
               ></v-switch>
             </div>
@@ -270,6 +270,6 @@ export default {
 
 <style>
 .custom-red .v-input__control .v-input__slot .v-input--selection-controls__input div {
-  color: red;
+  color: #818a8f;
 }
 </style>

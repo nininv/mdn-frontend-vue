@@ -28,7 +28,7 @@ export default {
               ranges: [{
                 from: 0,
                 to: 100,
-                color: '#4CAF50'
+                color: this.$vuetify.theme.themes.light.secondary
               }]
             }
           }

@@ -44,26 +44,6 @@ import DateRangeChooserDialog from '../common/DateRangeChooserDialog.vue'
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
 
-const seriesColors = [{
-  name: 'No Demand',
-  color: '#eeeeef'
-}, {
-  name: 'Preventative Maintenance',
-  color: '#0f2d52'
-}, {
-  name: 'Machine Failure',
-  color: '#29b1b8'
-}, {
-  name: 'Power Outage',
-  color: '#5a5d61'
-}, {
-  name: 'Other',
-  color: '#c8c62e'
-}, {
-  name: 'Change Over',
-  color: '#623666'
-}]
-
 export default {
   components: {
     DateRangeChooserDialog
@@ -78,7 +58,29 @@ export default {
         timeFrom: '00:00',
         timeTo: '00:00'
       },
-      showChart: true
+      showChart: true,
+      seriesColors: [{
+        name: 'No Demand',
+        color: '#bac1c6'
+      }, {
+        name: 'Preventative Maintenance',
+        color: '#004165'
+      }, {
+        name: 'Machine Failure',
+        color: this.$vuetify.theme.themes.light.info
+      }, {
+        name: 'Power Outage',
+        color: this.$vuetify.theme.themes.light.secondary
+      }, {
+        name: 'Other',
+        color: this.$vuetify.theme.themes.light.primary
+      }, {
+        name: 'Change Over',
+        color: this.$vuetify.theme.themes.light.error
+      }, {
+        name: 'Average Downtime',
+        color: '#ba7d55'
+      }]
     }
   },
   computed: {
@@ -150,7 +152,7 @@ export default {
       const _colors = []
 
       this.downtimeByReasonGraphSeries.map((item) => {
-        const seriesColor = seriesColors.find((data) => {
+        const seriesColor = this.seriesColors.find((data) => {
           return data.name === item.name
         })
 

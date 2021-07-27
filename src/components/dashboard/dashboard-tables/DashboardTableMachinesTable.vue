@@ -112,26 +112,6 @@ import NoDowntime from './DashboardTableNoDowntime'
 import DowntimeLegend from './DashboardTableDowntimeLegend'
 import { debounce } from '../../../plugins/debounce'
 
-const seriesColors = [{
-  name: 'No Demand',
-  color: '#eeeeef'
-}, {
-  name: 'Preventative Maintenance',
-  color: '#012d52'
-}, {
-  name: 'Machine Failure',
-  color: '#29b1b8'
-}, {
-  name: 'Power Outage',
-  color: '#5a5d61'
-}, {
-  name: 'Other',
-  color: '#c8c62e'
-}, {
-  name: 'Change Over',
-  color: '#623666'
-}]
-
 export default {
   components: {
     NoDowntime, DowntimeLegend
@@ -192,6 +172,28 @@ export default {
           icon: '$mdi-alert-outline'
         }
       },
+      seriesColors: [{
+        name: 'No Demand',
+        color: '#bac1c6'
+      }, {
+        name: 'Preventative Maintenance',
+        color: '#004165'
+      }, {
+        name: 'Machine Failure',
+        color: this.$vuetify.theme.themes.light.info
+      }, {
+        name: 'Power Outage',
+        color: this.$vuetify.theme.themes.light.secondary
+      }, {
+        name: 'Other',
+        color: this.$vuetify.theme.themes.light.primary
+      }, {
+        name: 'Change Over',
+        color: this.$vuetify.theme.themes.light.error
+      }, {
+        name: 'Average Downtime',
+        color: '#ba7d55'
+      }],
       searchQuery: '',
       page: 1,
       itemsPerPage: 5,
@@ -384,7 +386,7 @@ export default {
       const _colors = []
 
       series.map((item) => {
-        const seriesColor = seriesColors.find((data) => {
+        const seriesColor = this.seriesColors.find((data) => {
           return data.name === item.name
         })
 

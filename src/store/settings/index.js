@@ -78,18 +78,18 @@ const module = {
         const backgroundColor = response.find((colorItem) => colorItem.type === 'color_background')
 
         commit('SET_COLOR_SETTINGS', {
-          'color_primary': primaryColor ? primaryColor.value : '#096288',
-          'color_secondary': secondaryColor ? secondaryColor.value : '#c8c62e',
-          'color_accent': accentColor ? accentColor.value : '#0f2d52',
-          'color_surface': surfaceColor ? surfaceColor.value : '#29b1b8',
-          'color_background': backgroundColor ? backgroundColor.value : '#eeeeef'
+          'color_primary': primaryColor ? primaryColor.value : '#ff8300',
+          'color_secondary': secondaryColor ? secondaryColor.value : '#818a8f',
+          'color_accent': accentColor ? accentColor.value : '#004165',
+          'color_surface': surfaceColor ? surfaceColor.value : '#6dbe4b',
+          'color_background': backgroundColor ? backgroundColor.value : '#ffffff'
         })
 
-        vuetify.framework.theme.themes.light.background = backgroundColor ? backgroundColor.value : '#eeeeef'
-        vuetify.framework.theme.themes.light.primary = primaryColor ? primaryColor.value : '#096288'
-        vuetify.framework.theme.themes.light.secondary = secondaryColor ? secondaryColor.value : '#c8c62e'
-        vuetify.framework.theme.themes.light.accent = accentColor ? accentColor.value : '#0f2d52'
-        vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#29b1b8'
+        vuetify.framework.theme.themes.light.background = backgroundColor ? backgroundColor.value : '#ffffff'
+        vuetify.framework.theme.themes.light.primary = primaryColor ? primaryColor.value : '#ff8300'
+        vuetify.framework.theme.themes.light.secondary = secondaryColor ? secondaryColor.value : '#818a8f'
+        vuetify.framework.theme.themes.light.accent = accentColor ? accentColor.value : '#004165'
+        vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#6dbe4b'
 
         let authBackgroundFile = response.filter((data) => data.type.includes('auth_background_filepath'))
 

@@ -163,6 +163,9 @@ import ProductAnalytics from '../../components/dashboard/product/ProductAnalytic
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
+import DowntimeCard from '../../components/dashboard/DowntimeCard'
+import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCard'
+import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
 
 export default {
   components: {
@@ -172,7 +175,10 @@ export default {
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
-    AlarmsTable
+    AlarmsTable,
+    DowntimeCard,
+    DowntimeByTypeCard,
+    DowntimeByReasonCard
   },
   props:{
 
