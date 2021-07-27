@@ -383,10 +383,10 @@ export default {
       this.resetSettings().then(() => {
         this.setInitialSetting({}).then(() => {
           this.$vuetify.theme.themes.light.background = '#ffffff'
-          this.$vuetify.theme.themes.light.primary = '#096288'
-          this.$vuetify.theme.themes.light.secondary = '#c8c62e'
-          this.$vuetify.theme.themes.light.accent = '#0f2d52'
-          this.$vuetify.theme.themes.light.surface = '#29b1b8'
+          this.$vuetify.theme.themes.light.primary = '#ff8300'
+          this.$vuetify.theme.themes.light.secondary = '#818a8f'
+          this.$vuetify.theme.themes.light.accent = '#333333'
+          this.$vuetify.theme.themes.light.surface = '#6dbe4b'
         })
       })
     },

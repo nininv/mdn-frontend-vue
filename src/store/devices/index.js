@@ -703,17 +703,17 @@ const module = {
     SET_ADDING_AVAILABILITY_PLAN_TIME(state, status) { state.isAddingAvailabilityPlanTime = status },
     SET_MACHINES_TABLE_HEADERS(state, data) {
       if (data.headers === null) {
-        if (data.pathName === 'dashboard-analytics') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
-        if (data.pathName === 'location-dashboard') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
-        if (data.pathName === 'zone-dashboard') state.machinesTableHeaders = MACHINES_TABLE_DEFAULT_HEADERS
+        if (data.pathName === 'dashboard-analytics' || data.pathName === 'acs-machines') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
+        if (data.pathName === 'location-dashboard' || data.pathName === 'location-acs-dashboard') state.machinesTableHeaders = [...MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
+        if (data.pathName === 'zone-dashboard' || data.pathName === 'zone-acs-dashboard') state.machinesTableHeaders = MACHINES_TABLE_DEFAULT_HEADERS
       } else {
         state.machinesTableHeaders = data.headers
       }
     },
     SET_SAVED_MACHINES_TABLE_HEADERS(state, data) {
       if (data.headers === null) {
-        if (data.pathName === 'dashboard-analytics') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
-        if (data.pathName === 'location-dashboard') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
+        if (data.pathName === 'dashboard-analytics' || data.pathName === 'acs-machines') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Locations', 'Zones']
+        if (data.pathName === 'location-dashboard' || data.pathName === 'location-acs-dashboard') state.savedMachinesTableHeaders = [...SAVED_MACHINES_TABLE_DEFAULT_HEADERS, 'Zones']
       } else {
         state.savedMachinesTableHeaders = data.headers
       }
