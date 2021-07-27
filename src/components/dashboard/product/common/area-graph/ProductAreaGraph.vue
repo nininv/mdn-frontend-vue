@@ -158,7 +158,7 @@ export default {
             show: false
           }
         },
-        colors: [this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.primary.surface, this.$vuetify.theme.themes.light.warning],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.warning],
         fill: {
           type:'solid',
           opacity: [0.35, 1]

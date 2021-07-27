@@ -31,33 +31,33 @@ export default {
   },
   light: {
     background: '#ffffff',
-    surface: '#5a5d61', //background on screen behind chart
+    surface: '#6dbe4b', //background on screen behind chart
     surface2: '#eeeeef',
-    primary: '#0f2d52', // darker accent color
-    secondary: '#c8c62e', //lighter color // 002855
-    accent: '#096288', //almost same as primary
-    error: '#623266',
-    info: '#29b1b8',
-    success: '#06d6a0',
+    primary: '#ff8300', // darker accent color
+    secondary: '#818a8f', //lighter color // 002855
+    accent: '#333333', //almost same as primary
+    error: '#ea2839',
+    info: '#00a599',
+    success: '#6dbe4b',
     warning: '#ffd166',
     // custom colors
-    'acs-online': '#06d6a0',
-    'acs-offline': '#ff4560',
-    'acs-machine-running': '#00e396',
-    'acs-machine-not-running': '#ff4560',
-    'acs-system-steady': '#00e396',
-    'acs-system-not-steady': '#ff4560',
-    'acs-stable': '#06d6a0',
-    'acs-stable-waiting': '#ff4560',
-    'acs-unstable': '#ff4560',
-    'acs-hopper-disabled': '#6c706d',
-    'acs-hopper-setback': '#008ffb',
-    'acs-hopper-autotune': '#feb019',
-    'acs-hopper-alarmed': '#ff4560',
-    'acs-hopper-enabled': '#00e396',
-    'acs-checkin': '#00e396',
-    'acs-not-checkin': '#ff4560',
-    'acs-plc-link': '#00e396',
-    'acs-plc-not-link': '#ff4560'
+    'acs-online': '#6dbe4b',
+    'acs-offline': '#ea2839',
+    'acs-machine-running': '#6dbe4b',
+    'acs-machine-not-running': '#818a8f',
+    'acs-system-steady': '#6dbe4b',
+    'acs-system-not-steady': '#818a8f',
+    'acs-stable': '#6dbe4b',
+    'acs-stable-waiting': '#818a8f',
+    'acs-unstable': '#818a8f',
+    'acs-hopper-disabled': '#333333',
+    'acs-hopper-setback': '#004165',
+    'acs-hopper-autotune': '#00a599',
+    'acs-hopper-alarmed': '#818a8f',
+    'acs-hopper-enabled': '#6dbe4b',
+    'acs-checkin': '#6dbe4b',
+    'acs-not-checkin': '#818a8f',
+    'acs-plc-link': '#6dbe4b',
+    'acs-plc-not-link': '#818a8f'
   }
 }

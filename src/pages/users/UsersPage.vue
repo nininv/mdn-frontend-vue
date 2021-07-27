@@ -183,8 +183,8 @@ export default {
     }),
     roleColor(role) {
       if (role.key === 'customer_admin' || role.key === 'acs_admin') return 'primary'
-      else if (role.key === 'customer_manager') return '#4CAF50'
-      else if (role.key === 'acs_manager') return '#4CAF50'
+      else if (role.key === 'customer_manager') return 'surface'
+      else if (role.key === 'acs_manager') return '#004165'
       else return '#F79803'
     },
     canEditCustomerUser(item) {
