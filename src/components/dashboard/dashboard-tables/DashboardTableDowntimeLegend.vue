@@ -7,7 +7,7 @@
         <span class="text-caption">No Demand</span>
       </div>
       <div>
-        <v-icon class="ml-1 mr-0" color="#004165" x-small>$mdi-checkbox-blank</v-icon>
+        <v-icon class="ml-1 mr-0" color="#818a8f" x-small>$mdi-checkbox-blank</v-icon>
         <span class="text-caption">Preventative Maintenance</span>
       </div>
       <div>
@@ -15,7 +15,7 @@
         <span class="text-caption">Machine Failure</span>
       </div>
       <div>
-        <v-icon class="ml-1 mr-0" color="#818a8f" x-small>$mdi-checkbox-blank</v-icon>
+        <v-icon class="ml-1 mr-0" color="#004165" x-small>$mdi-checkbox-blank</v-icon>
         <span class="text-caption">Power Outage</span>
       </div>
       <div>

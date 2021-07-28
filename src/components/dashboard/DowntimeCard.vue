@@ -119,13 +119,13 @@ export default {
         color: '#bac1c6'
       }, {
         name: 'Preventative Maintenance',
-        color: '#004165'
+        color: this.$vuetify.theme.themes.light.secondary
       }, {
         name: 'Machine Failure',
         color: this.$vuetify.theme.themes.light.info
       }, {
         name: 'Power Outage',
-        color: this.$vuetify.theme.themes.light.secondary
+        color: '#004165'
       }, {
         name: 'Other',
         color: this.$vuetify.theme.themes.light.primary
