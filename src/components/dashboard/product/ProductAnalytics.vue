@@ -18,7 +18,7 @@
             v-bind="attrs"
             close
             small
-            color="primary lighten-2"
+            color="primary"
             outlined
             @click:close="remove(item)"
           >
