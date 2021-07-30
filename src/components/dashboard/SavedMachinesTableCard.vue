@@ -361,7 +361,10 @@ export default {
         return this.$store.state.devices.savedMachinesTableHeaders
       },
       set (value) {
-        this.$store.commit('devices/SET_SAVED_MACHINES_TABLE_HEADERS', value)
+        this.$store.commit('devices/SET_SAVED_MACHINES_TABLE_HEADERS', {
+          headers: value,
+          pathName: this.$route.name
+        })
       }
     },
     filteredSavedMachines() {
