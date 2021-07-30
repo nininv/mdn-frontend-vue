@@ -116,9 +116,9 @@ export default {
             }
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.surface],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.secondary],
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.surface]
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.secondary]
         },
         labels: this.labels,
         legend: {

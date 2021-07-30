@@ -79,8 +79,8 @@ export default {
       }],
       options: {
 
-      },
-      colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.warning]
+      }
+      // colors: ['#008ffb', '#00e396', '#feb019', '#ff4560', '#775dd0', '#adbcc9']
     }
   },
 
@@ -96,10 +96,6 @@ export default {
           toolbar: {
             show: false
           },
-          colors: this.colors
-        },
-        colors: this.colors,
-        fill: {
           colors: this.colors
         },
         dataLabels: {

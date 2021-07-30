@@ -119,13 +119,13 @@
   max-width: 400px !important;
 }
 
-.v-breadcrumbs .v-breadcrumbs__item {
-  color: var(--v-secondary-base);
+.v-breadcrumbs li:first-child .v-breadcrumbs__item {
+  color: var(--v-primary-base);
   font-weight: bold;
 }
 
 // Avatars
 .v-avatar {
-  background-color: var(--v-primary-base);
-  border-color: var(--v-primary-base);
+  background-color: #c8c62e;
+  border-color: #c8c62e;
 }
