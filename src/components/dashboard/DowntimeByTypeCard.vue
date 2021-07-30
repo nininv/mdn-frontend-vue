@@ -92,9 +92,7 @@ export default {
             radius: 12
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
           opacity: 1
         }
       }

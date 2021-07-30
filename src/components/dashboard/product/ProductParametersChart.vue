@@ -59,7 +59,7 @@ export default {
     return {
       showTimeRangeChooser: false,
       loading: false,
-      colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.warning],
+      colors: ['#008ffb', '#00e396', '#feb019', '#ff4560', '#775dd0', '#adbcc9'],
       defaultTimeRange: {
         timeRangeOption: 'last8Hours',
         dateFrom: '2021-07-21',

@@ -18,7 +18,7 @@
             v-bind="attrs"
             close
             small
-            color="primary"
+            color="primary lighten-2"
             outlined
             @click:close="remove(item)"
           >
@@ -139,6 +139,26 @@ import { debounce } from '../../plugins/debounce'
 |
 */
 
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#eeeeef'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#0f2d52'
+}, {
+  name: 'Machine Failure',
+  color: '#29b1b8'
+}, {
+  name: 'Power Outage',
+  color: '#5a5d61'
+}, {
+  name: 'Other',
+  color: '#c8c62e'
+}, {
+  name: 'Change Over',
+  color: '#623666'
+}]
+
 export default {
   components: {
     DowntimeLegend,
@@ -165,28 +185,6 @@ export default {
         { text: 'Locations', align: 'center', value: 'location_id', width: '110px' },
         { text: 'Zones', align: 'center', value: 'zone_id', width: '95px' }
       ],
-      seriesColors: [{
-        name: 'No Demand',
-        color: '#bac1c6'
-      }, {
-        name: 'Preventative Maintenance',
-        color: this.$vuetify.theme.themes.light.secondary
-      }, {
-        name: 'Machine Failure',
-        color: this.$vuetify.theme.themes.light.info
-      }, {
-        name: 'Power Outage',
-        color: '#004165'
-      }, {
-        name: 'Other',
-        color: this.$vuetify.theme.themes.light.primary
-      }, {
-        name: 'Change Over',
-        color: this.$vuetify.theme.themes.light.error
-      }, {
-        name: 'Average Downtime',
-        color: '#ba7d55'
-      }],
       page: 1,
       hours: 8,
       searchQuery: '',
@@ -451,7 +449,7 @@ export default {
       const _colors = []
 
       series.map((item) => {
-        const seriesColor = this.seriesColors.find((data) => {
+        const seriesColor = seriesColors.find((data) => {
           return data.name === item.name
         })
 

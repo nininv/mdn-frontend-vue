@@ -94,6 +94,29 @@ import AvailabilityPlanTimeForm from './AvailabilityPlanTimeForm'
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
 const BEFOREWEEK = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
 
+const seriesColors = [{
+  name: 'No Demand',
+  color: '#eeeeef'
+}, {
+  name: 'Preventative Maintenance',
+  color: '#0f2d52'
+}, {
+  name: 'Machine Failure',
+  color: '#29b1b8'
+}, {
+  name: 'Power Outage',
+  color: '#5a5d61'
+}, {
+  name: 'Other',
+  color: '#c8c62e'
+}, {
+  name: 'Change Over',
+  color: '#623266'
+}, {
+  name: 'Average Downtime',
+  color: '#ba7d55'
+}]
+
 export default {
   components: {
     DateRangeChooserDialog,
@@ -113,29 +136,7 @@ export default {
       showDowntimeChart: true,
       viewOptions: [
         'Daily', 'Weekly', 'Monthly'
-      ],
-      seriesColors: [{
-        name: 'No Demand',
-        color: '#bac1c6'
-      }, {
-        name: 'Preventative Maintenance',
-        color: this.$vuetify.theme.themes.light.secondary
-      }, {
-        name: 'Machine Failure',
-        color: this.$vuetify.theme.themes.light.info
-      }, {
-        name: 'Power Outage',
-        color: '#004165'
-      }, {
-        name: 'Other',
-        color: this.$vuetify.theme.themes.light.primary
-      }, {
-        name: 'Change Over',
-        color: this.$vuetify.theme.themes.light.error
-      }, {
-        name: 'Average Downtime',
-        color: '#ba7d55'
-      }]
+      ]
     }
   },
   computed: {
@@ -297,7 +298,7 @@ export default {
       const _colors = []
 
       this.downtimeGraphData.map((item) => {
-        const seriesColor = this.seriesColors.find((data) => {
+        const seriesColor = seriesColors.find((data) => {
           return data.name === item.name
         })
 
