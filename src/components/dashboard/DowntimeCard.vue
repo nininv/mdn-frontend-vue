@@ -359,8 +359,8 @@ export default {
 
       this.selectedTimeRange = newTimeRange
       if (newTimeRange.timeRangeOption === 'custom') {
-        from = this.$refs.dateRangeChooserType.getTimes().from
-        to = this.$refs.dateRangeChooserType.getTimes().to
+        from = this.$refs.dateRangeChooser.getTimes().from
+        to = this.$refs.dateRangeChooser.getTimes().to
       } else {
         from = this.timeRangeFromTo(newTimeRange).from
         to = this.timeRangeFromTo(newTimeRange).to
