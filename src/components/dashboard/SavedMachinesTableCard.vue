@@ -52,7 +52,7 @@
           <v-icon color="primary">$mdi-trending-up</v-icon>
           {{ header.text | percentageLabel }}
         </template>
-        <template v-slot:header.downtimeByReason="{ header }">
+        <template v-slot:header.downtimeByType="{ header }">
           <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
@@ -83,16 +83,16 @@
             </v-tooltip>
           </v-chip>
         </template>
-        <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason" class="mx-auto d-flex justify-center">
-            <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
+        <template v-slot:item.downtimeByType="{ item }">
+          <div v-if="item && item.downtimeByType" class="mx-auto d-flex justify-center">
+            <no-downtime v-if="hasNoDowntime(item.downtimeByType)"></no-downtime>
             <apexchart
               v-else
               key="downtime-chart"
               width="240"
               height="80"
-              :options="getSeriesOptions(item.downtimeByReason)"
-              :series="getDowntimeSeries(item.downtimeByReason)"
+              :options="getSeriesOptions(item.downtimeByType)"
+              :series="getDowntimeSeries(item.downtimeByType)"
             >
             </apexchart>
           </div>
@@ -140,23 +140,14 @@ import { debounce } from '../../plugins/debounce'
 */
 
 const seriesColors = [{
-  name: 'No Demand',
-  color: '#eeeeef'
-}, {
-  name: 'Preventative Maintenance',
-  color: '#0f2d52'
-}, {
-  name: 'Machine Failure',
+  name: 'Unplanned',
   color: '#29b1b8'
 }, {
-  name: 'Power Outage',
+  name: 'Idle',
   color: '#5a5d61'
 }, {
-  name: 'Other',
+  name: 'Planned',
   color: '#c8c62e'
-}, {
-  name: 'Change Over',
-  color: '#623666'
 }]
 
 export default {
@@ -180,7 +171,7 @@ export default {
         { text: 'Status', align: 'center', value: 'status' },
         { text: 'Machine Name', align: 'start', value: 'name' },
         { text: 'Machine Type', align: 'start', value: 'machineType', width: '150px' },
-        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByType', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },
         { text: 'Locations', align: 'center', value: 'location_id', width: '110px' },
         { text: 'Zones', align: 'center', value: 'zone_id', width: '95px' }

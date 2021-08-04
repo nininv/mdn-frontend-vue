@@ -76,20 +76,32 @@ const module = {
         const accentColor = response.find((colorItem) => colorItem.type === 'color_accent')
         const surfaceColor = response.find((colorItem) => colorItem.type === 'color_surface')
         const backgroundColor = response.find((colorItem) => colorItem.type === 'color_background')
+        const successColor = response.find((colorItem) => colorItem.type === 'color_success')
+        const infoColor = response.find((colorItem) => colorItem.type === 'color_info')
+        const warningColor = response.find((colorItem) => colorItem.type === 'color_warning')
+        const errorColor = response.find((colorItem) => colorItem.type === 'color_error')
 
         commit('SET_COLOR_SETTINGS', {
           'color_primary': primaryColor ? primaryColor.value : '#096288',
           'color_secondary': secondaryColor ? secondaryColor.value : '#c8c62e',
           'color_accent': accentColor ? accentColor.value : '#0f2d52',
-          'color_surface': surfaceColor ? surfaceColor.value : '#29b1b8',
-          'color_background': backgroundColor ? backgroundColor.value : '#eeeeef'
+          'color_surface': surfaceColor ? surfaceColor.value : '#5a5d61',
+          'color_background': backgroundColor ? backgroundColor.value : '#eeeeef',
+          'color_success': successColor ? successColor.value : '#06d6a0',
+          'color_info': infoColor ? infoColor.value : '#29b1b8',
+          'color_warning': warningColor ? warningColor.value : '#ffd166',
+          'color_error': errorColor ? errorColor.value : '#623266'
         })
 
         vuetify.framework.theme.themes.light.background = backgroundColor ? backgroundColor.value : '#eeeeef'
         vuetify.framework.theme.themes.light.primary = primaryColor ? primaryColor.value : '#096288'
         vuetify.framework.theme.themes.light.secondary = secondaryColor ? secondaryColor.value : '#c8c62e'
         vuetify.framework.theme.themes.light.accent = accentColor ? accentColor.value : '#0f2d52'
-        vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#29b1b8'
+        vuetify.framework.theme.themes.light.surface = surfaceColor ? surfaceColor.value : '#5a5d61'
+        vuetify.framework.theme.themes.light.success = successColor ? successColor.value : '#06d6a0'
+        vuetify.framework.theme.themes.light.info = infoColor ? infoColor.value : '#29b1b8'
+        vuetify.framework.theme.themes.light.warning = warningColor ? warningColor.value : '#ffd166'
+        vuetify.framework.theme.themes.light.error = errorColor ? errorColor.value : '#623266'
 
         let authBackgroundFile = response.filter((data) => data.type.includes('auth_background_filepath'))
 
@@ -156,6 +168,10 @@ const module = {
         vuetify.framework.theme.themes.light.secondary = colors[2].color
         vuetify.framework.theme.themes.light.accent = colors[3].color
         vuetify.framework.theme.themes.light.surface = colors[4].color
+        vuetify.framework.theme.themes.light.success = colors[5].color
+        vuetify.framework.theme.themes.light.info = colors[6].color
+        vuetify.framework.theme.themes.light.warning = colors[7].color
+        vuetify.framework.theme.themes.light.error = colors[8].color
 
         dispatch('app/showSuccess', response.message, { root: true })
       } catch (error) {

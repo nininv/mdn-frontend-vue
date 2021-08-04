@@ -172,7 +172,7 @@
               <v-data-table
                 :headers="headers"
                 :items="colorSettings"
-                :items-per-page="5"
+                :items-per-page="10"
                 class="elevation-1"
                 hide-default-footer
               >
@@ -275,6 +275,22 @@ export default {
           name: 'Surface',
           key: 'color_surface',
           color: '#29b1b8'
+        }, {
+          name: 'Success',
+          key: 'color_success',
+          color: '#06d6a0'
+        }, {
+          name: 'Info',
+          key: 'color_info',
+          color: '#29b1b8'
+        }, {
+          name: 'Warning',
+          key: 'color_warning',
+          color: '#ffd166'
+        }, {
+          name: 'Error',
+          key: 'color_error',
+          color: '#623266'
         }
       ]
     }

@@ -9,7 +9,7 @@
         class="link-table"
         @click:row="rowClicked"
       >
-        <template v-slot:header.downtimeByReason="{ header }">
+        <template v-slot:header.downtimeByType="{ header }">
           <v-icon class="mdi-rotate-90" color="primary">$mdi-battery-30</v-icon>
           {{ header.text }}
         </template>
@@ -20,28 +20,16 @@
         <template v-slot:item.alarmsCount="{ item }">
           <span class="font-weight-bold" :class="getAlarmsTextColor(item.alarmsCount)">{{ getAlarmsCount(item.alarmsCount) }}</span>
         </template>
-        <template v-slot:item.downtimeAvailability="{ item }">
-          <div class="d-flex justify-center mx-auto" style="width: 180px;">
-            <apexchart
-              key="availability-chart"
-              type="line"
-              width="160"
-              :options="availabilityChartOptions"
-              :series="item.downtimeAvailability"
-            >
-            </apexchart>
-          </div>
-        </template>
-        <template v-slot:item.downtimeByReason="{ item }">
-          <div v-if="item && item.downtimeByReason" class="d-flex justify-center">
-            <no-downtime v-if="hasNoDowntime(item.downtimeByReason)"></no-downtime>
+        <template v-slot:item.downtimeByType="{ item }">
+          <div v-if="item && item.downtimeByType" class="d-flex justify-center">
+            <no-downtime v-if="hasNoDowntime(item.downtimeByType)"></no-downtime>
             <apexchart
               v-else
               key="downtime-chart"
               width="240"
               height="80"
-              :options="getSeriesOptions(item.downtimeByReason)"
-              :series="getDowntimeSeries(item.downtimeByReason)"
+              :options="getSeriesOptions(item.downtimeByType)"
+              :series="getDowntimeSeries(item.downtimeByType)"
             >
             </apexchart>
           </div>
@@ -61,23 +49,14 @@ import NoDowntime from './DashboardTableNoDowntime'
 import DowntimeLegend from './DashboardTableDowntimeLegend'
 
 const seriesColors = [{
-  name: 'No Demand',
-  color: '#eeeeef'
-}, {
-  name: 'Preventative Maintenance',
-  color: '#0f2d52'
-}, {
-  name: 'Machine Failure',
+  name: 'Unplanned',
   color: '#29b1b8'
 }, {
-  name: 'Power Outage',
+  name: 'Idle',
   color: '#5a5d61'
 }, {
-  name: 'Other',
+  name: 'Planned',
   color: '#c8c62e'
-}, {
-  name: 'Change Over',
-  color: '#623666'
 }]
 
 export default {
@@ -214,8 +193,7 @@ export default {
       return [
         { text: this.headerLabel, value: 'name' },
         { text: 'Alarms', align: 'center', value: 'alarmsCount' },
-        { text: 'Downtime By Type', align: 'center', value: 'downtimeByReason', sortable: false },
-        { text: 'Availability', align: 'center', value: 'downtimeAvailability', sortable: false }
+        { text: 'Downtime By Type', align: 'center', value: 'downtimeByType', sortable: false }
       ]
     },
     headerLabel() {
