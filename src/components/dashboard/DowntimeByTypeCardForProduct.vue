@@ -87,7 +87,7 @@ export default {
             show: false
           }
         },
-        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.surface],
         legend: {
           position: 'bottom',
           offsetY:8,
@@ -97,7 +97,7 @@ export default {
           }
         },
         fill: {
-          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.surface],
           opacity: 1
         }
       }
