@@ -84,7 +84,7 @@
             <v-col cols="2" class="pa-0">
               <v-list-item-avatar
                 class="mr-1"
-                color="success"
+                color="accent"
                 size="30"
               >
                 <v-icon color="white">

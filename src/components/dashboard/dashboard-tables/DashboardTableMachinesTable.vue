@@ -113,14 +113,14 @@ import DowntimeLegend from './DashboardTableDowntimeLegend'
 import { debounce } from '../../../plugins/debounce'
 
 const seriesColors = [{
+  name: 'Planned',
+  color: '#096288'
+}, {
   name: 'Unplanned',
-  color: '#29b1b8'
+  color: '#c8c62e'
 }, {
   name: 'Idle',
   color: '#5a5d61'
-}, {
-  name: 'Planned',
-  color: '#c8c62e'
 }]
 
 export default {

@@ -100,6 +100,11 @@ export default {
         },
         tooltip: {
           enabled: false
+        },
+        colors: [this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.warning],
+        fill: {
+          colors: [this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.error, this.$vuetify.theme.themes.light.info, this.$vuetify.theme.themes.light.surface, this.$vuetify.theme.themes.light.warning],
+          opacity: 1
         }
       }
     },
