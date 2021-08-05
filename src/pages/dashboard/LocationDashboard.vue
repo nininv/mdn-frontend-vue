@@ -114,6 +114,7 @@ export default {
 
     const now = new Date().getTime()
     const before7days =  now - 7 * 60 * 60 * 24 * 1000
+    const before8Hours = now - 8 * 60 * 60 * 1000
 
     this.getDowntimeGraphData({
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
@@ -127,7 +128,7 @@ export default {
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: 0,
-      from: before7days,
+      from: before8Hours,
       to: now
     })
 
@@ -135,7 +136,7 @@ export default {
       company_id: this.selectedCompany ? this.selectedCompany.id : 0,
       location_id: this.$route.params.location,
       zone_id: 0,
-      from: before7days,
+      from: before8Hours,
       to: now
     })
   },

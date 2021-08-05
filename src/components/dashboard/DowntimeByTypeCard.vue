@@ -37,6 +37,8 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import DowntimeDataTable from './product/DowntimeDataTable'
 
+const TYPE_CATEGORIES = ['Planned', 'Unplanned', 'Idle']
+
 export default {
   components: {
     DowntimeDataTable
@@ -80,11 +82,12 @@ export default {
           }
         },
         xaxis: {
-          categories: this.downtimeByTypeGraphSeries.map((item) => item.name),
+          categories: TYPE_CATEGORIES.map((item) => item),
           labels: {
             show: false
           }
         },
+        colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
         legend: {
           position: 'bottom',
           offsetY: 7,
@@ -93,6 +96,7 @@ export default {
           }
         },
         fill: {
+          colors: [this.$vuetify.theme.themes.light.primary, this.$vuetify.theme.themes.light.secondary, this.$vuetify.theme.themes.light.error],
           opacity: 1
         }
       }
@@ -100,8 +104,12 @@ export default {
     getDowntimeByTypeSeries() {
       const series = [{ name: 'Hours', data: [] }]
 
-      this.downtimeByTypeGraphSeries.map((item) => {
-        series[0].data.push(item.data)
+      TYPE_CATEGORIES.map((category) => {
+        const data = this.downtimeByTypeGraphSeries.find((item) => {
+          return item.name === category
+        })
+
+        series[0].data.push(data ? data.data : 0)
 
         return 0
       })
