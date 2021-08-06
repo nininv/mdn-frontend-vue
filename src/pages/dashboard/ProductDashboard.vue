@@ -285,7 +285,8 @@ export default {
 
       const params = {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
+        location_id: this.$route.params.location,
+        zone_id: this.$route.params.zone,
         machine_id: this.$route.params.configurationId,
         serial_number: this.$route.params.productId,
         from: before7days,

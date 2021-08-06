@@ -135,7 +135,6 @@ export default {
       const params = {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
         location_id: this.$route.params.location,
-        zone_id: 0,
         from: before7days,
         to: now
       }
