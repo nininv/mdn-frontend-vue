@@ -31,7 +31,7 @@
           >
           </v-file-input>
           <v-row dense>
-            <v-col xs="12" cols="6">
+            <v-col sm="6" cols="12">
               <v-card flat>
                 <v-card-title>Original JSON</v-card-title>
                 <v-card-text color="grey" style="max-height: 500px; overflow-y: auto;">
@@ -39,7 +39,7 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <v-col xs="12" cols="6">
+            <v-col sm="6" cols="12">
               <v-card flat>
                 <v-card-title>New JSON</v-card-title>
                 <v-card-text style="max-height: 500px; overflow-y: auto;">

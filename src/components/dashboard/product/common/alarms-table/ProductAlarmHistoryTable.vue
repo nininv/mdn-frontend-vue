@@ -47,9 +47,7 @@
       ref="dateRangeChooser"
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
-      allow-custom
       has-time-picker
-      show-short-intervals
       limit-two-weeks
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"

@@ -5,11 +5,9 @@
       <v-card-text>
         <date-range-chooser
           ref="dateRangeChooser"
-          :allow-custom="allowCustom"
           :has-time-picker="hasTimePicker"
           :time-range="timeRange"
           :time-range-options="timeRangeOptions"
-          :show-short-intervals="showShortIntervals"
           :limit-two-weeks="limitTwoWeeks"
           @change="onChange"
         />
@@ -26,6 +24,9 @@
 <script>
 import DateRangeChooser from './DateRangeChooser.vue'
 
+const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
+
 export default {
   components: {
     DateRangeChooser
@@ -35,15 +36,7 @@ export default {
       type: Boolean,
       default: false
     },
-    allowCustom: {
-      type: Boolean,
-      default: true
-    },
     hasTimePicker: {
-      type: Boolean,
-      default: false
-    },
-    showShortIntervals: {
       type: Boolean,
       default: false
     },

@@ -84,13 +84,13 @@
                     Downtime Data
                   </v-card-title>
                   <v-row class="flex-grow-0" dense>
-                    <v-col md="4" sm="12">
+                    <v-col md="4" cols="12">
                       <downtime-card></downtime-card>
                     </v-col>
-                    <v-col md="4" sm="12">
+                    <v-col md="4" cols="12">
                       <downtime-by-type-card></downtime-by-type-card>
                     </v-col>
-                    <v-col md="4" sm="12">
+                    <v-col md="4" cols="12">
                       <downtime-by-reason-card></downtime-by-reason-card>
                     </v-col>
                   </v-row>

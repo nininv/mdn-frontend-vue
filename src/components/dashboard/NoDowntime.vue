@@ -19,7 +19,13 @@ export default {
           stacked: true,
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         plotOptions: {
           bar: {

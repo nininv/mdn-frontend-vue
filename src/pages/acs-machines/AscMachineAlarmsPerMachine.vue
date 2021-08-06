@@ -12,12 +12,12 @@
       </v-col>
       <v-col cols="12">
         <v-row>
-          <v-col 
+          <v-col
             v-for="idx in 4"
             :key="idx"
-            lg="3"
+            cols="12"
             md="6"
-            sm="12"
+            lg="3"
           >
             <alarm-per-machine-card />
           </v-col>

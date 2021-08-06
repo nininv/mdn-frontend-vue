@@ -1,8 +1,6 @@
 <template>
   <div>
     <date-range-chooser
-      allow-custom
-      show-short-intervals
       has-time-picker
       limit-two-weeks
       horizontal-layout

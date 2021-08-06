@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row dense>
-      <v-col md="3" sm="12">
+      <v-col md="3" cols="12">
         <apexchart
           height="200"
           :options="chartOptions"
@@ -9,7 +9,7 @@
         >
         </apexchart>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col md="4" cols="12">
         <v-row>
           <v-col cols="6">
             <alarm-amount-cards
@@ -19,7 +19,7 @@
             />
           </v-col>
           <v-col cols="6">
-            <alarm-amount-cards 
+            <alarm-amount-cards
               :icon-type="'$mdi-clock-outline'"
               :amount="totalTime"
               :time="'Total Times'"
@@ -27,9 +27,9 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col md="4" sm="12">
+      <v-col md="4" cols="12">
         <v-row>
-          <v-col 
+          <v-col
             v-for="(value, idx) in 3"
             :key="value"
             cols="4"
@@ -43,7 +43,7 @@
             />
           </v-col>
         </v-row>
-      </v-col>    
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -88,7 +88,7 @@ export default {
     },
     totalTime() {
       let value = 0
-      
+
       this.times.forEach((item) => {
         value += item
       })

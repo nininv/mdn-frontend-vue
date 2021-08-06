@@ -37,7 +37,6 @@
     <date-range-chooser-dialog
       :dlg="showTimeRangeChooser"
       :time-range="timeRange"
-      show-short-intervals
       @close="showTimeRangeChooser = false"
       @submit="onTimeRangeChanged"
     >

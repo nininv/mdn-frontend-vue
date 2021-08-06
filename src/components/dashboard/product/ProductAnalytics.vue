@@ -9,7 +9,7 @@
         multiple
         item-text="graph_name"
         item-value="graph_id"
-        class="flex-grow-0 ml-auto mb-1"
+        class="flex-grow-0 ml-auto mb-2"
         hide-details
         @input="onEnabledPropertiesChanged()"
       >
@@ -29,7 +29,7 @@
     </div>
 
     <component
-      :is="analyticsComponent()" 
+      :is="analyticsComponent()"
       :machine-id="machineId"
       :serial-number="serialNumber"
       :parameters="selectedGraphs.map((graph) => graph.graph_id)"

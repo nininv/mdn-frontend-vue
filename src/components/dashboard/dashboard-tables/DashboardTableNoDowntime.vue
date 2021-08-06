@@ -20,7 +20,13 @@ export default {
           stackType: '100%',
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         plotOptions: {
           bar: {

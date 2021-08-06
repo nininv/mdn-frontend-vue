@@ -49,52 +49,22 @@ const state = {
   alarmHistoryLoading: false,
   alarmHistory: [],
 
-  timeRangeOptions: [
-    {
-      label: 'Last 30 minutes',
-      value: 'last30Min'
-    },
-    {
-      label: 'Last hour',
-      value: 'lastHour'
-    },
-    {
-      label: 'Last 4 hours',
-      value: 'last4Hours'
-    },
-    {
-      label: 'Last 12 hours',
-      value: 'last12Hours'
-    },
-    {
-      label: 'Last 24 hours',
-      value: 'last24Hours'
-    },
-    {
-      label: 'Last 8 hours',
-      value: 'last8Hours'
-    },
-    {
-      label: 'Last 3 days',
-      value: 'last3Days'
-    },
-    {
-      label: 'Last 7 days',
-      value: 'last7Days'
-    },
-    {
-      label: 'Last 14 days',
-      value: 'last14Days'
-    },
-    {
-      label: 'Last 24 days',
-      value: 'last24Days'
-    },
-    {
-      label: 'Custom',
-      value: 'custom'
-    }
-  ],
+  timeRangeOptions: [{
+    label: 'Last 8 hours',
+    value: 'last8Hours'
+  }, {
+    label: 'Last 12 hours',
+    value: 'last12Hours'
+  }, {
+    label: 'Last 24 hours',
+    value: 'last24Hours'
+  }, {
+    label: 'Last 7 days',
+    value: 'last7Days'
+  }, {
+    label: 'Custom',
+    value: 'custom'
+  }],
 
   // BD Batch Blender
   totalRunningPercentage: 0,

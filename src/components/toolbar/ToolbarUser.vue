@@ -24,7 +24,7 @@
           :disabled="item.disabled"
           link
         >
-          <v-list-item-icon>
+          <v-list-item-icon class="d-flex align-center">
             <v-icon small :class="{ 'grey--text': item.disabled }">{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
@@ -35,7 +35,7 @@
         <v-divider class="my-1"></v-divider>
 
         <v-list-item @click="signOut">
-          <v-list-item-icon>
+          <v-list-item-icon class="d-flex align-center">
             <v-icon small>$mdi-logout-variant</v-icon>
           </v-list-item-icon>
           <v-list-item-content>

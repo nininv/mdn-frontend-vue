@@ -11,7 +11,7 @@
       <v-tab to="#tabs-active">Active Thresholds</v-tab>
       <v-tab to="#tabs-approaching">Approaching Thresholds</v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="overflow-visible my-2">
       <v-tab-item value="tabs-add">
         <add-threshold></add-threshold>
       </v-tab-item>

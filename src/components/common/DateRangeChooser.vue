@@ -15,7 +15,7 @@
     </v-radio-group>
 
     <!-- custom pickers -->
-    <v-expand-transition v-if="allowCustom">
+    <v-expand-transition>
       <div v-show="locTimeRangeOption === 'custom'" class="flex-grow-1">
         <div class="d-flex">
           <div class="flex-grow-1">
@@ -133,6 +133,8 @@
 
 <script>
 const TODAY = new Date().toISOString().substr(0, 10) // YYYY-MM-DD
+const BEFOREEIGHTHOURS = new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString().substr(0, 10) // YYYY-MM-DD
+
 const DATE_PRESET = [{
   label: 'Last 8 hours',
   value: 'last8Hours'
@@ -152,15 +154,7 @@ const DATE_PRESET = [{
 
 export default {
   props: {
-    allowCustom: {
-      type: Boolean,
-      default: true
-    },
     hasTimePicker: {
-      type: Boolean,
-      default: false
-    },
-    showShortIntervals: {
       type: Boolean,
       default: false
     },
@@ -176,8 +170,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          timeRangeOption: 'last24Hours',
-          dateFrom: TODAY,
+          timeRangeOption: 'last8Hours',
+          dateFrom: BEFOREEIGHTHOURS,
           dateTo: TODAY,
           timeFrom: '00:00',
           timeTo: '00:00'
@@ -206,7 +200,11 @@ export default {
     rangeOptions() {
       let options = []
 
-      options = DATE_PRESET.slice(0)
+      if (this.timeRangeOptions.length > 0) {
+        options = this.timeRangeOptions
+      } else {
+        options = DATE_PRESET.slice(0)
+      }
 
       return options
     }
@@ -227,22 +225,26 @@ export default {
   },
   methods: {
     getTimes() {
-      const from = new Date(`${this.locDateFrom} ${this.locTimeFrom}`).getTime()
-      let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
+      if (this.locTimeRangeOption !== 'custom') {
+        return this.timeFromTo()
+      } else {
+        const from = new Date(`${this.locDateFrom} ${this.locTimeFrom}`).getTime()
+        let to = new Date(`${this.locDateTo} ${this.locTimeTo}`).getTime()
 
-      // validate custom input
-      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
-        if (!this.hasTimePicker) {
-          const oneDayInMs = (24 * 3600000) - 1
+        // validate custom input
+        if (this.locTimeRangeOption === 'custom') {
+          if (!this.hasTimePicker) {
+            const oneDayInMs = (24 * 3600000) - 1
 
-          // add 24 hours
-          to = to + oneDayInMs
+            // add 24 hours
+            to = to + oneDayInMs
+          }
         }
-      }
 
-      return {
-        from,
-        to
+        return {
+          from,
+          to
+        }
       }
     },
     onChange() {
@@ -250,7 +252,7 @@ export default {
       const oneDayInMs = (24 * 3600000) - 1
 
       // validate custom input
-      if (this.allowCustom && this.locTimeRangeOption === 'custom') {
+      if (this.locTimeRangeOption === 'custom') {
         const customRange = to - from
 
         if (customRange < 0) {
@@ -277,9 +279,41 @@ export default {
         timeFrom: this.locTimeFrom,
         timeTo: this.locTimeTo
       })
+    },
+    timeFromTo() {
+      const dateGetTime = new Date().getTime()
+
+      switch (this.locTimeRangeOption) {
+      case 'last8Hours':
+        return {
+          from: dateGetTime - (8 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last12Hours':
+        return {
+          from: dateGetTime - (12 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last24Hours':
+        return {
+          from: dateGetTime - (24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      case 'last7Days':
+        return {
+          from: dateGetTime - (7 * 24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      default:
+        return {
+          from: dateGetTime - (24 * 60 * 60 * 1000),
+          to: dateGetTime
+        }
+      }
     }
   }
 }
+
 </script>
 
 <style lang="scss">

@@ -194,7 +194,13 @@ export default {
           stackType: '100%',
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         plotOptions: {
           bar: {
@@ -241,7 +247,13 @@ export default {
           },
           toolbar: {
             show: false
+          },
+          animations: {
+            enabled: false
           }
+        },
+        markers: {
+          size: 0
         },
         colors: ['#FF1654', '#247BA0'],
         dataLabels: {
@@ -352,7 +364,7 @@ export default {
 
         return sum
       })
-      
+
       return sum === 0
     },
     getDowntimeSeries(data) {
