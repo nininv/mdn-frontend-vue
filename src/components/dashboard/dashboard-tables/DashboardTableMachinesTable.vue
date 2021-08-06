@@ -26,7 +26,7 @@
     <v-card-text>
       <v-data-table
         :loading="loading"
-        :headers="filtedHeaders"
+        :headers="filteredHeaders"
         :items="devices"
         :items-per-page="5"
         :page.sync="page"
@@ -307,8 +307,9 @@ export default {
       totalDevices: (state) => state.devices.totalDevices,
       pageCount: (state) => state.devices.pageCount
     }),
-    filtedHeaders() {
-      const headerColumns = ['Running', 'Machines', ...this.machinesTableHeaders]
+    filteredHeaders() {
+      const savedHeaders = Array.isArray(this.machinesTableHeaders) ? this.machinesTableHeaders : []
+      const headerColumns = ['Running', 'Machines', ...savedHeaders]
 
       return this.headers.filter((header) => {
         return headerColumns.includes(header.text)
