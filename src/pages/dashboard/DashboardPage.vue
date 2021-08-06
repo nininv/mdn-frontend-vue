@@ -103,42 +103,9 @@ export default {
     }
   },
   async mounted() {
-    if (this.canViewCompanies)
-      await this.initAcsDashboard()
-    this.getZones()
-    this.initLocationsTable({ companyId: this.selectedCompany ? this.selectedCompany.id : 0 })
+    if (this.canViewCompanies) await this.initAcsDashboard()
 
-    if (!(this.isAcsUser && this.selectedCompany && this.selectedCompany.id === 0)) {
-      this.getAlarmsReports({
-        companyId: this.selectedCompany ? this.selectedCompany.id : 0
-      })
-    }
-
-    const now = new Date().getTime()
-    const nowMinus24Hours = now - 60 * 60 * 24 * 1000
-    const before7days =  now - 7 * 60 * 60 * 24 * 1000
-    const before8hours = now - 8 * 60 * 60 * 1000
-
-    this.getDowntimeGraphData({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      from: before7days,
-      to: now
-    })
-
-    this.getDowntimeByTypeGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      from: before8hours,
-      to: now
-    })
-
-    this.getDowntimeByReasonGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      from: before8hours,
-      to: now
-    })
+    this.getAllAnalytics()
   },
   methods: {
     ...mapActions({
@@ -155,15 +122,17 @@ export default {
     onCompanyChanged(company) {
       this.changeSelectedCompany(company)
 
-      this.initLocationsTable({
-        companyId: this.selectedCompany ? this.selectedCompany.id : 0
-      })
-
       this.getDevicesAnalytics({
         page: 1,
-        location_id: this.location,
         company_id: this.selectedCompany ? this.selectedCompany.id : 0
       })
+
+      this.getAllAnalytics()
+    },
+
+    getAllAnalytics() {
+      this.getZones()
+      this.initLocationsTable({ companyId: this.selectedCompany ? this.selectedCompany.id : 0 })
 
       if (!(this.isAcsUser && this.selectedCompany && this.selectedCompany.id === 0)) {
         this.getAlarmsReports({
@@ -171,34 +140,23 @@ export default {
         })
       }
 
-      const now = new Date().getTime()
-      const nowMinus24Hours = now - 60 * 60 * 24 * 1000
-      const before7days =  now - 7 * 60 * 60 * 24 * 1000
-      const before8hours = now - 8 * 60 * 24 * 1000
+      this.getDowntimeGraphs()
+    },
 
-      this.getDowntimeGraphData({
+    getDowntimeGraphs() {
+      const now = new Date().getTime()
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
+      const before8Hours = now - 8 * 60 * 60 * 1000
+
+      const params = {
         company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        zone_id: 0,
         from: before7days,
         to: now
-      })
+      }
 
-      this.getDowntimeByTypeGraphSeries({
-        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        zone_id: 0,
-        from: before8hours,
-        to: now
-      })
-
-      this.getDowntimeByReasonGraphSeries({
-        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        zone_id: 0,
-        from: before8hours,
-        to: now
-      })
+      this.getDowntimeGraphData(params)
+      this.getDowntimeByTypeGraphSeries({ ...params, from: before8Hours })
+      this.getDowntimeByReasonGraphSeries({ ...params, from: before8Hours })
     }
   }
 }
