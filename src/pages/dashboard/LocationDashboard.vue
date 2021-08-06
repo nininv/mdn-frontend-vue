@@ -12,9 +12,9 @@
           </company-menu>
         </div>
         <v-breadcrumbs v-else :items="breadcrumbItems"></v-breadcrumbs>
-        <v-card-title>
+        <div class="title mt-1 mb-2">
           Zone Summary
-        </v-card-title>
+        </div>
         <dashboard-table
           :loading="loadingZonesTable"
           :items="zones"
