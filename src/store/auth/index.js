@@ -257,6 +257,8 @@ const module = {
         state.user.username = user.name
         state.user.role = user.role
         state.user.companyId = user.company_id
+        state.user.companyName = user.companyName
+        state.user.phone = user.phoneNumber
         state.token = token
       }
 

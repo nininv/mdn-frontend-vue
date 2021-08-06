@@ -180,16 +180,10 @@ export default {
     DowntimeByTypeCard,
     DowntimeByReasonCard
   },
-  props:{
-
-  },
   data() {
     return {
       tabModel: 0,
-      selectedParameters: [],
-      selectedParametersForTcu: [],
-      getProductAlarms: commonApi.getProductAlarms,
-      options: {}
+      getProductAlarms: commonApi.getProductAlarms
     }
   },
   computed: {
@@ -254,98 +248,19 @@ export default {
           disabled: true
         }
       ]
-    },
-    routeParams() {
-      return {
-        location:this.$route.params.location,
-        zone:this.$route.params.zone,
-        machine_id:this.$route.params.configurationId,
-        serial_number:this.$route.params.productId
-      }
     }
   },
-  watch: {
-    async $route(to, from) {
-      if (this.canViewCompanies)
-        this.initAcsDashboard()
-      this.getLocations()
-      this.getZones()
 
-      await this.getDeviceConfiguration(to.params.productId)
-      const now = new Date().getTime()
-      const nowMinus24Hours = now - 60 * 60 * 24 * 1000
-      const before7days =  now - 7 * 60 * 60 * 24 * 1000
-
-      this.getDowntimeGraphData({
-        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        machine_id: to.params.configurationId,
-        serial_number: to.params.productId,
-        from: before7days,
-        to: now
-      })
-
-      this.getDowntimeByTypeGraphSeries({
-        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        machine_id: to.params.configurationId,
-        serial_number: to.params.productId,
-        from: before7days,
-        to: now
-      })
-
-      this.getDowntimeByReasonGraphSeries({
-        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-        location_id: 0,
-        machine_id: to.params.configurationId,
-        serial_number: to.params.productId,
-        from: before7days,
-        to: now
-      })
-      if (!this.error) {
-        this.getNotes(to.params.productId)
-      }
-    }
-  },
   async mounted() {
-    if (this.canViewCompanies)
-      this.initAcsDashboard()
+    if (this.canViewCompanies) this.initAcsDashboard()
+
     this.getLocations()
     this.getZones()
 
     await this.getDeviceConfiguration(this.$route.params.productId)
 
-    const now = new Date().getTime()
-    const nowMinus24Hours = now - 60 * 60 * 24 * 1000
-    const before7days =  now - 7 * 60 * 60 * 24 * 1000
-    const before8Hours = now - 8 * 60 * 60 * 1000
+    this.getDowntimeGraphs()
 
-    this.getDowntimeGraphData({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      machine_id: this.$route.params.configurationId,
-      serial_number: this.$route.params.productId,
-      from: before7days,
-      to: now
-    })
-
-    this.getDowntimeByTypeGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      machine_id: this.$route.params.configurationId,
-      serial_number: this.$route.params.productId,
-      from: before8Hours,
-      to: now
-    })
-
-    this.getDowntimeByReasonGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: 0,
-      machine_id: this.$route.params.configurationId,
-      serial_number: this.$route.params.productId,
-      from: before8Hours,
-      to: now
-    })
     if (!this.error) {
       this.getNotes(this.$route.params.productId)
     }
@@ -361,7 +276,27 @@ export default {
       getDowntimeGraphData: 'devices/getDowntimeGraphData',
       getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
       getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
-    })
+    }),
+
+    getDowntimeGraphs() {
+      const now = new Date().getTime()
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
+      const before8Hours = now - 8 * 60 * 60 * 1000
+
+      const params = {
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: this.$route.params.location,
+        zone_id: this.$route.params.zone,
+        machine_id: this.$route.params.configurationId,
+        serial_number: this.$route.params.productId,
+        from: before7days,
+        to: now
+      }
+
+      this.getDowntimeGraphData(params)
+      this.getDowntimeByTypeGraphSeries({ ...params, from: before8Hours })
+      this.getDowntimeByReasonGraphSeries({ ...params, from: before8Hours })
+    }
   }
 }
 </script>

@@ -37,10 +37,6 @@ export default {
     MachinesTable,
     TopCard
   },
-  data() {
-    return {
-    }
-  },
   computed: {
     ...mapState({
       loadingMachinesTable: (state) => state.machines.loadingMachinesTable,
@@ -93,38 +89,11 @@ export default {
     }
   },
   async mounted() {
-    if (this.canViewCompanies)
-      await this.initAcsDashboard()
+    if (this.canViewCompanies) await this.initAcsDashboard()
+
     this.getLocations()
     this.getZones()
-
-    const now = new Date().getTime()
-    const before7days =  now - 7 * 60 * 60 * 24 * 1000
-    const before8Hours = now - 8 * 60 * 60 * 1000
-
-    this.getDowntimeGraphData({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: this.$route.params.location,
-      zone_id: this.$route.params.zone,
-      from: before7days,
-      to: now
-    })
-
-    this.getDowntimeByTypeGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: this.$route.params.location,
-      zone_id: this.$route.params.zone,
-      from: before8Hours,
-      to: now
-    })
-
-    this.getDowntimeByReasonGraphSeries({
-      company_id: this.selectedCompany ? this.selectedCompany.id : 0,
-      location_id: this.$route.params.location,
-      zone_id: this.$route.params.zone,
-      from: before8Hours,
-      to: now
-    })
+    this.getDowntimeGraphs()
   },
   methods: {
     ...mapActions({
@@ -142,6 +111,24 @@ export default {
       this.$router.push({
         name: 'acs-machines'
       }).catch((error) => {})
+    },
+
+    getDowntimeGraphs() {
+      const now = new Date().getTime()
+      const before7days =  now - 7 * 60 * 60 * 24 * 1000
+      const before8Hours = now - 8 * 60 * 60 * 1000
+
+      const params = {
+        company_id: this.selectedCompany ? this.selectedCompany.id : 0,
+        location_id: this.$route.params.location,
+        zone_id: this.$route.params.zone,
+        from: before7days,
+        to: now
+      }
+
+      this.getDowntimeGraphData(params)
+      this.getDowntimeByTypeGraphSeries({ ...params, from: before8Hours })
+      this.getDowntimeByReasonGraphSeries({ ...params, from: before8Hours })
     }
   }
 }

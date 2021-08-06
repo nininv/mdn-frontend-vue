@@ -30,7 +30,7 @@
     <v-card-text>
       <v-data-table
         id="saved-machines-table"
-        :headers="filtedHeaders"
+        :headers="filteredHeaders"
         :items="filteredSavedMachines"
         :search="searchQuery"
         :loading="loadingDashboardSavedMachinesTable"
@@ -329,8 +329,9 @@ export default {
       locationName: 'locations/locationName',
       zoneName: 'zones/zoneName'
     }),
-    filtedHeaders() {
-      const headerColumns = ['Status', 'Machine Name', ...this.savedMachinesTableHeaders]
+    filteredHeaders() {
+      const savedHeaders = Array.isArray(this.savedMachinesTableHeaders) ? this.savedMachinesTableHeaders : []
+      const headerColumns = ['Status', 'Machine Name', ...savedHeaders]
 
       return this.headers.filter((header) => {
         return headerColumns.includes(header.text)
