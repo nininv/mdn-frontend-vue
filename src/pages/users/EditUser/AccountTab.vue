@@ -251,7 +251,7 @@ export default {
         const data = {
           id: this.user.id,
           name: this.user.name,
-          email: this.user.email,
+          email: this.user.email.toLowerCase(),
           role: this.user.role,
           locations: this.selectedLocations,
           zones: this.selectedZones
@@ -269,7 +269,7 @@ export default {
     async handleDeleteUser() {
       try {
         await this.deleteUser({
-          email: this.user.email
+          email: this.user.email.toLowerCase()
         })
 
         this.deleteDialog = false

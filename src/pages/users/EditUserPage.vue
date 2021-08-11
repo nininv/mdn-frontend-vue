@@ -124,6 +124,8 @@ export default {
     submitAccount(data) {
       Object.assign(this.user, data)
 
+      this.user.email = this.user.email.toLowerCase()
+
       this.updateUserAccount(this.user)
     }
   }

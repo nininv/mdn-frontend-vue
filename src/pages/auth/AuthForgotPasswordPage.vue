@@ -82,7 +82,7 @@ export default {
     }),
     submit(e) {
       if (this.$refs.form.validate()) {
-        this.requestForgotPassword(this.email)
+        this.requestForgotPassword(this.email.toLowerCase())
       }
     },
     resetErrors() {

@@ -9,7 +9,7 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title :class="getHeadlineClass(overview.status)">
-              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
+              {{ overview.teltonikaDevice && overview.teltonikaDevice.name }}
             </v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar class="mt-3" color="grey lighten-3">

@@ -166,7 +166,7 @@ export default {
         timeRange: this.defaultTimeRange,
         selectedTags: this.selectedTags
       })
-      await this.getTags({
+      await this.serialNumber && this.getTags({
         machineId: this.machineId,
         serialNumber: this.serialNumber
       })

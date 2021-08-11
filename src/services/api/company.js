@@ -55,7 +55,7 @@ export default {
     Object.assign(data, {
       company_name: data.companyName,
       administrator_name: data.administratorName,
-      administrator_email: data.administratorEmail
+      administrator_email: data.administratorEmail.toLowerCase()
     })
 
     return api.post('/customers/add', data)

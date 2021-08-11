@@ -97,7 +97,7 @@ export default {
       if (this.$refs.accountForm.validate()) {
         this.updateProfile({
           name:this.userData.user.username,
-          email:this.userData.user.email,
+          email:this.userData.user.email.toLowerCase(),
           phone:this.userData.phone
         })
       }
