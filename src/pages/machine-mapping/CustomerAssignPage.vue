@@ -41,7 +41,7 @@
                     outlined
                     value="active"
                     color="primary lighten-2"
-                    @click="filterDevices"
+                    @click="filterDevices(1)"
                   >
                     Active
                   </v-chip>
@@ -50,7 +50,7 @@
                     outlined
                     value="PLCLink"
                     color="primary lighten-2"
-                    @click="filterDevices"
+                    @click="filterDevices(1)"
                   >
                     PLC Link
                   </v-chip>
@@ -59,7 +59,7 @@
                     outlined
                     value="registered"
                     color="primary lighten-2"
-                    @click="filterDevices"
+                    @click="filterDevices(1)"
                   >
                     Registered
                   </v-chip>
@@ -76,14 +76,14 @@
                     dense
                     clearable
                     placeholder="e.g. filter for serial number, device name, customer assigned name"
-                    @keyup.enter="filterDevices"
-                    @click:append="filterDevices"
+                    @keyup.enter="filterDevicesBySearchQuery"
+                    @click:append="filterDevicesBySearchQuery"
                   ></v-text-field>
                   <v-btn
                     icon
                     small
                     class="mr-2"
-                    @click="filterDevices"
+                    @click="filterDevices(loc_page)"
                   >
                     <v-icon>$mdi-refresh</v-icon>
                   </v-btn>
@@ -308,7 +308,7 @@ export default {
   mounted() {
     this.loc_page = this.page
     this.getConfigurations()
-    this.filterDevices()
+    this.filterDevices(1)
   },
   methods: {
     ...mapActions({
@@ -345,7 +345,7 @@ export default {
           device_name: this.editedItem.name
         })
           .then((response) => {
-            this.filterDevices()
+            this.filterDevices(this.loc_page)
             this.close()
           })
       }
@@ -358,11 +358,15 @@ export default {
 
       return _company ? _company.name : 'Not Assigned'
     },
-    filterDevices() {
+    filterDevicesBySearchQuery() {
+      this.filterDevices(1)
+    },
+    filterDevices(page) {
+      this.loc_page = page
       this.$nextTick(() => {
         this.getDevices({
           filterForm: this.filterForm,
-          page: this.loc_page
+          page
         })
       })
     },

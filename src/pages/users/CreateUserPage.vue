@@ -306,6 +306,8 @@ export default {
               zip: this.zipCode
             })
 
+            data.email = data.email.toLowerCase()
+
             this.addUser(data)
           } else {
             const data = Object.assign(this.user, {
@@ -313,6 +315,8 @@ export default {
               locations: this.selectedLocations,
               zones: this.selectedZones
             })
+
+            data.email = data.email.toLowerCase()
 
             this.addUser(data)
           }

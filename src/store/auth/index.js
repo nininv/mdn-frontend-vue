@@ -204,7 +204,7 @@ const module = {
       commit('BUTTON_LOAD')
 
       try {
-        await authAPI.requestForgotPassword(email)
+        await authAPI.requestForgotPassword(email.toLowerCase())
       } catch (error) {
         if (error.response.status === 404) {
           commit('SET_ERROR', {

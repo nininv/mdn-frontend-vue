@@ -108,6 +108,7 @@ export default {
     }),
     submit() {
       if (this.$refs.accountForm.validate()) {
+        this.companyAccount.email = this.companyAccount.email.toLowerCase()
         this.updateAccount(this.companyAccount)
       }
     },

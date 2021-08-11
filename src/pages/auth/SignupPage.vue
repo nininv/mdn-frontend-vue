@@ -144,7 +144,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.signup({
           name: this.name,
-          email: this.email,
+          email: this.email.toLowerCase(),
           password: this.password
         })
       }

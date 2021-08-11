@@ -103,7 +103,7 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         this.signIn({
-          email: this.email,
+          email: this.email.toLowerCase(),
           password: this.password
         })
       }

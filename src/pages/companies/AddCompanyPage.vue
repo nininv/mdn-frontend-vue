@@ -241,6 +241,8 @@ export default {
             zip: this.zipCode
           })
 
+          data.administratorEmail = data.administratorEmail.toLowerCase()
+
           this.addCompany(data)
         } else {
           this.tab = 1
