@@ -170,7 +170,7 @@ export default {
         machineId: this.machineId,
         serialNumber: this.serialNumber
       })
-      await this.getDataToolSeries({
+      await this.serialNumber && this.getDataToolSeries({
         machineId: this.machineId,
         serialNumber: this.serialNumber,
         selectedTags: this.selectedTags,
