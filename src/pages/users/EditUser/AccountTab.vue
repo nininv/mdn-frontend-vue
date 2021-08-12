@@ -278,7 +278,7 @@ export default {
       }
     },
     handleResetPassword() {
-      this.requestForgotPassword(this.user.email)
+      this.requestForgotPassword(this.user.email.toLowerCase())
     }
   }
 }
