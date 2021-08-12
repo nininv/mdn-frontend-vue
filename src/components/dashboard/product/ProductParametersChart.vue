@@ -157,6 +157,16 @@ export default {
       }
     }
   },
+  watch: {
+    selectedTags(tags) {
+      this.serialNumber && this.selectedTags.length && this.getDataToolSeries({
+        machineId: this.machineId,
+        serialNumber: this.serialNumber,
+        selectedTags: this.selectedTags,
+        timeRange: this.dataToolTimeRange
+      })
+    }
+  },
 
   async mounted() {
     this.loading = true
@@ -170,7 +180,7 @@ export default {
         machineId: this.machineId,
         serialNumber: this.serialNumber
       })
-      await this.serialNumber && this.getDataToolSeries({
+      await this.serialNumber && this.selectedTags.length && this.getDataToolSeries({
         machineId: this.machineId,
         serialNumber: this.serialNumber,
         selectedTags: this.selectedTags,
@@ -182,7 +192,6 @@ export default {
 
     this.loading = false
   },
-
   methods: {
     ...mapActions('machines', ['getDataToolSeries', 'getTags', 'updateDataToolOptions']),
     async onTimeRangeChanged(options) {
