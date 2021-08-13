@@ -4,6 +4,13 @@ $border-radius-root: 6px;
 // Spacing
 $spacer: 8px;
 
+$spacers: () !default;
+@if (type-of($spacers) == list) {
+  @for $i from 0 through 16 {
+    $spacers: map-merge($spacers, ($i: $spacer * $i))
+  }
+}
+
 $grid-breakpoints: (
   'xs': 0,
   'sm': 600px,

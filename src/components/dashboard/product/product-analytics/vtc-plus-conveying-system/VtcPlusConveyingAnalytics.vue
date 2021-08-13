@@ -1,85 +1,73 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id5"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-vtc-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="6">
-        <bar-graph
-          namespace="barGraph-vtc-id1"
-          title="Pump Hours"
-          :height="500"
-          :fetch="getPumpHours"
-          unit="h"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="pumpHoursOilCategories"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12" md="6">
-        <bar-graph
-          namespace="barGraph-vtc-id2"
-          title="Pump Hours Oil Change"
-          :height="500"
-          :fetch="getPumpHoursOil"
-          unit="h"
-          :names="['Actual', 'Target']"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="pumpHoursOilCategories"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(5)" cols="12" md="6">
-        <bar-graph
-          namespace="barGraph-vtc-id3"
-          title="Online Life"
-          :height="500"
-          :fetch="getPumpOnlineLife"
-          unit="%"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="pumpHoursOilCategories"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
-        <v-card-title>
-          Downtime Data
-        </v-card-title>
-        <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" cols="12" md="4">
-            <downtime-card></downtime-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-type-card></downtime-by-type-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-reason-card></downtime-by-reason-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 grid-cols-lg-4 gap-2">
+      <overview
+        namespace="overview-id5"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(1)"
+        namespace="areaGraph-vtc-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <bar-graph
+        v-if="parameters.includes(3)"
+        class="col-span-md-2"
+        namespace="barGraph-vtc-id1"
+        title="Pump Hours"
+        :height="500"
+        :fetch="getPumpHours"
+        unit="h"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :categories="pumpHoursOilCategories"
+      >
+      </bar-graph>
+      <bar-graph
+        v-if="parameters.includes(4)"
+        class="col-span-md-2"
+        namespace="barGraph-vtc-id2"
+        title="Pump Hours Oil Change"
+        :height="500"
+        :fetch="getPumpHoursOil"
+        unit="h"
+        :names="['Actual', 'Target']"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :categories="pumpHoursOilCategories"
+      >
+      </bar-graph>
+      <bar-graph
+        v-if="parameters.includes(5)"
+        class="col-span-md-2"
+        namespace="barGraph-vtc-id3"
+        title="Online Life"
+        :height="500"
+        :fetch="getPumpOnlineLife"
+        unit="%"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :categories="pumpHoursOilCategories"
+      >
+      </bar-graph>
+    </div>
+
+    <div class="title mb-2 mt-4">Downtime Data</div>
+    <div class="d-grid grid-cols-1 grid-cols-md-3 gap-2">
+      <downtime-card v-if="parameters.includes(20)"></downtime-card>
+      <downtime-by-type-card v-if="parameters.includes(21)"></downtime-by-type-card>
+      <downtime-by-reason-card v-if="parameters.includes(21)"></downtime-by-reason-card>
+    </div>
   </div>
 </template>
 <script>
