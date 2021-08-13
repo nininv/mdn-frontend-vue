@@ -20,22 +20,14 @@
         </v-btn>
       </v-card-title>
       <v-card-text>
-        <div v-if="inventory.inventories && inventory.inventories.length" class="d-flex flex-wrap px-2">
-          <v-row dense>
-            <v-col
-              v-for="(inv, i) in inventory.inventories"
-              :key="i"
-              cols="12"
-              md="3"
-              sm="6"
-              class="py-1"
-            >
-              <v-card>
-                <div class="overline ml-2">{{ `Hopper ${i + 1}` }}</div>
-                <v-card-title class="text--primary">{{ inv }} {{ inventory.unit }}</v-card-title>
-              </v-card>
-            </v-col>
-          </v-row>
+        <div v-if="inventory.inventories && inventory.inventories.length" class="d-grid grid-cols-2 grid-cols-md-4 gap-2">
+          <v-card
+            v-for="(inv, i) in inventory.inventories"
+            :key="i"
+          >
+            <div class="overline ml-2">{{ `Hopper ${i + 1}` }}</div>
+            <v-card-title class="text--primary">{{ inv }} {{ inventory.unit }}</v-card-title>
+          </v-card>
         </div>
         <div v-else class="text-center">
           No Data From Device

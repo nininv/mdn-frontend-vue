@@ -18,33 +18,25 @@
         </v-btn>
       </v-card-title>
       <v-card-text>
-        <div v-if="inventory.inventories && inventory.inventories.length" class="d-flex flex-wrap px-2">
-          <v-row dense>
-            <v-col
-              v-for="(inv, i) in inventory.inventories"
-              :key="i"
-              cols="12"
-              md="3"
-              sm="6"
-              class="py-1"
-            >
-              <v-card>
-                <div class="overline ml-2">{{ `Hopper ${i + 1}` }}</div>
-                <v-card-text class="text--primary text-subtitle-1">{{ materialText(i) }}</v-card-text>
-                <v-card-text class="text--primary text-subtitle-1">{{ locationText(i) }}</v-card-text>
-                <v-card-actions>
-                  <v-btn
-                    small
-                    block
-                    color="primary"
-                    @click="editMaterial(i)"
-                  >
-                    Add Material/Location
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
+        <div v-if="inventory.inventories && inventory.inventories.length" class="d-grid grid-cols-2 grid-cols-md-4 gap-2">
+          <v-card
+            v-for="(inv, i) in inventory.inventories"
+            :key="i"
+          >
+            <div class="overline ml-2">{{ `Hopper ${i + 1}` }}</div>
+            <v-card-text class="text--primary text-subtitle-1">{{ materialText(i) }}</v-card-text>
+            <v-card-text class="text--primary text-subtitle-1">{{ locationText(i) }}</v-card-text>
+            <v-card-actions>
+              <v-btn
+                small
+                block
+                color="primary"
+                @click="editMaterial(i)"
+              >
+                Add Material/Location
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </div>
         <div v-else class="text-center">
           No Data From Device
@@ -153,7 +145,7 @@ export default {
     ...mapActions({
       getMaterials: 'materials/getMaterials',
       updateInventoryMaterial: 'bdBlenderAnalytics/updateInventoryMaterial',
-      getMaterialLocations: 'materials/getMaterialLocations',      
+      getMaterialLocations: 'materials/getMaterialLocations',
       getInventory: 'bdBlenderAnalytics/getInventory',
       toggleInventoryTracking: 'bdBlenderAnalytics/toggleInventoryTracking'
     }),
