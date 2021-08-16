@@ -1,5 +1,7 @@
 <template>
   <div>
+    <v-img v-if="logoFile" class="logo" :src="logoFilePath" @error="onLogoImgError()"> </v-img>
+    <v-img v-else-if="logoFile === false" class="logo" :src="require('../../assets/imgs/logo-aec.png')" > </v-img>
     <v-card class="pa-1">
       <v-card-title class="justify-center text-h4 mb-2">Welcome</v-card-title>
       <v-card-subtitle>Sign in to your account</v-card-subtitle>
@@ -90,7 +92,8 @@ export default {
     ...mapState({
       isLoading: (state) => state.auth.buttonLoading,
       errorMessages: (state) => state.auth.error,
-      privateColors: (state) => state.settings.privateColors
+      privateColors: (state) => state.settings.privateColors,
+      logoFile: (state) => state.settings.logoFile
     })
   },
   mounted() {
@@ -110,6 +113,9 @@ export default {
     },
     resetErrors() {
       this.$store.commit('auth/CLEAR_ERROR')
+    },
+    onLogoImgError() {
+      this.logoImgError = true
     }
   }
 }
