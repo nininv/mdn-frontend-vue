@@ -178,9 +178,9 @@ export default {
     }
   },
   mounted() {
-    this.getDowntimeTableData({
-      params:this.routeParams
-    })
+    this.options.sortBy.push('start_time')
+    this.options.sortDesc.push(true)
+    this.updateDowntimeData()
   },
   methods: {
     ...mapActions({
@@ -230,9 +230,7 @@ export default {
         this.updateDowntime(this.editedItem)
           .then(() => {
             this.dialog = false
-            this.getDowntimeTableData({
-              params: this.routeParams
-            })
+            this.updateDowntimeData()
           })
       }
     },
