@@ -61,7 +61,6 @@
 
       <v-data-table
         v-model="selectedUsers"
-        show-select
         :headers="headers"
         :items="users"
         :search="searchQuery"
