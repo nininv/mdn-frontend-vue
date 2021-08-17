@@ -260,7 +260,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 tr.Other{
   background-color: #eedc5b;
 }
