@@ -23,23 +23,12 @@
         >
         </area-graph>
       </v-col>
-      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
-        <v-card-title>
-          Downtime Data
-        </v-card-title>
-        <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" cols="12" md="4">
-            <downtime-card></downtime-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-type-card></downtime-by-type-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-reason-card></downtime-by-reason-card>
-          </v-col>
-        </v-row>
-      </v-col>
     </v-row>
+
+    <downtime-section
+      :show-history="parameters.includes(20)"
+      :show-by-reason="parameters.includes(21)"
+    ></downtime-section>
   </div>
 </template>
 <script>
@@ -47,9 +36,7 @@ import commonApi from '../../common/fetches/api'
 
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
-import DowntimeCard from '../../../DowntimeCard'
-import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
-import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
+import DowntimeSection from '../../../DowntimeSection'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -57,9 +44,7 @@ export default {
   components: {
     AreaGraph,
     Overview,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
+    DowntimeSection
   },
   props: {
     machineId: {

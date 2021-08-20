@@ -80,9 +80,7 @@
                   </product-analytics>
                 </v-col>
                 <v-col cols="12">
-                  <v-card-title>
-                    Downtime Data
-                  </v-card-title>
+                  <div class="title mb-2 mt-4">Downtime Data</div>
                   <v-row class="flex-grow-0" dense>
                     <v-col md="4" cols="12">
                       <downtime-card></downtime-card>
