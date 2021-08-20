@@ -1,49 +1,47 @@
 <template>
   <v-card>
     <v-card-title>
-      <span>Add a note</span>
+      Add a note
     </v-card-title>
     <v-card-text>
-      <v-card-text>
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-          @submit="addNote"
-        >
-          <v-textarea
-            v-model="note"
-            label="Note"
-            outlined
-            required
-            :rules="noteRules"
-          ></v-textarea>
+      <v-form
+        ref="form"
+        v-model="valid"
+        lazy-validation
+        @submit="addNote"
+      >
+        <v-textarea
+          v-model="note"
+          label="Note"
+          outlined
+          required
+          :rules="noteRules"
+        ></v-textarea>
 
-          <v-btn
-            :disabled="!valid"
-            color="grey"
-            class="mr-4"
-            @click="resetNote"
-          >
-            <v-icon dark>
-              $mdi-minus
-            </v-icon>
-            Reset
-          </v-btn>
+        <div class="d-flex">
           <v-btn
             color="primary"
-            class="mr-4"
             :loading="isLoading"
-            :disabled="isLoading"
+            :disabled="!valid"
             @click="_addNote"
           >
-            <v-icon dark>
+            <v-icon left small>
               $mdi-plus
             </v-icon>
-            Add
+            Add note
           </v-btn>
-        </v-form>
-      </v-card-text>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="grey lighten-2"
+            @click="resetNote"
+          >
+            <v-icon left small>
+              $mdi-backspace-outline
+            </v-icon>
+            Reset form
+          </v-btn>
+        </div>
+      </v-form>
     </v-card-text>
   </v-card>
 </template>
