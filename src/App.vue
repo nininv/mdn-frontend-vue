@@ -74,15 +74,16 @@ export default {
 </script>
 
 <style>
-/**
- * Transition animation between pages
- */
-
 @font-face {
   font-family: "Museo Sans 500";
   src: local("Museo Sans 500"),
-   url(./assets/fonts/MuseoSans_500.otf) format("truetype");
+   url('./assets/fonts/MuseoSans_500.otf') format("opentype");
+  font-style: normal;
 }
+
+/**
+ * Transition animation between pages
+ */
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.2s;
