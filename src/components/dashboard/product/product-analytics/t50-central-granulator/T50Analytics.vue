@@ -51,30 +51,12 @@
         >
         </bar-graph>
       </v-col>
-      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
-        <v-card-title>
-          Downtime Data
-        </v-card-title>
-        <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" cols="12" md="4">
-            <downtime-card></downtime-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-type-card></downtime-by-type-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-reason-card></downtime-by-reason-card>
-          </v-col>
-        </v-row>
-      </v-col>
-      <!-- <v-col cols="12" md="4">
-        <t50-amp
-          :loading="loadingT50Amps"
-          :amps="t50Amps"
-        >
-        </t50-amp>
-      </v-col> -->
     </v-row>
+
+    <downtime-section
+      :show-history="parameters.includes(20)"
+      :show-by-reason="parameters.includes(21)"
+    ></downtime-section>
   </div>
 </template>
 <script>
@@ -86,10 +68,7 @@ import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import Overview from '../../common/overview/ProductOverview'
 import T50Running from './components/T50Running'
 import T50Hours from './components/T50Hours'
-import DowntimeCard from '../../../DowntimeCard'
-import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
-import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
-// import T50Amp from './components/T50Amp'
+import DowntimeSection from '../../../DowntimeSection'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -100,10 +79,7 @@ export default {
     Overview,
     T50Running,
     T50Hours,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
-    // T50Amp
+    DowntimeSection
   },
   props: {
     machineId: {

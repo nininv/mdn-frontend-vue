@@ -53,6 +53,7 @@ export const routes = [{
   name: 'product-details',
   component: () => import(/* webpackChunkName: "product-details" */ '@/pages/dashboard/ProductDashboard.vue'),
   meta: {
+    layout: 'dashboard'
   }
 },
 ...AppSettingsRoutes,

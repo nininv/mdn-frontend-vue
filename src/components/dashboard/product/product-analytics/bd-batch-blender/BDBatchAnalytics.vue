@@ -1,80 +1,63 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id1"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-dbBlender-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(5)" cols="12" md="4">
-        <batch-blender-recipe
-          :loading="loadingRecipe"
-          :recipes="recipeValues"
-          :ez-types="ezTypes"
-          :mode="recipeMode"
-          @reload="getRecipe({ serialNumber })"
-        >
-        </batch-blender-recipe>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="8">
-        <batch-blender-weight
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-        >
-        </batch-blender-weight>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <batch-blender-standard-deviation>
-        </batch-blender-standard-deviation>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12">
-        <batch-blender-inventory-hoppers
-          :serial-number="serialNumber"
-          @reload="getInventory({ serialNumber })"
-        >
-        </batch-blender-inventory-hoppers>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12">
-        <batch-blender-inventory-reports
-          :serial-number="serialNumber"
-          @reload="getInventory({ serialNumber })"
-        >
-        </batch-blender-inventory-reports>
-      </v-col>
-      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
-        <v-card-title>
-          Downtime Data
-        </v-card-title>
-        <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" cols="12" md="4">
-            <downtime-card></downtime-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-type-card></downtime-by-type-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-reason-card></downtime-by-reason-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 grid-cols-lg-3 gap-2">
+      <overview
+        namespace="overview-id1"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(1)"
+        namespace="areaGraph-dbBlender-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <batch-blender-recipe
+        v-if="parameters.includes(5)"
+        :loading="loadingRecipe"
+        :recipes="recipeValues"
+        :ez-types="ezTypes"
+        :mode="recipeMode"
+        @reload="getRecipe({ serialNumber })"
+      >
+      </batch-blender-recipe>
+      <batch-blender-weight
+        v-if="parameters.includes(3)"
+        class="col-span-md-2"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+      >
+      </batch-blender-weight>
+      <batch-blender-standard-deviation v-if="parameters.includes(3)">
+      </batch-blender-standard-deviation>
+      <batch-blender-inventory-hoppers
+        v-if="parameters.includes(4)"
+        class="col-span-md-3"
+        :serial-number="serialNumber"
+        @reload="getInventory({ serialNumber })"
+      >
+      </batch-blender-inventory-hoppers>
+      <batch-blender-inventory-reports
+        v-if="parameters.includes(4)"
+        class="col-span-md-3"
+        :serial-number="serialNumber"
+        @reload="getInventory({ serialNumber })"
+      >
+      </batch-blender-inventory-reports>
+    </div>
+
+    <downtime-section
+      :show-history="parameters.includes(20)"
+      :show-by-reason="parameters.includes(21)"
+    ></downtime-section>
   </div>
 </template>
 <script>
@@ -89,9 +72,7 @@ import BatchBlenderInventoryReports from './components/BatchBlenderInventoryRepo
 import BatchBlenderInventoryHoppers from './components/BatchBlenderInventoryHoppers'
 import BatchBlenderWeight from './components/BatchBlenderWeight'
 import BatchBlenderStandardDeviation from './components/BatchBlenderStandardDeviation'
-import DowntimeCard from '../../../DowntimeCard'
-import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
-import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
+import DowntimeSection from '../../../DowntimeSection'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -104,9 +85,7 @@ export default {
     BatchBlenderInventoryHoppers,
     BatchBlenderWeight,
     BatchBlenderStandardDeviation,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
+    DowntimeSection
   },
   props: {
     machineId: {

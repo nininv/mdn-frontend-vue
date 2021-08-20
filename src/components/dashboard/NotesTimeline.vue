@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="min-h-full">
     <v-card-title>
       <span>Notes & Timeline</span>
     </v-card-title>

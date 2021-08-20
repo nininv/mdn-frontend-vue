@@ -32,15 +32,19 @@
         </v-alert>
         <div v-else>
           <v-tabs v-if="deviceConfiguration.isTcuConnected && deviceConfiguration.plcMachineId !== 11" v-model="tabModel">
-            <v-tab>{{ deviceConfiguration.plcMachineName }}</v-tab>
-            <v-tab v-if="deviceConfiguration.plcMachineName !== deviceConfiguration.tcuMachineName">{{ deviceConfiguration.tcuMachineName }}</v-tab>
+            <v-tab @click="onTabClick">{{ deviceConfiguration.plcMachineName }}</v-tab>
+            <v-tab v-if="deviceConfiguration.plcMachineName !== deviceConfiguration.tcuMachineName" @click="onTabClick">{{ deviceConfiguration.tcuMachineName }}</v-tab>
           </v-tabs>
 
           <br>
 
+          <div v-if="tabContent === -1" class="text-center my-10">
+            <div class="mt-1">Loading configuration...</div>
+          </div>
+
           <v-tabs-items v-model="tabModel" class="overflow-visible">
-            <v-tab-item>
-              <v-row class="flex-grow-0" dense>
+            <v-tab-item :transition="false">
+              <v-row v-if="tabContent === 0" class="flex-grow-0" dense>
                 <v-col cols="12">
                   <product-analytics
                     :machine-id="deviceConfiguration.plcMachineId"
@@ -68,8 +72,8 @@
                 </v-col>
               </v-row>
             </v-tab-item>
-            <v-tab-item reverse-transition>
-              <v-row class="flex-grow-0" dense>
+            <v-tab-item :transition="false">
+              <v-row v-if="tabContent === 1" class="flex-grow-0" dense>
                 <v-col cols="12">
                   <product-analytics
                     :machine-id="11"
@@ -79,10 +83,8 @@
                   >
                   </product-analytics>
                 </v-col>
-                <v-col cols="12">
-                  <v-card-title>
-                    Downtime Data
-                  </v-card-title>
+                <!-- <v-col cols="12">
+                  <div class="title mb-2 mt-4">Downtime Data</div>
                   <v-row class="flex-grow-0" dense>
                     <v-col md="4" cols="12">
                       <downtime-card></downtime-card>
@@ -94,7 +96,7 @@
                       <downtime-by-reason-card></downtime-by-reason-card>
                     </v-col>
                   </v-row>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12">
                   <alarms-table
                     namespace="alarms-table-id2"
@@ -163,9 +165,9 @@ import ProductAnalytics from '../../components/dashboard/product/ProductAnalytic
 import NotesTimeline from '../../components/dashboard/NotesTimeline'
 import NoteForm from '../../components/dashboard/NoteForm'
 import CompanyMenu from '../../components/dashboard/CompanyMenu'
-import DowntimeCard from '../../components/dashboard/DowntimeCard'
-import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCard'
-import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
+// import DowntimeCard from '../../components/dashboard/DowntimeCard'
+// import DowntimeByTypeCard from '../../components/dashboard/DowntimeByTypeCard'
+// import DowntimeByReasonCard from '../../components/dashboard/DowntimeByReasonCard'
 
 export default {
   components: {
@@ -175,14 +177,15 @@ export default {
     ProductAnalytics,
     NotesTimeline,
     NoteForm,
-    AlarmsTable,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
+    AlarmsTable
+    // DowntimeCard,
+    // DowntimeByTypeCard,
+    // DowntimeByReasonCard
   },
   data() {
     return {
       tabModel: 0,
+      tabContent: 0,
       getProductAlarms: commonApi.getProductAlarms
     }
   },
@@ -277,6 +280,14 @@ export default {
       getDowntimeByTypeGraphSeries: 'devices/getDowntimeByTypeGraphSeries',
       getDowntimeByReasonGraphSeries: 'devices/getDowntimeByReasonGraphSeries'
     }),
+
+    onTabClick() {
+      this.tabContent = -1
+
+      setTimeout(() => {
+        this.tabContent = this.tabModel
+      })
+    },
 
     getDowntimeGraphs() {
       const now = new Date().getTime()

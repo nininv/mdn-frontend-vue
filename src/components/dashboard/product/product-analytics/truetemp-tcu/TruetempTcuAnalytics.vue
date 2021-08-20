@@ -1,65 +1,49 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id11"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-trueTemp-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <machine-state
-          :loading="loadingMachineState"
-          :machine="machineState"
-        ></machine-state>
-      </v-col>
-      <v-col v-if="parameters.includes(2)" cols="12" md="4">
-        <bar-graph
-          namespace="barGraph-id1"
-          title="TCU Temperature"
-          :height="320"
-          unit="ºC"
-          :fetch="getActTgtTemperatures"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
-          :options="temperatureOptions"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(20) || parameters.includes(21)" cols="12">
-        <v-card-title>
-          Downtime Data
-        </v-card-title>
-        <v-row class="flex-grow-0" dense>
-          <v-col v-if="parameters.includes(20)" cols="12" md="4">
-            <downtime-card></downtime-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-type-card></downtime-by-type-card>
-          </v-col>
-          <v-col v-if="parameters.includes(21)" cols="12" md="4">
-            <downtime-by-reason-card></downtime-by-reason-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 gap-2">
+      <overview
+        namespace="overview-id11"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(3)"
+        namespace="areaGraph-trueTemp-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <machine-state
+        v-if="parameters.includes(1)"
+        :loading="loadingMachineState"
+        :machine="machineState"
+      ></machine-state>
+      <bar-graph
+        v-if="parameters.includes(2)"
+        namespace="barGraph-id1"
+        title="TCU Temperature"
+        :height="320"
+        unit="ºC"
+        :fetch="getActTgtTemperatures"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :categories="['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
+        :options="temperatureOptions"
+      >
+      </bar-graph>
+    </div>
+
+    <downtime-section
+      :show-history="parameters.includes(20)"
+      :show-by-reason="parameters.includes(21)"
+    ></downtime-section>
   </div>
 </template>
 <script>
@@ -70,9 +54,7 @@ import BarGraph from '../../common/bar-graph/ProductBarGraph'
 import AreaGraph from '../../common/area-graph/ProductAreaGraph'
 import Overview from '../../common/overview/ProductOverview'
 import MachineState from './components/TruetempTcuMachineState'
-import DowntimeCard from '../../../DowntimeCard'
-import DowntimeByTypeCard from '../../../DowntimeByTypeCardForProduct'
-import DowntimeByReasonCard from '../../../DowntimeByReasonCard'
+import DowntimeSection from '../../../DowntimeSection'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
@@ -81,9 +63,7 @@ export default {
     MachineState,
     BarGraph,
     AreaGraph,
-    DowntimeCard,
-    DowntimeByTypeCard,
-    DowntimeByReasonCard
+    DowntimeSection
   },
   props: {
     machineId: {
