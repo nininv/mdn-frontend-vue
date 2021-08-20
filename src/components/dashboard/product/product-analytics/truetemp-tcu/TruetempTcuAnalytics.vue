@@ -1,49 +1,44 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id11"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-trueTemp-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <machine-state
-          :loading="loadingMachineState"
-          :machine="machineState"
-        ></machine-state>
-      </v-col>
-      <v-col v-if="parameters.includes(2)" cols="12" md="4">
-        <bar-graph
-          namespace="barGraph-id1"
-          title="TCU Temperature"
-          :height="320"
-          unit="ºC"
-          :fetch="getActTgtTemperatures"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :categories="['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
-          :options="temperatureOptions"
-        >
-        </bar-graph>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 gap-2">
+      <overview
+        namespace="overview-id11"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(3)"
+        namespace="areaGraph-trueTemp-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <machine-state
+        v-if="parameters.includes(1)"
+        :loading="loadingMachineState"
+        :machine="machineState"
+      ></machine-state>
+      <bar-graph
+        v-if="parameters.includes(2)"
+        namespace="barGraph-id1"
+        title="TCU Temperature"
+        :height="320"
+        unit="ºC"
+        :fetch="getActTgtTemperatures"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :categories="['Actual Delivery Temperature', 'Actual Return Temperature', 'Target Setpoint 1']"
+        :options="temperatureOptions"
+      >
+      </bar-graph>
+    </div>
 
     <downtime-section
       :show-history="parameters.includes(20)"

@@ -1,64 +1,58 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id1"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-dbBlender-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(5)" cols="12" md="4">
-        <batch-blender-recipe
-          :loading="loadingRecipe"
-          :recipes="recipeValues"
-          :ez-types="ezTypes"
-          :mode="recipeMode"
-          @reload="getRecipe({ serialNumber })"
-        >
-        </batch-blender-recipe>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="8">
-        <batch-blender-weight
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-        >
-        </batch-blender-weight>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <batch-blender-standard-deviation>
-        </batch-blender-standard-deviation>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12">
-        <batch-blender-inventory-hoppers
-          :serial-number="serialNumber"
-          @reload="getInventory({ serialNumber })"
-        >
-        </batch-blender-inventory-hoppers>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12">
-        <batch-blender-inventory-reports
-          :serial-number="serialNumber"
-          @reload="getInventory({ serialNumber })"
-        >
-        </batch-blender-inventory-reports>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 grid-cols-lg-3 gap-2">
+      <overview
+        namespace="overview-id1"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(1)"
+        namespace="areaGraph-dbBlender-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <batch-blender-recipe
+        v-if="parameters.includes(5)"
+        :loading="loadingRecipe"
+        :recipes="recipeValues"
+        :ez-types="ezTypes"
+        :mode="recipeMode"
+        @reload="getRecipe({ serialNumber })"
+      >
+      </batch-blender-recipe>
+      <batch-blender-weight
+        v-if="parameters.includes(3)"
+        class="col-span-md-2"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+      >
+      </batch-blender-weight>
+      <batch-blender-standard-deviation v-if="parameters.includes(3)">
+      </batch-blender-standard-deviation>
+      <batch-blender-inventory-hoppers
+        v-if="parameters.includes(4)"
+        class="col-span-md-3"
+        :serial-number="serialNumber"
+        @reload="getInventory({ serialNumber })"
+      >
+      </batch-blender-inventory-hoppers>
+      <batch-blender-inventory-reports
+        v-if="parameters.includes(4)"
+        class="col-span-md-3"
+        :serial-number="serialNumber"
+        @reload="getInventory({ serialNumber })"
+      >
+      </batch-blender-inventory-reports>
+    </div>
 
     <downtime-section
       :show-history="parameters.includes(20)"

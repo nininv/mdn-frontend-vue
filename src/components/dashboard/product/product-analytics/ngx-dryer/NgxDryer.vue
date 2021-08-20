@@ -1,75 +1,69 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col cols="12" md="4">
-        <overview
-          namespace="overview-id6"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :fetch="getOverview"
-        >
-        </overview>
-      </v-col>
-      <v-col v-if="parameters.includes(1)" cols="12" md="4">
-        <area-graph
-          namespace="areaGraph-ngxDryer-utilization"
-          title="Capacity Utilization"
-          :height="220"
-          unit="%"
-          :fetch="getUtilization"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Utilization']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <drying-hopper-states
-          :loading="loadingDryingHoppers"
-          :drying-hoppers="dryingHoppers"
-        >
-        </drying-hopper-states>
-      </v-col>
-      <v-col v-if="parameters.includes(4)" cols="12" md="8">
-        <bar-graph
-          namespace="barGraph-ngxDryer-id1"
-          title="Hopper Air Temperatures"
-          :height="320"
-          :fetch="getHopperTemperatures"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :options="temperatureOptions"
-          :names="['Process', 'Process Set Point', 'Outlet']"
-          :categories="hopperAirTemperatureCategories"
-        >
-        </bar-graph>
-      </v-col>
-      <v-col cols="12" md="6">
-        <area-graph
-          namespace="areaGraph-ngxDryer-dew-temperature"
-          title="Dew Point Temperature"
-          :height="220"
-          unit="ºC"
-          :fetch="getDewPointTemperature"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-          :names="['Dew Point Temperature']"
-        >
-        </area-graph>
-      </v-col>
-      <v-col cols="12" md="6">
-        <area-graph
-          namespace="areaGraph-ngxDryer-region-temperature"
-          title="Regen Temperatures"
-          :height="220"
-          unit="ºC"
-          :fetch="getRegionAirTemperature"
-          :machine-id="machineId"
-          :serial-number="serialNumber"
-        >
-        </area-graph>
-      </v-col>
-    </v-row>
+    <div class="d-grid grid-cols-1 grid-cols-md-2 grid-cols-lg-3 gap-2">
+      <overview
+        namespace="overview-id6"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :fetch="getOverview"
+      >
+      </overview>
+      <area-graph
+        v-if="parameters.includes(1)"
+        namespace="areaGraph-ngxDryer-utilization"
+        title="Capacity Utilization"
+        :height="220"
+        unit="%"
+        :fetch="getUtilization"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Utilization']"
+      >
+      </area-graph>
+      <drying-hopper-states
+        v-if="parameters.includes(3)"
+        :loading="loadingDryingHoppers"
+        :drying-hoppers="dryingHoppers"
+      >
+      </drying-hopper-states>
+      <bar-graph
+        v-if="parameters.includes(4)"
+        class="col-span-md-1"
+        namespace="barGraph-ngxDryer-id1"
+        title="Hopper Air Temperatures"
+        :height="320"
+        :fetch="getHopperTemperatures"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :options="temperatureOptions"
+        :names="['Process', 'Process Set Point', 'Outlet']"
+        :categories="hopperAirTemperatureCategories"
+      >
+      </bar-graph>
+      <area-graph
+        class="col-span-md-2"
+        namespace="areaGraph-ngxDryer-dew-temperature"
+        title="Dew Point Temperature"
+        :height="220"
+        unit="ºC"
+        :fetch="getDewPointTemperature"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+        :names="['Dew Point Temperature']"
+      >
+      </area-graph>
+      <area-graph
+        class="col-span-md-3"
+        namespace="areaGraph-ngxDryer-region-temperature"
+        title="Regen Temperatures"
+        :height="220"
+        unit="ºC"
+        :fetch="getRegionAirTemperature"
+        :machine-id="machineId"
+        :serial-number="serialNumber"
+      >
+      </area-graph>
+    </div>
 
     <downtime-section
       :show-history="parameters.includes(20)"
