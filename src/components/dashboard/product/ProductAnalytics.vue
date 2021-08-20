@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="combo-wrapper">
       <v-combobox
         v-model="selectedGraphs"
         :items="graphs"
@@ -130,3 +130,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.combo-wrapper {
+  position: sticky;
+  z-index: 2;
+  top: 86px;
+}
+</style>
