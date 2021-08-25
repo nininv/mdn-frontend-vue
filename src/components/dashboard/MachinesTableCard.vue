@@ -174,7 +174,7 @@ export default {
     return {
       headers: [
         { text: 'Status', align: 'center', value: 'status' },
-        { text: 'Machine Name', align: 'start', value: 'name' },
+        { text: 'Machine Name', align: 'start', value: 'customer_assigned_name' },
         { text: 'Machine Type', align: 'start', value: 'machineType', width: '150px' },
         { text: 'Downtime By Type', align: 'center', value: 'downtimeByType', sortable: false },
         { text: 'Capacity Utilization', align: 'center', value: 'capacityUtilization' },

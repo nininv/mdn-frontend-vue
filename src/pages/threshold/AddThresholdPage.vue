@@ -89,6 +89,7 @@
                       v-model="filter.value"
                       type="number"
                       label="Select or enter a value"
+                      :disabled="isRunningSelected(i)"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -100,6 +101,7 @@
                       v-model="filter.approachingValue"
                       type="number"
                       label="Enter a approaching value"
+                      :disabled="isRunningSelected(i)"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -113,6 +115,7 @@
                       :items="runningStatus"
                       item-text="name"
                       item-value="value"
+                      :disabled="isRunningAvailable(i)"
                     ></v-select>
                   </v-col>
                 </v-row>
@@ -205,7 +208,7 @@ export default {
 
       tab: null,
 
-      conditionValid: true,
+      conditionValid: false,
 
       runningStatus: [{
         name: 'True',
@@ -326,6 +329,12 @@ export default {
       }]
 
       this.$refs.conditionForm.resetValidation()
+    },
+    isRunningSelected(index) {
+      return this.filters[index].isRunning
+    },
+    isRunningAvailable(index) {
+      return !!(this.filters[index].value || this.filters[index].approachingValue)
     }
   }
 }

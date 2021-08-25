@@ -12,7 +12,7 @@
             md="4"
             sm="6"
           >
-            <v-checkbox v-model="deviceIds" :label="machine.name" :value="machine.device_id" @change="handleSelectMachine"></v-checkbox>
+            <v-checkbox v-model="deviceIds" :label="machine.customer_assigned_name" :value="machine.device_id" @change="handleSelectMachine"></v-checkbox>
           </v-col>
         </v-row>
       </v-card-text>

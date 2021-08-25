@@ -6,13 +6,13 @@
       :disabled="isLoading"
     >
       <template v-if="overview.machineId !== 11">
-        <v-list-item three-line>
+        <v-list-item>
           <v-list-item-content>
             <v-list-item-title :class="getHeadlineClass(overview.status)">
-              {{ overview.teltonikaDevice && overview.teltonikaDevice.name }}
+              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
             </v-list-item-title>
           </v-list-item-content>
-          <v-list-item-avatar class="mt-3" color="grey lighten-3">
+          <v-list-item-avatar color="grey lighten-3">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -30,10 +30,9 @@
           </v-list-item-avatar>
         </v-list-item>
 
-        <v-card-subtitle>
-          <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
-          <div>{{ overview.machineName }}</div>
-          <v-chip color="grey lighten-4" dense>
+        <v-card-subtitle class="pt-0">
+          <div v-if="overview.teltonikaDevice">{{ 'Gateway: ' + overview.teltonikaDevice.name }}</div>
+          <v-chip color="grey lighten-4 mt-1" dense>
             <v-tooltip v-for="(status, index) in overview.status" :key="index" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-avatar
@@ -60,8 +59,8 @@
         ></v-img>
         <v-card-text>
           <div class="ml-2">
-            <div>PLC Software Version: <small>{{ overview.version }}</small></div>
-            <div>PLC Software Build: <small>{{ overview.software_build }}</small></div>
+            <div>{{ overview.machineName }}</div>
+            <div>PLC Software Version: <small>{{ overview.version + '.' + overview.software_build }}</small></div>
             <div>Serial Number: <small>{{ overview.serial }}</small></div>
           </div>
           <div class="mt-2">
@@ -100,7 +99,6 @@
         </v-list-item>
         <v-card-subtitle>
           <div v-if="overview.teltonikaDevice">{{ overview.teltonikaDevice.name }}</div>
-          <div>{{ overview.machineName }}</div>
           <v-chip color="grey lighten-4" dense>
             <v-tooltip v-for="(status, index) in overview.status" :key="index" bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -128,6 +126,7 @@
         ></v-img>
         <v-card-text>
           <div class="ml-2">
+            <div>{{ overview.machineName }}</div>
             <div>PLC Software Version: <small>{{ overview.version }}</small></div>
           </div>
           <div class="mt-2">
