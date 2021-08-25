@@ -175,8 +175,8 @@
             >
             </v-select>
             <v-text-field
-              v-model="editedItem.name"
-              label="Device Name"
+              v-model="editedItem.customer_assigned_name"
+              label="Assigned Name"
               :rules="[$rules.required]"
               outlined
               dense
@@ -244,8 +244,7 @@ export default {
     return {
       tableHeaders: [
         { text: 'Teltonika Serial', value: 'serial_number' },
-        { text: 'PLC Serial', value: 'plc_serial_number' },
-        { text: 'Device Name', value: 'name' },
+        { text: 'Assgined Name', value: 'customer_assigned_name' },
         { text: 'Edit', value: 'actions', sortable: false, align: 'center' },
         { text: 'Company Name', value: 'company_id' },
         { text: 'Machine Configuration', value: 'machine_id' },
@@ -259,13 +258,15 @@ export default {
         company_id: '',
         machine_id: '',
         tcu_added: false,
-        plc_ip: ''
+        plc_ip: '',
+        customer_assigned_name: ''
       },
       defaultItem: {
         company_id: '',
         machine_id: '',
         tcu_added: false,
-        plc_ip: ''
+        plc_ip: '',
+        customer_assigned_name: ''
       },
       editDialog: false,
 
@@ -342,7 +343,7 @@ export default {
           machine_id: this.editedItem.machine_id,
           tcu_added: this.editedItem.tcu_added,
           plc_ip: this.editedItem.plc_ip,
-          device_name: this.editedItem.name
+          device_name: this.editedItem.customer_assigned_name
         })
           .then((response) => {
             this.filterDevices(this.loc_page)
