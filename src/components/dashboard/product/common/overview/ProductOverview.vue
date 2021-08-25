@@ -8,9 +8,19 @@
       <template v-if="overview.machineId !== 11">
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title :class="getHeadlineClass(overview.status)">
-              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
-            </v-list-item-title>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-card-title
+                  v-bind="attrs"
+                  :class="getHeadlineClass(overview.status)"
+                  :style="productTitleStyle"
+                  v-on="on"
+                >
+                  <div>{{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}</div>
+                </v-card-title>
+              </template>
+              <span>{{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}</span>
+            </v-tooltip>
           </v-list-item-content>
           <v-list-item-avatar color="grey lighten-3">
             <v-tooltip bottom>
@@ -75,9 +85,19 @@
       <template v-else>
         <v-list-item three-line>
           <v-list-item-content>
-            <v-list-item-title :class="getHeadlineClass(overview.status)">
-              {{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}
-            </v-list-item-title>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-card-title
+                  v-bind="attrs"
+                  :class="getHeadlineClass(overview.status)"
+                  :style="productTitleStyle"
+                  v-on="on"
+                >
+                  <div>{{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}</div>
+                </v-card-title>
+              </template>
+              <span>{{ overview.teltonikaDevice && overview.teltonikaDevice.customer_assigned_name }}</span>
+            </v-tooltip>
           </v-list-item-content>
           <v-list-item-avatar class="mt-3" color="grey lighten-3">
             <v-tooltip bottom>
@@ -255,6 +275,12 @@ export default {
     },
     isSaveMachineLoading() {
       return this.state['isSaveMachineLoading']
+    },
+    productTitleStyle() {
+      return {
+        'overflow': 'hidden',
+        'white-space': 'nowrap'
+      }
     }
   },
   mounted() {
@@ -295,7 +321,7 @@ export default {
       return this.deviceStatus[item] ? this.deviceStatus[item].color : ''
     },
     getHeadlineClass(status) {
-      return `headline ${status && status.length ? this.getColor(status[0]) : 'green'}`
+      return `${status && status.length ? this.getColor(status[0]) : 'green'}`
     }
   }
 }
