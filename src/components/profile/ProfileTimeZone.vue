@@ -1,5 +1,5 @@
 <template>
-  <v-card class="flex-grow-1 pt-2 pa-sm-2">
+  <v-card class="flex-grow-1">
     <v-card-title>Timezone setting</v-card-title>
     <v-card-text>
       <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
@@ -24,7 +24,6 @@
 </template>
 <script>
 
-// import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -43,7 +42,7 @@ export default {
     }),
     timeZones() {
       const date = new Date
-      
+
       return this.timeZoneNames.map((timeZone) => {
         return {
           id: timeZone.id,

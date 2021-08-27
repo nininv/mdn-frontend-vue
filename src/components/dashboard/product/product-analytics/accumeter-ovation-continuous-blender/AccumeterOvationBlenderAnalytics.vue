@@ -23,6 +23,9 @@
         >
         </area-graph>
       </v-col>
+      <v-col v-if="parameters.includes(3)" cols="12" md="4">
+        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
+      </v-col>
       <v-col v-if="parameters.includes(6)" cols="12" md="8">
         <bar-graph
           namespace="barGraph-accumeterBlender-recipe"
@@ -36,9 +39,6 @@
           :categories="['Feeder 1', 'Feeder 2', 'Feeder 3', 'Feeder 4', 'Feeder 5', 'Feeder 6']"
         >
         </bar-graph>
-      </v-col>
-      <v-col v-if="parameters.includes(3)" cols="12" md="4">
-        <machine-state :loading="loadingSystemStates" :system-states="systemStates"></machine-state>
       </v-col>
       <v-col v-if="parameters.includes(4)" cols="12" md="4">
         <feeder-stable :loading="loadingFeederStables" :feeders="feederStables"></feeder-stable>

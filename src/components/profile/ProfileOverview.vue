@@ -23,10 +23,6 @@ export default {
       default: () => ({})
     }
   },
-  data() {
-    return {
-    }
-  },
   computed: {
     ...mapGetters({
       roleName: 'auth/roleName'
