@@ -76,6 +76,5 @@ export {
   mdiStandardDefinition,
   mdiContrast,
   mdiInformation,
-  mdiAlertOutline,
-  mdiBackspaceOutline
+  mdiAlertOutline
 } from '@mdi/js'

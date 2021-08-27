@@ -7,6 +7,9 @@
       </div>
       <v-spacer></v-spacer>
       <v-btn v-if="canCreateCustomerUser || canCreateAcsUser" color="primary" to="add" :append="true">
+        <v-icon left small>
+          $mdi-plus
+        </v-icon>
         Create User
       </v-btn>
     </div>
