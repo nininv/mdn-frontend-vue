@@ -17,9 +17,8 @@
           <v-card-title>Basic Information</v-card-title>
           <v-card-text>
             <div class="d-flex flex-column flex-sm-row">
-              <div>
+              <div class="pt-1 mr-2">
                 <v-avatar
-                  v-if="user.name"
                   color="primary"
                   size="68"
                 >
@@ -30,7 +29,7 @@
                 ref="accountForm"
                 v-model="isAccountFormValid"
                 lazy-validation
-                class="flex-grow-1 pt-2 pa-sm-2"
+                class="flex-grow-1 pt-2"
                 @submit.prevent="save"
               >
                 <v-text-field
@@ -125,73 +124,68 @@
           <v-card-title>User Information</v-card-title>
           <v-card-text>
             <v-form ref="profileForm" v-model="isProfileFormValid" lazy-validation>
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="user.address_1"
-                    label="Address"
-                    :rules="[$rules.required]"
-                    outlined
-                    dense
-                  >
-                  </v-text-field>
-                  <v-select
-                    v-model="user.state"
-                    label="State"
-                    :items="states"
-                    :rules="[$rules.required]"
-                    outlined
-                    dense
-                    @change="onStateChange"
-                  >
-                  </v-select>
-                  <v-combobox
-                    v-if="user.state"
-                    v-model="user.city"
-                    :items="cities"
-                    label="City"
-                    item-text="city"
-                    :return-object="false"
-                    :rules="[$rules.required]"
-                    :disabled="loadingCities"
-                    :loading="loadingCities"
-                    outlined
-                    dense
-                  ></v-combobox>
-                  <v-text-field
-                    :value="zipCode"
-                    label="Zip Code"
-                    :rules="[$rules.required]"
-                    :disabled="!user.state || !user.city"
-                    outlined
-                    dense
-                    readonly
-                  >
-                  </v-text-field>
-                  <v-text-field
-                    v-model="user.country"
-                    label="Country"
-                    :rules="[$rules.required]"
-                    outlined
-                    dense
-                    readonly
-                  >
-                  </v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="user.phone"
-                    v-mask="'###-###-####'"
-                    label="Phone"
-                    placeholder="123-456-7890"
-                    outlined
-                    dense
-                    :rules="[$rules.required, $rules.phoneFormat]"
-                  >
-                  </v-text-field>
-                </v-col>
-              </v-row>
+              <v-text-field
+                v-model="user.phone"
+                v-mask="'###-###-####'"
+                label="Phone Number"
+                placeholder="123-456-7890"
+                :rules="[$rules.required, $rules.phoneFormat]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-divider class="mb-4"></v-divider>
+              <div class="d-grid grid-cols-1 grid-cols-md-3 gap-2">
+                <v-text-field
+                  v-model="user.address_1"
+                  label="Address"
+                  :rules="[$rules.required]"
+                  outlined
+                  dense
+                >
+                </v-text-field>
+                <v-select
+                  v-model="user.state"
+                  label="State"
+                  :items="states"
+                  :rules="[$rules.required]"
+                  outlined
+                  dense
+                  @change="onStateChange"
+                >
+                </v-select>
+                <v-combobox
+                  v-model="user.city"
+                  :disabled="!user.state || loadingCities"
+                  :items="cities"
+                  label="City"
+                  item-text="city"
+                  :return-object="false"
+                  :rules="[$rules.required]"
+                  :loading="loadingCities"
+                  outlined
+                  dense
+                ></v-combobox>
+                <v-text-field
+                  :value="zipCode"
+                  label="Zip Code"
+                  :rules="[$rules.required]"
+                  :disabled="!user.state || !user.city"
+                  outlined
+                  dense
+                  readonly
+                >
+                </v-text-field>
+                <v-text-field
+                  v-model="user.country"
+                  label="Country"
+                  :rules="[$rules.required]"
+                  outlined
+                  dense
+                  readonly
+                >
+                </v-text-field>
+              </div>
 
               <div class="d-flex">
                 <v-spacer></v-spacer>

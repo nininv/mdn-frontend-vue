@@ -41,12 +41,13 @@
           </v-select>
           <v-combobox
             v-model="user.city"
+            :disabled="!user.state || loadingCities"
             :items="cities"
             label="City"
             item-text="city"
             :return-object="false"
             :rules="[$rules.required]"
-            :disabled="!user.state"
+            :loading="loadingCities"
             outlined
             dense
           ></v-combobox>
@@ -66,6 +67,7 @@
             label="Country"
             outlined
             dense
+            readonly
           >
           </v-text-field>
         </div>
@@ -107,7 +109,8 @@ export default {
   }),
   computed: {
     ...mapState({
-      cities: (state) => state.cities.data
+      cities: (state) => state.cities.data,
+      loadingCities: (state) => state.cities.loadingCities
     }),
     zipCode() {
       const _zip = this.cities.find((city) => city.city === this.user.city)
