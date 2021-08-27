@@ -19,6 +19,14 @@
         ></v-textarea>
 
         <div class="d-flex">
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            class="mr-1"
+            @click="resetNote"
+          >
+            Reset
+          </v-btn>
           <v-btn
             color="primary"
             :loading="isLoading"
@@ -29,16 +37,6 @@
               $mdi-plus
             </v-icon>
             Add note
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey lighten-2"
-            @click="resetNote"
-          >
-            <v-icon left small>
-              $mdi-backspace-outline
-            </v-icon>
-            Reset form
           </v-btn>
         </div>
       </v-form>

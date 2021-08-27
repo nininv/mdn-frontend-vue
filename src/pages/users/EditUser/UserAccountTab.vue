@@ -15,9 +15,8 @@
         <v-card-title>Basic Information</v-card-title>
         <v-card-text>
           <div class="d-flex flex-column flex-sm-row">
-            <div>
+            <div class="pt-1 mr-2">
               <v-avatar
-                v-if="user.name"
                 color="primary"
                 size="68"
               >
@@ -28,7 +27,7 @@
               ref="form"
               v-model="isFormValid"
               lazy-validation
-              class="flex-grow-1 pt-2 pa-sm-2"
+              class="flex-grow-1 pt-2"
               @submit.prevent="save"
             >
               <v-text-field
@@ -154,10 +153,10 @@
           <v-expansion-panel-header class="title">Metadata</v-expansion-panel-header>
           <v-expansion-panel-content class="text-body-2">
             <span class="font-weight-bold">Created</span>
-            {{ user.created | formatDate('yyyy-MM-dd') }}
+            {{ user.created_at | formatDate('yyyy-MM-dd HH:mm') }}
             <br />
-            <span class="font-weight-bold">Last Sign In</span>
-            {{ user.lastSignIn | formatDate('yyyy-MM-dd') }}
+            <span class="font-weight-bold">Updated</span>
+            {{ user.updated_at | formatDate('yyyy-MM-dd HH:mm') }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>

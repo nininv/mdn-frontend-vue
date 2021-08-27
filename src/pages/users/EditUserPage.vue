@@ -29,7 +29,7 @@
 
     <v-tabs-items v-model="tab" class="overflow-visible my-2">
       <v-tab-item value="tabs-account">
-        <account-tab
+        <user-account-tab
           :user="user"
           :roles="availableRoles"
           :locations="locations"
@@ -37,16 +37,16 @@
           :button-loading="buttonLoading"
           @submit="submitAccount"
         >
-        </account-tab>
+        </user-account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab
+        <user-information-tab
           :user="user"
           :button-loading="buttonLoading"
           @submit="submitAccount"
         >
-        </information-tab>
+        </user-information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -63,16 +63,16 @@
 */
 
 import CopyLabel from '../../components/common/CopyLabel'
-import AccountTab from './EditUser/AccountTab'
-import InformationTab from './EditUser/InformationTab'
+import UserAccountTab from './EditUser/UserAccountTab'
+import UserInformationTab from './EditUser/UserInformationTab'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     CopyLabel,
-    AccountTab,
-    InformationTab
+    UserAccountTab,
+    UserInformationTab
   },
   data() {
     return {

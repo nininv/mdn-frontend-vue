@@ -14,14 +14,14 @@
 
     <v-tabs-items v-model="tab" class="overflow-visible">
       <v-tab-item value="tabs-account">
-        <account-tab
+        <company-account-tab
           :company-account="companyAccount"
           :companies="companies"
-        ></account-tab>
+        ></company-account-tab>
       </v-tab-item>
 
       <v-tab-item value="tabs-information">
-        <information-tab :company-profile="companyProfile"></information-tab>
+        <company-information-tab :company-profile="companyProfile"></company-information-tab>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -38,12 +38,13 @@
 */
 import { mapState, mapActions } from 'vuex'
 
-import AccountTab from './EditCompany/AccountTab'
-import InformationTab from './EditCompany/InformationTab'
+import CompanyAccountTab from './EditCompany/CompanyAccountTab'
+import CompanyInformationTab from './EditCompany/CompanyInformationTab'
 
 export default {
   components: {
-    AccountTab, InformationTab
+    CompanyAccountTab,
+    CompanyInformationTab
   },
   data() {
     return {

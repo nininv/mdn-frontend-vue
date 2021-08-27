@@ -74,126 +74,129 @@
     </v-bottom-sheet>
     <v-dialog
       v-model="deviceConfigDialog"
-      persistent
+      scrollable
       max-width="600px"
     >
       <v-card>
         <v-card-title class="primary white--text">Device Config</v-card-title>
         <v-card-text class="mt-2">
           <v-form ref="editForm" v-model="isDeviceFormValid" lazy-validation @submit.prevent="_submitDeviceConfig">
-            <v-row dense>
-              <v-col cols="12" md="6">
-                <h4 class="mb-1">PLC Config</h4>
-                <v-text-field
-                  v-model="deviceForm.plc_ip"
-                  label="PLC IP"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.plc_modbus_tcp_port"
-                  label="Modbus Tcp Port"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.plc_serial_number"
-                  label="Serial Number"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" md="6">
-                <h4 class="mb-1">TCU Config</h4>
-                <v-text-field
-                  v-model="deviceForm.tcu_serial_number"
-                  label="Serial Number"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_port"
-                  label="Port"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_base_addr"
-                  label="Base Address"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_baud"
-                  label="Baud"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_parity"
-                  label="Parity"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_data_bits"
-                  label="Data Bits"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_stop_bits"
-                  label="Stop Bits"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_bype_timeout"
-                  label="Byte Timeout"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="deviceForm.tcu_resp_timeout"
-                  label="Rest Timeout"
-                  type="number"
-                  :rules="[$rules.required]"
-                  outlined
-                  dense
-                >
-                </v-text-field>
-              </v-col>
-            </v-row>
+            <h4 class="mb-2">PLC Config</h4>
+            <div class="d-grid grid-cols-2 gap-2">
+              <v-text-field
+                v-model="deviceForm.plc_ip"
+                label="PLC IP"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.plc_modbus_tcp_port"
+                label="Modbus Tcp Port"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.plc_serial_number"
+                label="Serial Number"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+            </div>
+            <v-divider class="mb-1"></v-divider>
+            <h4 class="mb-2">TCU Config</h4>
+            <div class="d-grid grid-cols-2 gap-2">
+              <v-text-field
+                v-model="deviceForm.tcu_serial_number"
+                label="Serial Number"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_port"
+                label="Port"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_base_addr"
+                label="Base Address"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_baud"
+                label="Baud"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_parity"
+                label="Parity"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_data_bits"
+                label="Data Bits"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_stop_bits"
+                label="Stop Bits"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_bype_timeout"
+                label="Byte Timeout"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+              <v-text-field
+                v-model="deviceForm.tcu_resp_timeout"
+                label="Rest Timeout"
+                type="number"
+                :rules="[$rules.required]"
+                outlined
+                dense
+              >
+              </v-text-field>
+            </div>
+          </v-form>
+        </v-card-text>
+        <v-card-actions class="grey lighten-4 elevation-1">
+          <div class="flex-grow-1">
             <div class="d-flex justify-content-center">
               <v-checkbox
                 v-model="deviceForm.tcuAdded"
@@ -201,10 +204,10 @@
                 class="mx-auto"
               ></v-checkbox>
             </div>
-            <div class="d-flex">
-              <v-spacer></v-spacer>
+            <div class="text-center mb-1">
               <v-btn
                 color="primary"
+                class="mr-1"
                 text
                 @click="deviceConfigDialog = false"
               >
@@ -219,8 +222,8 @@
                 Submit
               </v-btn>
             </div>
-          </v-form>
-        </v-card-text>
+          </div>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>

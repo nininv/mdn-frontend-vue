@@ -1,47 +1,45 @@
 <template>
-  <div>
-    <div class="d-flex flex-column flex-sm-row">
-      <div class="flex-grow-1 pt-2 pa-sm-2">
-        <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
-          <v-text-field
-            v-model="userData.user.email"
-            :rules="[$rules.required]"
-            label="Email"
-            outlined
-            dense
-            type="email"
-            @input="resetErrors"
-          ></v-text-field>
-          <v-row>
-            <v-col md="6">
-              <v-text-field
-                v-model="userData.user.username"
-                :rules="[$rules.required]"
-                label="Full name"
-                outlined
-                dense
-                @input="resetErrors"
-              ></v-text-field>
-            </v-col>
-            <v-col md="6">
-              <v-text-field
-                v-model="userData.phone"
-                :rules="[$rules.required]"
-                label="Phone"
-                outlined
-                :loading="loading"
-                dense
-                @input="resetErrors"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <error-component :error="error"></error-component>
+  <div class="d-flex flex-column flex-sm-row">
+    <div class="flex-grow-1 pt-2">
+      <v-form ref="accountForm" v-model="isAccountValidForm" lazy-validation @submit.prevent="submit">
+        <v-text-field
+          v-model="userData.user.email"
+          :rules="[$rules.required]"
+          label="Email"
+          outlined
+          dense
+          type="email"
+          @input="resetErrors"
+        ></v-text-field>
+        <v-row>
+          <v-col md="6">
+            <v-text-field
+              v-model="userData.user.username"
+              :rules="[$rules.required]"
+              label="Full name"
+              outlined
+              dense
+              @input="resetErrors"
+            ></v-text-field>
+          </v-col>
+          <v-col md="6">
+            <v-text-field
+              v-model="userData.phone"
+              :rules="[$rules.required]"
+              label="Phone"
+              outlined
+              :loading="loading"
+              dense
+              @input="resetErrors"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <error-component :error="error"></error-component>
 
-          <div class="mt-2">
-            <v-btn type="submit" color="primary" :loading="isBtnLoading">Save</v-btn>
-          </div>
-        </v-form>
-      </div>
+        <div class="mt-2">
+          <v-btn type="submit" color="primary" :loading="isBtnLoading">Save</v-btn>
+        </div>
+      </v-form>
     </div>
   </div>
 </template>
