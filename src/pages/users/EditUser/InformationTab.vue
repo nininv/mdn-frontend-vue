@@ -6,75 +6,71 @@
         ref="form"
         v-model="isFormValid"
         lazy-validation
-        class="flex-grow-1 pt-2 pa-sm-2"
+        class="flex-grow-1 pt-2"
         @submit.prevent="save"
       >
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="user.address_1"
-              label="Address"
-              :rules="[$rules.required]"
-              outlined
-              dense
-            >
-            </v-text-field>
-            <v-select
-              v-model="user.state"
-              label="State"
-              :items="states"
-              :rules="[$rules.required]"
-              outlined
-              dense
-              @change="onStateChange"
-            >
-            </v-select>
-            <v-combobox
-              v-model="user.city"
-              :items="cities"
-              label="City"
-              item-text="city"
-              :return-object="false"
-              :rules="[$rules.required]"
-              :disabled="!user.state"
-              outlined
-              dense
-            ></v-combobox>
-            <v-text-field
-              :value="zipCode"
-              label="Zip Code"
-              :rules="[$rules.required]"
-              :disabled="!user.state || !user.city"
-              outlined
-              dense
-              readonly
-            >
-            </v-text-field>
-            <v-text-field
-              v-model="user.country"
-              :rules="[$rules.required]"
-              label="Country"
-              outlined
-              dense
-            >
-            </v-text-field>
-          </v-col>
-
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="user.phone"
-              v-mask="'###-###-####'"
-              placeholder="123-456-7890"
-              :rules="[$rules.required, $rules.phoneFormat]"
-              outlined
-              dense
-            >
-            </v-text-field>
-          </v-col>
-        </v-row>
+        <v-text-field
+          v-model="user.phone"
+          v-mask="'###-###-####'"
+          label="Phone Number"
+          placeholder="123-456-7890"
+          :rules="[$rules.required, $rules.phoneFormat]"
+          outlined
+          dense
+        >
+        </v-text-field>
+        <v-divider class="mb-4"></v-divider>
+        <div class="d-grid grid-cols-1 grid-cols-md-3 gap-2">
+          <v-text-field
+            v-model="user.address_1"
+            label="Address"
+            :rules="[$rules.required]"
+            outlined
+            dense
+          >
+          </v-text-field>
+          <v-select
+            v-model="user.state"
+            label="State"
+            :items="states"
+            :rules="[$rules.required]"
+            outlined
+            dense
+            @change="onStateChange"
+          >
+          </v-select>
+          <v-combobox
+            v-model="user.city"
+            :items="cities"
+            label="City"
+            item-text="city"
+            :return-object="false"
+            :rules="[$rules.required]"
+            :disabled="!user.state"
+            outlined
+            dense
+          ></v-combobox>
+          <v-text-field
+            :value="zipCode"
+            label="Zip Code"
+            :rules="[$rules.required]"
+            :disabled="!user.state || !user.city"
+            outlined
+            dense
+            readonly
+          >
+          </v-text-field>
+          <v-text-field
+            v-model="user.country"
+            :rules="[$rules.required]"
+            label="Country"
+            outlined
+            dense
+          >
+          </v-text-field>
+        </div>
 
         <div class="d-flex">
-          <v-spacer></v-spacer>
           <v-btn
             color="primary"
             :loading="buttonLoading"

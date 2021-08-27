@@ -154,10 +154,10 @@
           <v-expansion-panel-header class="title">Metadata</v-expansion-panel-header>
           <v-expansion-panel-content class="text-body-2">
             <span class="font-weight-bold">Created</span>
-            {{ user.created | formatDate('yyyy-MM-dd') }}
+            {{ user.created_at | formatDate('yyyy-MM-dd HH:mm') }}
             <br />
-            <span class="font-weight-bold">Last Sign In</span>
-            {{ user.lastSignIn | formatDate('yyyy-MM-dd') }}
+            <span class="font-weight-bold">Updated</span>
+            {{ user.updated_at | formatDate('yyyy-MM-dd HH:mm') }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
