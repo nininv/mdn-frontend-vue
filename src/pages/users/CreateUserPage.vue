@@ -188,7 +188,6 @@
               </div>
 
               <div class="d-flex">
-                <v-spacer></v-spacer>
                 <v-btn color="primary" @click="onBack">Back</v-btn>
               </div>
             </v-form>
