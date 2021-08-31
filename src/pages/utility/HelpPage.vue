@@ -29,15 +29,22 @@
 
       <v-col cols="12" md="9" xl="10">
         <div v-for="faq in faqs" :id="faq.id" :key="faq.id">
-          <div id="#general" class="title pb-2">{{ faq.title }}</div>
+          <div id="#general" class="title pb-2">General Questions</div>
           <v-expansion-panels class="mb-4" multiple>
             <v-expansion-panel
-              v-for="(item,i) in faq.items"
-              :key="i"
+              key="1"
             >
-              <v-expansion-panel-header class="font-weight-black">{{ item.title }}</v-expansion-panel-header>
+              <v-expansion-panel-header class="font-weight-black">How do I contact MiVue for technical help?</v-expansion-panel-header>
               <v-expansion-panel-content>
-                {{ item.content }}
+                <span>A: Send an email to : <a href="mailto:service@mivue.com">service@mivue.com</a></span>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel
+              key="2"
+            >
+              <v-expansion-panel-header class="font-weight-black">How can I connect more of my equipment and factory to MiVue?</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <span>A: Please visit <a href="http://www.mivue.com">www.mivue.com</a> for more information.</span>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -78,41 +85,13 @@ export default {
 
       faqs: [{
         id: 'general',
-        title: 'General Resources',
+        title: 'General Questions',
         items: [{
-          title: 'Can I use a purchased item in a freelance project or contract work for a client?',
-          content: 'Yes. However, if the client intends to charge End Users in any way from the End Product you create, you will need to purchase an Extended License. If you create the End Product for a client, your rights to purchased Items are transferred from you to your client.'
+          title: 'How do I contact MiVue for technical help?',
+          content: 'A: Send an email to : service@mivue.com'
         }, {
-          title: 'What is an End Product?',
-          content: 'An End Product is work that is designed or developed for a single, paid client. This website can not be resold as a product to multiple users. For more information on selling products to multiple users.'
-        }, {
-          title: 'What are the End Product requirements?',
-          content: 'An End Product must be a unique implementation of the Item, often requiring limited copy and content changes. For example, if you purchase a resume template, you may use the Item for yourself or a client after having input personal information (you may not resell it as stock).'
-        }, {
-          title: 'What is Personal Use, Commerical Work, Contracted Work, Client Work, etc.?',
-          content: 'If the created site can not charge users in any way, it is considered for Personal Use and a Regular License can be used. For End Products that can charge users, such as a Software as a Service application, or an e-commerce site, you should use an Extended License. For any End Products that will be sold in its entirety, such as creating software that is distributed digitally, use an Unlimited License.'
-        }, {
-          title: 'What is Personal Use?',
-          content: 'A Personal Use License can only be used for 1 End Product that does not charge users in any way.'
-        }, {
-          title: 'What is Commerical Use?',
-          content: 'A Commercial Use License can only be used for 1 End Product that charges or will charge users.'
-        }, {
-          title: 'What is Unlimited Use?',
-          content: 'An Extended Use License can be used for any number of Personal and Commercial projects.'
-        }]
-      }, {
-        id: 'licenses',
-        title: 'Licenses',
-        items: [{
-          title: 'Personal Use',
-          content: 'Digital products purchased under the Standard License may be used one time in an End Product for Personal Use (an End Product that does not charge End Users).'
-        }, {
-          title: 'Commercial Use',
-          content: 'Digital products purchased under the Extended License may be used an unlimited amount of times for Personal Use, and one time to create a single End Product that does charge End Users.'
-        }, {
-          title: 'Unlimited Use',
-          content: 'An Unlimited License can be used an unlimited amount of times for Personal Use, Commercial Use, and Commercial End Products.'
+          title: 'How can I connect more of my equipment and factory to MiVue?',
+          content: 'A: Please visit www.mivue.com for more information.'
         }]
       }]
     }
