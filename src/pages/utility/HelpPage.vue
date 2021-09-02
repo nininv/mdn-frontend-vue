@@ -44,7 +44,7 @@
             >
               <v-expansion-panel-header class="font-weight-black">How can I connect more of my equipment and factory to MiVue?</v-expansion-panel-header>
               <v-expansion-panel-content>
-                <span>A: Please visit <a href="http://www.mivue.com">www.mivue.com</a> for more information.</span>
+                <span>A: Please visit <a href="http://www.mivue.com" target="_blank">www.mivue.com</a> for more information.</span>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>

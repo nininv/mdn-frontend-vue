@@ -14,7 +14,8 @@
       :disabled="hopperWeightLoading"
     >
       <v-card-title>
-        <span>Target Weights vs Actual Weights</span>
+        <div>Target Weights vs Actual Weights</div>
+        <div class="text-caption font-italic ml-1">(displayed in lbs)</div>
         <v-spacer></v-spacer>
         {{ timeRangeDataToolLabel(hopperSettingTimeRange) }}
         <v-btn
