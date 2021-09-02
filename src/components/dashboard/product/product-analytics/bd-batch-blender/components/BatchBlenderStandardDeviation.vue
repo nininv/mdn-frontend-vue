@@ -6,6 +6,7 @@
   >
     <v-card-title>
       <span>Standard Deviation and Average Error</span>
+      <div class="text-caption font-italic ml-1">(displayed in lbs)</div>
     </v-card-title>
     <v-tabs v-model="tabs" show-arrows fixed-tabs>
       <v-tab
